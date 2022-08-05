@@ -1,0 +1,188 @@
+name: LibertyCity v2
+version: '${project.version}'
+main: com.xiii.libertycity.LibertyCity
+authors: [ XIII___ ]
+description: LibertyCity's plugin
+commands:
+  clearchat:
+    aliases: cc, chatclear
+    usage: /chatclear
+    permission: LibertyCity.clearchat
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  mutechat:
+    aliases: mc, chatmute
+    usage: /mutechat
+    permission: LibertyCity.mutechat
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  clearlag:
+    aliases: cl
+    usage: /clearlag
+    permission: LibertyCity.clearlag
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  cooldown:
+    aliases: cd
+    usage: /cooldown
+    permission: LibertyCity.cooldown
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  spy:
+    usage: /spy
+    permission: LibertyCity.spy
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  clear:
+    aliases: ci
+    usage: /clear
+    permission: LibertyCity.clear
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  feed:
+    usage: /feed
+    permission: LibertyCity.feed
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  fly:
+    usage: /fly
+    permission: LibertyCity.fly
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  gamemode:
+    aliases: gm
+    usage: /gamemode
+    permission: LibertyCity.gamemode
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  god:
+    usage: /god
+    permission: LibertyCity.god
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  hat:
+    usage: /hat
+    permission: LibertyCity.hat
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  heal:
+    usage: /heal
+    permission: LibertyCity.heal
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  ignore:
+    aliases: ig
+    usage: /ignore
+    permission: LibertyCity.ignore
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  invsee:
+    aliases: iv
+    usage: /invsee
+    permission: LibertyCity.invsee
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  more:
+    usage: /more
+    permission: LibertyCity.more
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  msg:
+    aliases: message
+    usage: /msg
+    permission: LibertyCity.msg
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  near:
+    usage: /near
+    permission: LibertyCity.near
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  ping:
+    usage: /ping
+    permission: LibertyCity.ping
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  r:
+    aliases: respond
+    usage: /r
+    permission: LibertyCity.r
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  repair:
+    usage: /repair
+    permission: LibertyCity.repair
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  speed:
+    aliases: /sp
+    usage: /speed
+    permission: LibertyCity.speed
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  sudo:
+    usage: /sudo
+    permission: LibertyCity.sudo
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  telport:
+    aliases: tp
+    usage: /teleport
+    permission: LibertyCity.teleport
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  tpall:
+    usage: /tpall
+    permission: LibertyCity.tpall
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  tphere:
+    usage: /tphere
+    permission: LibertyCity.tphere
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  togglemsg:
+    aliases: tmsg
+    usage: /togglemsg
+    permission: LibertyCity.togglemsg
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  vanish:
+    aliases: v
+    usage: /vanish
+    permission: LibertyCity.vanish
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  whois:
+    aliases: who, w
+    usage: /whois
+    permission: LibertyCity.whois
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  ban:
+    usage: /ban
+    permission: LibertyCity.ban
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  kickall:
+    usage: /kickall
+    permission: LibertyCity.kickall
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  kick:
+    usage: /kick
+    permission: LibertyCity.kick
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  mute:
+    usage: /mute
+    permission: LibertyCity.mute
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  report:
+    usage: /report
+    permission: LibertyCity.report
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  unban:
+    usage: /unban
+    permission: LibertyCity.unban
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  unmute:
+    usage: /unmute
+    permission: LibertyCity.unmute
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  list:
+    usage: /list
+    permission: LibertyCity.list
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  day:
+    aliases: jour
+    usage: /day
+    permission: LibertyCity.day
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  night:
+    aliases: nuit
+    usage: /night
+    permission: LibertyCity.night
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  sun:
+    aliases: soleil
+    usage: /sun
+    permission: LibertyCity.sun
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  rain:
+    aliases: pluie
+    usage: /rain
+    permission: LibertyCity.rain
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+
+
+
