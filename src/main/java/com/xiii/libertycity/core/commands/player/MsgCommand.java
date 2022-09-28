@@ -28,7 +28,11 @@ public class MsgCommand implements CommandExecutor {
                         for (int i = 1; i < args.length; i++) {
                             message += args[i] + " ";
                         }
-                        target.sendMessage("§7[§a§l" + send.rpPrenom + " §2§l" + send.rpNom + " §7(" + sender.getName() + "§7)" + "§r §6--> §a§l" + tar.rpPrenom + " §2§l" + tar.rpNom + " §7(" + target.getName() + ")] §f" + message);
+                        sender.sendMessage("§7[§a§lVous" + "§r §6--> §a§l" + tar.rpPrenom + " §2§l" + tar.rpNom + " §7(" + target.getName() + ")] §f" + message);
+                        PlayerData data = Data.data.getUserData(target);
+                        if(!data.ignoredPlayers.contains(sender.getName())) {
+                            target.sendMessage("§7[§a§l" + send.rpPrenom + " §2§l" + send.rpNom + " §7(" + sender.getName() + "§7)" + "§r §6--> §a§lMoi] §f" + message);
+                        }
                     } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cCette personne n'autorise pas les messages privé");
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
             }
