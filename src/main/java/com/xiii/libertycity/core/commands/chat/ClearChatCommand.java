@@ -14,7 +14,7 @@ public class ClearChatCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("clearchat")) {
             for(Player p : Bukkit.getOnlinePlayers()) {
                 if(!p.hasPermission("LibertyCity.bypass.clearchat")) {
-                    for(int i = 0; i < 524; i++) p.sendMessage(" ");
+                    for(int i = 0; i < 524; i++) p.sendMessage("§a§b§k§o§n§2§0 ");
                     Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat a été néttoyer !");
 
                 } else p.sendMessage("§2§lLiberty§a§lCity §7» §7§oVotre chat n'a pas été néttoyer");
