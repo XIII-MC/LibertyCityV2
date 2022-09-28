@@ -2,6 +2,8 @@ package com.xiii.libertycity.core.data;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerData implements java.io.Serializable {
@@ -24,6 +26,7 @@ public class PlayerData implements java.io.Serializable {
     public boolean isGodMode = false;
     public boolean allowMsg = true;
     public Player lastDm;
+    public List<String> ignoredPlayers = new ArrayList<>();
 
     public int playerID;
     public String rpPrenom;
