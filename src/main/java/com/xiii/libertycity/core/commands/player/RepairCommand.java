@@ -13,13 +13,15 @@ public class RepairCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(command.getName().equalsIgnoreCase("repair")) {
-            Player snder = (Player) sender;
-            if(snder.getItemInHand() != null && snder.getItemInHand() != new ItemStack(Material.AIR)) {
-                snder.getItemInHand().setDurability((short)0);
-                sender.sendMessage("§2§lLiberty§a§lCity §7» §fVotre item a été réparé");
-            } else {
-                sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Item invalide");
-            }
+            if(sender instanceof Player) {
+                Player snder = (Player) sender;
+                if (snder.getItemInHand() != null && snder.getItemInHand() != new ItemStack(Material.AIR)) {
+                    snder.getItemInHand().setDurability((short) 0);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVotre item a été réparé");
+                } else {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Item invalide");
+                }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 
         return true;

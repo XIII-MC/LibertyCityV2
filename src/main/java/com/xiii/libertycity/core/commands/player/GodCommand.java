@@ -15,24 +15,30 @@ public class GodCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("god")) {
             if(args.length == 0) {
-                PlayerData data = Data.data.getUserData((Player) sender);
-                if(!data.isGodMode) {
-                    data.isGodMode = true;
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §aactivé");
-                } else {
-                    data.isGodMode = false;
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §cdésactivé");
-                }
+                if(sender instanceof Player) {
+                    PlayerData data = Data.data.getUserData((Player) sender);
+                    if (!data.isGodMode) {
+                        data.isGodMode = true;
+                        ((Player) sender).setInvulnerable(true);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §aactivé");
+                    } else {
+                        data.isGodMode = false;
+                        ((Player) sender).setInvulnerable(false);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §cdésactivé");
+                    }
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if(target.isOnline()) {
                     PlayerData data = Data.data.getUserData(target);
                     if(!data.isGodMode) {
                         data.isGodMode = true;
+                        target.setInvulnerable(true);
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §aactivé");
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode pour §e" + target.getName() + " §aactivé");
                     } else {
                         data.isGodMode = false;
+                        target.setInvulnerable(false);
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode §cdésactivé");
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fGod mode pour §e" + target.getName() + " §cdésactivé");
                     }

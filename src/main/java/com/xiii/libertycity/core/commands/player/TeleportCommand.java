@@ -18,8 +18,10 @@ public class TeleportCommand implements CommandExecutor {
                 Player p = (Player) sender;
                 if(target.isOnline()) {
                     if(args.length == 1) {
-                        p.teleport(target);
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporter à §e" + target.getName());
+                        if(sender instanceof Player) {
+                            p.teleport(target);
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporter à §e" + target.getName());
+                        } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
                     } else if(args.length == 2) {
                         Player target2 = Bukkit.getServer().getPlayer(args[1]);
                         if(target2.isOnline()) {
@@ -33,13 +35,18 @@ public class TeleportCommand implements CommandExecutor {
         }
 
         if(command.getName().equalsIgnoreCase("tpall")) {
-            for(Player p : Bukkit.getOnlinePlayers()) {
-                p.teleport((Player) sender);
-                p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporter vers §e" + sender.getName());
-            }
+            if(sender instanceof Player) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.teleport((Player) sender);
+                    p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporter vers §e" + sender.getName());
+                }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 
         if(command.getName().equalsIgnoreCase("tphere")) {
+            if(sender instanceof Player) {
+
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
 
         }
 

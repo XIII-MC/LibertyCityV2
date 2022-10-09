@@ -13,9 +13,11 @@ public class FeedCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("feed")) {
             if(args.length == 0) {
-                Player p = (Player) sender;
-                p.setFoodLevel(20);
-                p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rassasié");
+                if(sender instanceof Player) {
+                    Player p = (Player) sender;
+                    p.setFoodLevel(20);
+                    p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rassasié");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if(target.isOnline()) {

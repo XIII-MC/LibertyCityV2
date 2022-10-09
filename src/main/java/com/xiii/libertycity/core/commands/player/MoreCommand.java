@@ -9,12 +9,14 @@ public class MoreCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player p = (Player) sender;
 
         if(command.getName().equalsIgnoreCase("more")) {
-            if(p.getItemInHand() != null && p.getItemInHand().getType() != null) {
-                p.getItemInHand().setAmount(64);
-            }
+            if(sender instanceof Player) {
+                Player p = (Player) sender;
+                if (p.getItemInHand() != null && p.getItemInHand().getType() != null) {
+                    p.getItemInHand().setAmount(64);
+                }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 
         return true;

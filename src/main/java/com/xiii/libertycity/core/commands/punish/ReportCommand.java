@@ -21,6 +21,8 @@ public class ReportCommand implements CommandExecutor {
                 PlayerData reported = Data.data.getUserData(target);
                 if(target.isOnline()) {
                     if(System.currentTimeMillis() - reporter.lastReport > 60000) {
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fVotre signalement a bien été envoyé");
+                        reporter.lastReport = System.currentTimeMillis();
                         if(args.length == 1) {
                             for (Player p : Bukkit.getOnlinePlayers()) {
                                 if (p.hasPermission("LibertyCity.staff.seereports")) {
@@ -52,7 +54,7 @@ public class ReportCommand implements CommandExecutor {
                                 }
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Veuillez patientez entre chaque signalement");
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
             }
         }

@@ -14,8 +14,10 @@ public class ClearCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("clear")) {
             if(args.length == 0) {
-                p.getInventory().clear();
-                p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre inventaire a été vidé");
+                if(sender instanceof Player) {
+                    p.getInventory().clear();
+                    p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre inventaire a été vidé");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if(target.isOnline()) {

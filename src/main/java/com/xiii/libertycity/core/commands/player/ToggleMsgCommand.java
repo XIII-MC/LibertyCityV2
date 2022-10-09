@@ -13,14 +13,16 @@ public class ToggleMsgCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(command.getName().equalsIgnoreCase("togglemsg")) {
-            PlayerData data = Data.data.getUserData((Player) sender);
-            if(!data.allowMsg) {
-                data.allowMsg = true;
-                sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §aactivé§f vos messages privé");
-            } else {
-                data.allowMsg = false;
-                sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §cdésactivé§f vos messages privé");
-            }
+            if(sender instanceof Player) {
+                PlayerData data = Data.data.getUserData((Player) sender);
+                if (!data.allowMsg) {
+                    data.allowMsg = true;
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §aactivé§f vos messages privé");
+                } else {
+                    data.allowMsg = false;
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §cdésactivé§f vos messages privé");
+                }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 
         return true;

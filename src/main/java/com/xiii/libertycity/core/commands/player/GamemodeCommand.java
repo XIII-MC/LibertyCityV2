@@ -16,26 +16,28 @@ public class GamemodeCommand implements CommandExecutor {
             if(args.length == 0) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /gamemode <Gamemode> (Joueur)");
             else {
                 if(args.length == 1) {
-                    Player p = (Player) sender;
-                    if(args[0].equalsIgnoreCase("creative") || args[0].equalsIgnoreCase("c") || args[0].equalsIgnoreCase("creatif")) {
-                        p.setGameMode(GameMode.CREATIVE);
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6créatif");
-                    }
+                    if(sender instanceof Player) {
+                        Player p = (Player) sender;
+                        if (args[0].equalsIgnoreCase("creative") || args[0].equalsIgnoreCase("c") || args[0].equalsIgnoreCase("creatif")) {
+                            p.setGameMode(GameMode.CREATIVE);
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6créatif");
+                        }
 
-                    if(args[0].equalsIgnoreCase("survival") || args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("survie")) {
-                        p.setGameMode(GameMode.SURVIVAL);
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6survie");
-                    }
+                        if (args[0].equalsIgnoreCase("survival") || args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("survie")) {
+                            p.setGameMode(GameMode.SURVIVAL);
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6survie");
+                        }
 
-                    if(args[0].equalsIgnoreCase("adventure") || args[0].equalsIgnoreCase("a") || args[0].equalsIgnoreCase("aventure")) {
-                        p.setGameMode(GameMode.ADVENTURE);
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6aventure");
-                    }
+                        if (args[0].equalsIgnoreCase("adventure") || args[0].equalsIgnoreCase("a") || args[0].equalsIgnoreCase("aventure")) {
+                            p.setGameMode(GameMode.ADVENTURE);
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6aventure");
+                        }
 
-                    if(args[0].equalsIgnoreCase("spectator") || args[0].equalsIgnoreCase("sp") || args[0].equalsIgnoreCase("spectateur")) {
-                        p.setGameMode(GameMode.SPECTATOR);
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6spectateur");
-                    }
+                        if (args[0].equalsIgnoreCase("spectator") || args[0].equalsIgnoreCase("sp") || args[0].equalsIgnoreCase("spectateur")) {
+                            p.setGameMode(GameMode.SPECTATOR);
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6spectateur");
+                        }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
                 } else if(args.length == 2) {
                     Player target = Bukkit.getServer().getPlayer(args[1]);
                     if(target.isOnline()) {

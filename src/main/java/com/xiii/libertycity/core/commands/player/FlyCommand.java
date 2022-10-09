@@ -13,18 +13,20 @@ public class FlyCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("fly")) {
             if(args.length == 0) {
-                Player p = (Player) sender;
-                if(p.getAllowFlight()) {
-                    p.setAllowFlight(true);
-                    p.sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais volé");
-                } else {
-                    p.setAllowFlight(false);
-                    p.sendMessage("§2§lLiberty§a§lCity §7» §fVous ne pouvez plus volé");
-                }
+                if(sender instanceof Player) {
+                    Player p = (Player) sender;
+                    if (!p.getAllowFlight()) {
+                        p.setAllowFlight(true);
+                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais volé");
+                    } else {
+                        p.setAllowFlight(false);
+                        p.sendMessage("§2§lLiberty§a§lCity §7» §fVous ne pouvez plus volé");
+                    }
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if(target.isOnline()) {
-                    if(target.getAllowFlight()) {
+                    if(!target.getAllowFlight()) {
                         target.setAllowFlight(true);
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais volé");
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fpeut désormais volé");

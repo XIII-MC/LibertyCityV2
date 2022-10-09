@@ -13,14 +13,17 @@ public class InvseeCommand implements CommandExecutor {
         Player p = (Player) sender;
 
         if(command.getName().equalsIgnoreCase("invsee")) {
-            if(args.length == 0) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /invsee <Joueur>");
-            else {
-                Player target = Bukkit.getServer().getPlayer(args[0]);
-                if(target.isOnline()) {
-                    p.openInventory(target.getInventory());
-                    p.sendMessage("§2§lLiberty§a§lCity §7» §fOuverture de l'inventaire de §e" + target.getName());
-                } else p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
-            }
+            if(sender instanceof Player) {
+                if (args.length == 0) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /invsee <Joueur>");
+                else {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        p.openInventory(target.getInventory());
+                        p.sendMessage("§2§lLiberty§a§lCity §7» §fOuverture de l'inventaire de §e" + target.getName());
+                    } else
+                        p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 
         return true;
