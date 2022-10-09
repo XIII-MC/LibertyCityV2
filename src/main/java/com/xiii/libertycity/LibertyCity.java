@@ -1,28 +1,40 @@
 package com.xiii.libertycity;
 
+import com.xiii.libertycity.core.Events;
 import com.xiii.libertycity.core.commands.chat.*;
 import com.xiii.libertycity.core.commands.player.*;
 import com.xiii.libertycity.core.commands.punish.*;
-import com.xiii.libertycity.core.commands.server.ClearLagCommand;
-import com.xiii.libertycity.core.commands.server.ListCommand;
-import com.xiii.libertycity.core.commands.server.TimeSetCommand;
-import com.xiii.libertycity.core.commands.server.WeatherCommand;
+import com.xiii.libertycity.core.commands.server.*;
+import com.xiii.libertycity.core.data.Data;
+import com.xiii.libertycity.core.utils.FileUtils;
+import com.xiii.libertycity.roleplay.events.RegisterEvent;
+import com.xiii.libertycity.roleplay.guis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LibertyCity extends JavaPlugin {
 
-    public static LibertyCity instance;
+    public static LibertyCity INSTANCE;
 
     public static Plugin getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
 
+        Data.data.registerServer(Bukkit.getServer());
+        FileUtils.readServerData();
+        FileUtils.readPlayerData();
+
+        Bukkit.getPluginManager().registerEvents(new Events(), this);
+        Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
+        Bukkit.getPluginManager().registerEvents(new BinGui(), this);
+        Bukkit.getPluginManager().registerEvents(new RegisterEvent(), this);
+
+        // PHASE 1
         Bukkit.getPluginCommand("cooldown").setExecutor(new ChatCooldownCommand());
         Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChatCommand());
         Bukkit.getPluginCommand("mutechat").setExecutor(new MuteChatCommand());
@@ -38,34 +50,53 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("invsee").setExecutor(new InvseeCommand());
         Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
         Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
-        Bukkit.getPluginCommand("near").setExecutor(new NearCommand());
-        Bukkit.getPluginCommand("ping").setExecutor(new PingCommand());
-        Bukkit.getPluginCommand("r").setExecutor(new RCommand());
-        Bukkit.getPluginCommand("repair").setExecutor(new RepairCommand());
-        Bukkit.getPluginCommand("speed").setExecutor(new SpeedCommand());
-        Bukkit.getPluginCommand("sudo").setExecutor(new SudoCommand());
-        Bukkit.getPluginCommand("teleport").setExecutor(new TeleportCommand());
-        Bukkit.getPluginCommand("togglemsg").setExecutor(new ToggleMsgCommand());
-        Bukkit.getPluginCommand("vanish").setExecutor(new VanishCommand());
-        Bukkit.getPluginCommand("whois").setExecutor(new WhoisCommand());
-        Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
-        Bukkit.getPluginCommand("kickall").setExecutor(new KickallCommand());
-        Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
-        Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
-        Bukkit.getPluginCommand("report").setExecutor(new ReportCommand());
-        Bukkit.getPluginCommand("unban").setExecutor(new UnbanCommand());
-        Bukkit.getPluginCommand("unmute").setExecutor(new UnmuteCommand());
-        Bukkit.getPluginCommand("clearlag").setExecutor(new ClearLagCommand());
-        Bukkit.getPluginCommand("list").setExecutor(new ListCommand());
-        Bukkit.getPluginCommand("day").setExecutor(new TimeSetCommand());
-        Bukkit.getPluginCommand("night").setExecutor(new TimeSetCommand());
-        Bukkit.getPluginCommand("sun").setExecutor(new WeatherCommand());
-        Bukkit.getPluginCommand("rain").setExecutor(new WeatherCommand());
+
+        //PHASE 2
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+            Bukkit.getPluginCommand("near").setExecutor(new NearCommand());
+            Bukkit.getPluginCommand("ping").setExecutor(new PingCommand());
+            Bukkit.getPluginCommand("r").setExecutor(new RCommand());
+            Bukkit.getPluginCommand("repair").setExecutor(new RepairCommand());
+            Bukkit.getPluginCommand("speed").setExecutor(new SpeedCommand());
+            Bukkit.getPluginCommand("sudo").setExecutor(new SudoCommand());
+            Bukkit.getPluginCommand("teleport").setExecutor(new TeleportCommand());
+            Bukkit.getPluginCommand("togglemsg").setExecutor(new ToggleMsgCommand());
+            Bukkit.getPluginCommand("vanish").setExecutor(new VanishCommand());
+            Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
+            Bukkit.getPluginCommand("kickall").setExecutor(new KickallCommand());
+            Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
+            Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
+            Bukkit.getPluginCommand("report").setExecutor(new ReportCommand());
+            Bukkit.getPluginCommand("unban").setExecutor(new UnbanCommand());
+            Bukkit.getConsoleSender().sendMessage("Phase 2 PASSED.");
+
+        }, 20);
+
+        //PHASE 3
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+            Bukkit.getPluginCommand("unmute").setExecutor(new UnmuteCommand());
+            Bukkit.getPluginCommand("setwarp").setExecutor(new AddWarpCommand());
+            Bukkit.getPluginCommand("clearlag").setExecutor(new ClearLagCommand());
+            Bukkit.getPluginCommand("delwarp").setExecutor(new DelWarpCommand());
+            Bukkit.getPluginCommand("list").setExecutor(new ListCommand());
+            Bukkit.getPluginCommand("day").setExecutor(new TimeSetCommand());
+            Bukkit.getPluginCommand("night").setExecutor(new TimeSetCommand());
+            Bukkit.getPluginCommand("warp").setExecutor(new WarpCommand());
+            Bukkit.getPluginCommand("warps").setExecutor(new WarpsCommand());
+            Bukkit.getPluginCommand("sun").setExecutor(new WeatherCommand());
+            Bukkit.getPluginCommand("rain").setExecutor(new WeatherCommand());
+            Bukkit.getPluginCommand("atm").setExecutor(new ATMGui());
+            Bukkit.getConsoleSender().sendMessage("Phase 3 PASSED.");
+
+        }, 40);
+        Bukkit.getConsoleSender().sendMessage("Plugin loaded");
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
     }
 }
