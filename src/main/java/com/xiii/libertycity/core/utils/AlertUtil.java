@@ -10,10 +10,16 @@ public class AlertUtil {
             switch (type) {
                 case 0:
                     if(p.hasPermission(permission)) p.sendMessage("§4§lSTAFF §7» " + message);
+                    break;
                 case 1:
                     if(p.hasPermission(permission)) p.sendMessage("§c§l[ALERT]§r " + message);
+                    break;
                 case 2:
                     if(p.hasPermission(permission)) p.sendMessage("§4§l⚠ §7» " + message);
+                    break;
+                case 3:
+                    if(p.hasPermission(permission)) p.sendMessage("§c§l[AC]§r " + message);
+                    break;
             }
         }
     }
