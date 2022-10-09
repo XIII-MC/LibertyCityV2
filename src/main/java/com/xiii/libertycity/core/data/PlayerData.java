@@ -21,11 +21,9 @@ public class PlayerData implements java.io.Serializable {
     public String muteReason;
     public boolean silentKick = false;
 
-    public double lastReport = 90000;
     public boolean isVanished = false;
     public boolean isGodMode = false;
     public boolean allowMsg = true;
-    public Player lastDm;
     public List<String> ignoredPlayers = new ArrayList<>();
 
     public int playerID;
@@ -38,9 +36,7 @@ public class PlayerData implements java.io.Serializable {
     public String rpPoliceRank = "§b§kAucun";
     public String rpGangRank = "§c§kAucun";
     public boolean isVerified;
-    public boolean inSearch = false;
     public String joinDate;
-    public boolean isSearching = false;
 
     public boolean chatBanHRP = false;
     public boolean chatBanRP = false;
@@ -55,6 +51,12 @@ public class PlayerData implements java.io.Serializable {
     public boolean spyChatPolice = false;
     public boolean spyChatGang = false;
     public boolean spyMsg = false;
+
+    //TEMP
+    public transient boolean isSearching = false;
+    public transient boolean inSearch = false;
+    public transient double lastReport = 90000;
+    public transient Player lastDm;
 
     public PlayerData(String name, UUID uuid) {
         this.uuid = uuid;

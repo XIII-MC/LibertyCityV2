@@ -1,5 +1,10 @@
 package com.xiii.libertycity.core.data;
 
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServerData implements java.io.Serializable {
 
     public int globalID;
@@ -9,5 +14,13 @@ public class ServerData implements java.io.Serializable {
     public boolean chatStateRP = true;
     public boolean chatStateHRP = true;
     public int chatCooldownGlobal = 2500;
+
+    public List<Player> vanishedPlayers = new ArrayList<>();
+    public List<String> warpsNames = new ArrayList<>();
+
+    public List<String> rpPrenom = new ArrayList<>();
+    public List<String> rpNom = new ArrayList<>();
+    public List<Integer> averageAge = new ArrayList<>();
+    public int registeredPlayersIDAmount;
 
 }

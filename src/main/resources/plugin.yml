@@ -1,4 +1,4 @@
-name: LibertyCity v2
+name: LibertyCity
 version: '${project.version}'
 main: com.xiii.libertycity.LibertyCity
 authors: [ XIII___ ]
@@ -103,7 +103,7 @@ commands:
     usage: /sudo
     permission: LibertyCity.sudo
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
-  telport:
+  teleport:
     aliases: tp
     usage: /teleport
     permission: LibertyCity.teleport
@@ -125,11 +125,6 @@ commands:
     aliases: v
     usage: /vanish
     permission: LibertyCity.vanish
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
-  whois:
-    aliases: who, w
-    usage: /whois
-    permission: LibertyCity.whois
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   ban:
     usage: /ban
@@ -182,6 +177,26 @@ commands:
     aliases: pluie
     usage: /rain
     permission: LibertyCity.rain
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  setwarp:
+    usage: /setwarp
+    permission: LibertyCity.setwarp
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  delwarp:
+    usage: /delwarp
+    permission: LibertyCity.delwarp
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  warp:
+    usage: /warp
+    permission: LibertyCity.warp
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  warps:
+    usage: /warps
+    permission: LibertyCity.warps
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  atm:
+    usage: /atm
+    permission: LibertyCity.forceatm
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
 
 
