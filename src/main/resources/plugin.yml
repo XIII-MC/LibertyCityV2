@@ -198,6 +198,9 @@ commands:
     usage: /atm
     permission: LibertyCity.forceatm
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
-
+  time:
+    usage: /time
+  LCDBB1BETA:
+    usage: /LCDBB1BETA
 
 

@@ -7,6 +7,8 @@ import com.xiii.libertycity.core.commands.punish.*;
 import com.xiii.libertycity.core.commands.server.*;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.utils.FileUtils;
+import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
+import com.xiii.libertycity.roleplay.events.DeathEvent;
 import com.xiii.libertycity.roleplay.events.RegisterEvent;
 import com.xiii.libertycity.roleplay.guis.*;
 import org.bukkit.Bukkit;
@@ -33,23 +35,34 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
         Bukkit.getPluginManager().registerEvents(new BinGui(), this);
         Bukkit.getPluginManager().registerEvents(new RegisterEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new AnkleBreakEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
 
         // PHASE 1
-        Bukkit.getPluginCommand("cooldown").setExecutor(new ChatCooldownCommand());
-        Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChatCommand());
-        Bukkit.getPluginCommand("mutechat").setExecutor(new MuteChatCommand());
-        Bukkit.getPluginCommand("spy").setExecutor(new SpyChatCommand());
-        Bukkit.getPluginCommand("clear").setExecutor(new ClearCommand());
-        Bukkit.getPluginCommand("feed").setExecutor(new FeedCommand());
-        Bukkit.getPluginCommand("fly").setExecutor(new FlyCommand());
-        Bukkit.getPluginCommand("gamemode").setExecutor(new GamemodeCommand());
-        Bukkit.getPluginCommand("god").setExecutor(new GodCommand());
-        Bukkit.getPluginCommand("hat").setExecutor(new HatCommand());
-        Bukkit.getPluginCommand("heal").setExecutor(new HealCommand());
-        Bukkit.getPluginCommand("ignore").setExecutor(new IgnoreCommand());
-        Bukkit.getPluginCommand("invsee").setExecutor(new InvseeCommand());
-        Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
-        Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+
+            Bukkit.getPluginCommand("cooldown").setExecutor(new ChatCooldownCommand());
+            Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChatCommand());
+            Bukkit.getPluginCommand("mutechat").setExecutor(new MuteChatCommand());
+            Bukkit.getPluginCommand("spy").setExecutor(new SpyChatCommand());
+            Bukkit.getPluginCommand("clear").setExecutor(new ClearCommand());
+            Bukkit.getPluginCommand("feed").setExecutor(new FeedCommand());
+            Bukkit.getPluginCommand("fly").setExecutor(new FlyCommand());
+            Bukkit.getPluginCommand("gamemode").setExecutor(new GamemodeCommand());
+            Bukkit.getPluginCommand("god").setExecutor(new GodCommand());
+            Bukkit.getPluginCommand("hat").setExecutor(new HatCommand());
+            Bukkit.getPluginCommand("heal").setExecutor(new HealCommand());
+            Bukkit.getPluginCommand("ignore").setExecutor(new IgnoreCommand());
+            Bukkit.getPluginCommand("invsee").setExecutor(new InvseeCommand());
+            Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
+            Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
+            Bukkit.getPluginCommand("atm").setExecutor(new ATMGui());
+            Bukkit.getPluginCommand("kickall").setExecutor(new KickallCommand());
+            Bukkit.getPluginCommand("time").setExecutor(new TimeSetCommand());
+            Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
+            Bukkit.getPluginCommand("unban").setExecutor(new UnbanCommand());
+        }, 10);
+
 
         //PHASE 2
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -69,6 +82,11 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
             Bukkit.getPluginCommand("report").setExecutor(new ReportCommand());
             Bukkit.getPluginCommand("unban").setExecutor(new UnbanCommand());
+            Bukkit.getPluginCommand("night").setExecutor(new TimeSetCommand());
+            Bukkit.getPluginCommand("warp").setExecutor(new WarpCommand());
+            Bukkit.getPluginCommand("warps").setExecutor(new WarpsCommand());
+            Bukkit.getPluginCommand("sun").setExecutor(new WeatherCommand());
+            Bukkit.getPluginCommand("rain").setExecutor(new WeatherCommand());
             Bukkit.getConsoleSender().sendMessage("Phase 2 PASSED.");
 
         }, 20);
@@ -82,15 +100,10 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("delwarp").setExecutor(new DelWarpCommand());
             Bukkit.getPluginCommand("list").setExecutor(new ListCommand());
             Bukkit.getPluginCommand("day").setExecutor(new TimeSetCommand());
-            Bukkit.getPluginCommand("night").setExecutor(new TimeSetCommand());
-            Bukkit.getPluginCommand("warp").setExecutor(new WarpCommand());
-            Bukkit.getPluginCommand("warps").setExecutor(new WarpsCommand());
-            Bukkit.getPluginCommand("sun").setExecutor(new WeatherCommand());
-            Bukkit.getPluginCommand("rain").setExecutor(new WeatherCommand());
-            Bukkit.getPluginCommand("atm").setExecutor(new ATMGui());
+            Bukkit.getPluginCommand("LCDBB1BETA").setExecutor(new TestCommand());
             Bukkit.getConsoleSender().sendMessage("Phase 3 PASSED.");
 
-        }, 40);
+        }, 30);
         Bukkit.getConsoleSender().sendMessage("Plugin loaded");
 
     }
