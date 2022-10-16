@@ -22,7 +22,7 @@ public class AddWarpCommand implements CommandExecutor {
                 if (args.length >= 1) {
                     ServerData server = Data.data.getServerData(Bukkit.getServer());
                     Player p = (Player) sender;
-                    File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + args[0] + ".yml");
+                    File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + args[0] + ".yml");
                     if (warpFile.exists()) {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Ce warp existe déja");
                     } else {

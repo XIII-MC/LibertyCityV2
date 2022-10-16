@@ -22,7 +22,7 @@ public class WarpCommand implements CommandExecutor {
                 if (args.length >= 1) {
                     ServerData server = Data.data.getServerData(Bukkit.getServer());
                     Player p = (Player) sender;
-                    File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + args[0] + ".yml");
+                    File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + args[0] + ".yml");
                     if (warpFile.exists()) {
                         p.teleport(YMLUtil.loadWarp(args[0]));
                         p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporter vers le warp §6" + args[0]);

@@ -19,7 +19,7 @@ public class DelWarpCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("delwarp")) {
             if(args.length >= 1) {
                 ServerData server = Data.data.getServerData(Bukkit.getServer());
-                File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + args[0] + ".yml");
+                File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + args[0] + ".yml");
                 if(warpFile.exists()) {
                     if(server.warpsNames.contains(args[0])) server.warpsNames.remove(args[0]);
                     YMLUtil.deleteWarp(args[0]);
