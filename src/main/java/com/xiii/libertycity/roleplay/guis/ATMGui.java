@@ -26,6 +26,7 @@ public class ATMGui implements Listener, CommandExecutor {
 
             PlayerData data = Data.data.getUserData(p);
 
+            p.closeInventory();
             Inventory ATM = Bukkit.createInventory(p.getPlayer(), 27, "                 §2§lATM");
             ItemStack glass = (createGuiItem(Material.STAINED_GLASS_PANE, " ", " "));
             ItemStack deposit = (createGuiItem(Material.GOLD_NUGGET, "§aDéposer de l'argent", "", "§7§oVotre §n§6§oargent§r§7§o sera ajouté de votre §n§6§obanque§r§7§o §7§o!", "§7Vous avez §6" + data.rpBank + "§6$ §7(Banque)"));
@@ -48,8 +49,8 @@ public class ATMGui implements Listener, CommandExecutor {
     public void ATMDeposit(Player p) {
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
 
-            p.getPlayer().closeInventory();
-            Inventory ATMDeposit = Bukkit.createInventory(p.getPlayer(), 36, "                 §a§lATM");
+            p.closeInventory();
+            Inventory ATMDeposit = Bukkit.createInventory(p.getPlayer(), 36, "                 §a§lATM §7(D)");
             ItemStack glass = (createGuiItem(Material.STAINED_GLASS_PANE, " ", " "));
             ItemStack close = (createGuiItem(Material.ARROW, "§cRetourner a l'ATM", " ", "§7Cliqué(e) pour retourner au menu de l'ATM."));
             ItemStack oneDollarBill = (createGuiItem(Material.CLAY_BRICK, "§aDéposer 1$", " ", "§7Vous avez §6" + InventoryUtils.getAmount(p.getPlayer(), new ItemStack(Material.CLAY_BRICK)) + " §7billet(s) de §e1$", " ", "§7Clique §e§ndroit§7 pour tous déposer.", "§7Clique §e§ngauche§7 pour déposer 1 par 1."));
@@ -94,8 +95,8 @@ public class ATMGui implements Listener, CommandExecutor {
 
             PlayerData data = Data.data.getUserData(p);
 
-            p.getPlayer().closeInventory();
-            Inventory ATMWithdraw = Bukkit.createInventory(p.getPlayer(), 36, "                 §c§lATM");
+            p.closeInventory();
+            Inventory ATMWithdraw = Bukkit.createInventory(p.getPlayer(), 36, "                 §c§lATM §7(W)");
             ItemStack glass = (createGuiItem(Material.STAINED_GLASS_PANE, " ", " "));
             ItemStack close = (createGuiItem(Material.ARROW, "§cRetourner a l'ATM", " ", "§7Cliqué(e) pour retourner au menu de l'ATM."));
             ItemStack oneDollarBill = (createGuiItem(Material.CLAY_BRICK, "§cRetirer 1$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
@@ -159,7 +160,7 @@ public class ATMGui implements Listener, CommandExecutor {
             }
 
             //Deposit ATM
-            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §a§lATM")) {
+            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §a§lATM §7(D)")) {
 
                 //To save time & performance check if the return item is clicked now
                 if(e.getRawSlot() == 35) ATM(p);
@@ -170,7 +171,9 @@ public class ATMGui implements Listener, CommandExecutor {
 
                 //Get Item amount in player's inventory & the money he wants to deposit
                 amount = InventoryUtils.getAmount(p, im);
-                int money = Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§aDéposer $", " "));
+                String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§aDéposer ", "");
+                String newS = s.replaceAll("\\$", "");
+                int money = Integer.parseInt(newS);
 
                 //If clicked slot is any of the ATM's items
                 if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
@@ -200,10 +203,10 @@ public class ATMGui implements Listener, CommandExecutor {
                             else if (amount > 1) InventoryUtils.removeOne(p.getInventory(), new ItemStack(item));
 
                             //Add the value of the bill to the player's bank AKA deposit money
-                            data.rpBank += 1;
+                            data.rpBank += money;
 
                             //Tell how much money the player deposited when exiting the ATM
-                            depMoney += 1;
+                            depMoney += money;
 
                         }
 
@@ -213,7 +216,7 @@ public class ATMGui implements Listener, CommandExecutor {
             }
 
             //Withdraw ATM
-            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §c§lATM")) {
+            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §c§lATM §7(W)")) {
 
                 //To save time & performance check if the return item is clicked
                 if(e.getRawSlot() == 35) ATM(p);
@@ -223,7 +226,9 @@ public class ATMGui implements Listener, CommandExecutor {
                 ItemStack im = new ItemStack(item);
 
                 //Get the money the player wants to withdraw
-                int money = Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§cRetiré $", " "));
+                String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§cRetirer ", "");
+                String newS = s.replaceAll("\\$", "");
+                int money = Integer.parseInt(newS);
 
                 //If clicked slot is any of the ATM's items
                 if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
@@ -283,8 +288,8 @@ public class ATMGui implements Listener, CommandExecutor {
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
 
             //Tell how much money the player withdrew/deposited when exiting the ATM
-            if(depMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §a§ndéposé §6" + depMoney + "§6$");
-            if(whdMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §c§nretiré §6" + whdMoney + "§6$");
+            if(depMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §a§ndéposé§r §6" + depMoney + "§6$");
+            if(whdMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §c§nretiré§r §6" + whdMoney + "§6$");
 
             //Reset withdraw & deposit counts
             depMoney = 0;
