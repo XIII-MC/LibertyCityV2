@@ -13,7 +13,7 @@ import java.util.List;
 public class YMLUtil {
 
     public static Location loadWarp(String warpName) {
-        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + warpName + ".yml");
+        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + warpName + ".yml");
         if(warpFile.exists()) {
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(warpFile);
             return new Location(Bukkit.getServer().getWorld(cfg.get("world").toString()), cfg.getDouble("x"), cfg.getDouble("y"), cfg.getDouble("z"), (float) cfg.getDouble("yaw"), (float) cfg.getDouble("pitch"));
@@ -23,7 +23,7 @@ public class YMLUtil {
 
     public static List<String> getWarps() {
         List<String> names = new ArrayList<>();
-        File warpsFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\");
+        File warpsFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/");
         for(File file : warpsFolder.listFiles()) {
             if(file.getName().endsWith("yml")) names.add(file.getName().replace(".yml", ""));
         }
@@ -31,7 +31,7 @@ public class YMLUtil {
     }
 
     public static void deleteWarp(String warpName) {
-        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + warpName + ".yml");
+        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + warpName + ".yml");
         if(warpFile.exists()) {
             warpFile.delete();
         }
@@ -39,8 +39,8 @@ public class YMLUtil {
 
     public static void saveWarp(String warpName, Location loc) {
 
-        File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\");
-        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\warps\\" + warpName + ".yml");
+        File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/");
+        File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + warpName + ".yml");
         if (!fileFolder.exists()) fileFolder.mkdir();
 
         if (!warpFile.exists()) {

@@ -3,22 +3,30 @@ package com.xiii.libertycity.core.data;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class PlayerData implements java.io.Serializable {
+    private static final long serialVersionUID = 1113799434508676095L;
 
     public UUID uuid;
     public Player player;
     public String name;
 
-    public boolean isBanned;
+    public boolean isSilentBan;
+    public String banReason;
+    public String banDate;
+    public String banDuration;
+    public Date banExpiration;
+    public String bannedBy;
+
     public boolean isMuted;
-    public double muteDuration;
-    public String muteTime;
-    public double muteCalc;
-    public String muteLeft;
     public String muteReason;
+    public String muteDate;
+    public String muteDuration;
+    public String mutedBy;
+
     public boolean silentKick = false;
 
     public boolean isVanished = false;

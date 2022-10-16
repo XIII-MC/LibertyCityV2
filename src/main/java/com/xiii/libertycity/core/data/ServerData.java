@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServerData implements java.io.Serializable {
+    private static final long serialVersionUID = 6529685098267757690L;
 
     public int globalID;
     public boolean chatStateGlobal = true;

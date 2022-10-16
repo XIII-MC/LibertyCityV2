@@ -15,13 +15,13 @@ public class FileUtils {
         try {
             if (!LibertyCity.INSTANCE.getDataFolder().exists())
                 LibertyCity.INSTANCE.getDataFolder().mkdir();
-            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\");
+            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/");
             if (!filefolder.exists()) filefolder.mkdir();
-            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\", "CONSOLE" + ".libertycity");
+            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/", "CONSOLE" + ".libertycity");
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "\\server\\" + "CONSOLE" + ".libertycity");
+            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/server/" + "CONSOLE" + ".libertycity");
             BukkitObjectOutputStream out = new BukkitObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
@@ -32,7 +32,7 @@ public class FileUtils {
     }
 
     public static void readServerData() {
-        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\server\\");
+        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/");
 
         if (configsfolder.listFiles() == null || Objects.requireNonNull(configsfolder.listFiles()).length < 1) {
             System.out.println("§eWARN: No ServerData found");
@@ -61,13 +61,16 @@ public class FileUtils {
         try {
             if (!LibertyCity.INSTANCE.getDataFolder().exists())
                 LibertyCity.INSTANCE.getDataFolder().mkdir();
-            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\players\\");
+            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
             if (!filefolder.exists()) filefolder.mkdir();
-            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "\\players\\", data.getUuid() + ".libertycity");
+            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/", data.getUuid() + ".libertycity");
             if (!file.exists()) {
                 file.createNewFile();
+            } else {
+                file.delete();
+                file.createNewFile();
             }
-            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "\\players\\" + data.getUuid() + ".libertycity");
+            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/players/" + data.getUuid() + ".libertycity");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
@@ -78,7 +81,7 @@ public class FileUtils {
     }
 
     public static void readPlayerData() {
-        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "\\players\\");
+        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
 
         if (configsfolder.listFiles() == null || Objects.requireNonNull(configsfolder.listFiles()).length < 1) {
             System.out.println("§eWARN: No PlayerData found");
