@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 
 public class BinGui implements Listener {
 
+    /*
     @EventHandler
     public void onBinInteract(PlayerInteractEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.INSTANCE, () -> {
@@ -20,5 +21,7 @@ public class BinGui implements Listener {
 
         });
     }
+
+     */
 
 }
