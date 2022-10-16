@@ -21,7 +21,7 @@ public class KickCommand implements CommandExecutor {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if(target.isOnline()) {
                     if(args.length == 1) {
-                        target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l. §7Explusé(e) le §f» §c" + TimeUtil.getDate() + "\n" + "§f§l. Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l. Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l. §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l. §7Vous pouvez contesté cette sanction ici §f» §bdiscord.gg/LibertyCity");
+                        target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                         Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé(e) du serveur!");
                         AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé(e) §8" + target.getName(), "LibertyCity.staff.alert", 0);
                     } else {
@@ -38,14 +38,14 @@ public class KickCommand implements CommandExecutor {
                         if(newStringConverted.contains("-s")) {
                             data.silentKick = true;
                             if(args.length > 2) {
-                                target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l. §7Explusé(e) le §f» §c" + TimeUtil.getDate() + "\n" + "§f§l. Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l. Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l. §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l. §7Vous pouvez contesté cette sanction ici §f» §bdiscord.gg/LibertyCity");
+                                target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                                 AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé(e) §8" + target.getName() + " §7, raison: §c" + kickReason, "LibertyCity.staff.alert", 0);
                             } else {
-                                target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l. §7Explusé(e) le §f» §c" + TimeUtil.getDate() + "\n" + "§f§l. Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l. Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l. §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l. §7Vous pouvez contesté cette sanction ici §f» §bdiscord.gg/LibertyCity");
+                                target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                                 AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé(e) §8" + target.getName(), "LibertyCity.staff.alert", 0);
                             }
                         } else {
-                            target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l. §7Explusé(e) le §f» §c" + TimeUtil.getDate() + "\n" + "§f§l. Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l. Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l. §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l. §7Vous pouvez contesté cette sanction ici §f» §bdiscord.gg/LibertyCity");
+                            target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                             Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé(e) du serveur!");
                             AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé(e) §8" + target.getName() + "§7, raison: §8" + kickReason, "LibertyCity.staff.alert", 0);
                         }
