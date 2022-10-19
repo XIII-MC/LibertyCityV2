@@ -55,7 +55,7 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("ignore").setExecutor(new IgnoreCommand());
             Bukkit.getPluginCommand("invsee").setExecutor(new InvseeCommand());
             Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
-            Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
+            Bukkit.getPluginCommand("sms").setExecutor(new MsgCommand());
             Bukkit.getPluginCommand("atm").setExecutor(new ATMGui());
             Bukkit.getPluginCommand("kickall").setExecutor(new KickallCommand());
             Bukkit.getPluginCommand("time").setExecutor(new TimeSetCommand());

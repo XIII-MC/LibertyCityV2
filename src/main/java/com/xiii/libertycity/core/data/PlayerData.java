@@ -19,15 +19,17 @@ public class PlayerData implements java.io.Serializable {
     public String banDate;
     public String banDuration;
     public Date banExpiration;
+    public String banDisplayDate;
     public String bannedBy;
 
     public boolean isMuted;
+    public boolean isSilentMute;
     public String muteReason;
     public String muteDate;
-    public String muteDuration;
+    public long muteDuration;
+    public Date muteExpiration;
+    public String muteDisplayDate;
     public String mutedBy;
-
-    public boolean silentKick = false;
 
     public boolean isVanished = false;
     public boolean isGodMode = false;
@@ -50,8 +52,6 @@ public class PlayerData implements java.io.Serializable {
     public boolean chatBanRP = false;
     public boolean chatBanGang = false;
     public boolean chatBanPolice = false;
-    public boolean chatBanGlobal = false;
-    public double lastChat = 999999;
 
     public boolean spyChatGlobal = false;
     public boolean spyChatHRP = false;
@@ -65,6 +65,8 @@ public class PlayerData implements java.io.Serializable {
     public transient boolean inSearch = false;
     public transient double lastReport = 90000;
     public transient Player lastDm;
+    public transient double lastChat = 999999;
+    public transient boolean silentKick = false;
 
     public PlayerData(String name, UUID uuid) {
         this.uuid = uuid;

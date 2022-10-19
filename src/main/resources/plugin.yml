@@ -61,8 +61,6 @@ commands:
   ignore:
     aliases: ig
     usage: /ignore
-    permission: LibertyCity.ignore
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   invsee:
     aliases: iv
     usage: /invsee
@@ -72,11 +70,9 @@ commands:
     usage: /more
     permission: LibertyCity.more
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
-  msg:
+  sms:
     aliases: message
-    usage: /msg
-    permission: LibertyCity.msg
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+    usage: /sms
   near:
     usage: /near
     permission: LibertyCity.near
@@ -88,8 +84,6 @@ commands:
   r:
     aliases: respond
     usage: /r
-    permission: LibertyCity.r
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   repair:
     usage: /repair
     permission: LibertyCity.repair
@@ -119,8 +113,6 @@ commands:
   togglemsg:
     aliases: tmsg
     usage: /togglemsg
-    permission: LibertyCity.togglemsg
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   vanish:
     aliases: v
     usage: /vanish
@@ -144,8 +136,6 @@ commands:
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   report:
     usage: /report
-    permission: LibertyCity.report
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   unban:
     usage: /unban
     permission: LibertyCity.unban

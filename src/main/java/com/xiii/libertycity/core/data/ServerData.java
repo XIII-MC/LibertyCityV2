@@ -2,6 +2,7 @@ package com.xiii.libertycity.core.data;
 
 import org.bukkit.entity.Player;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class ServerData implements java.io.Serializable {
 
     public List<Player> vanishedPlayers = new ArrayList<>();
     public List<String> warpsNames = new ArrayList<>();
+
+    public List<String> mutedPlayer = new ArrayList<>();
+    public List<String> mutedIPs = new ArrayList<>();
 
     public List<String> rpPrenom = new ArrayList<>();
     public List<String> rpNom = new ArrayList<>();
