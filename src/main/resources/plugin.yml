@@ -192,5 +192,7 @@ commands:
     usage: /time
   LCDBB1BETA:
     usage: /LCDBB1BETA
+  chat:
+    usage: /chat
 
 

@@ -7,6 +7,7 @@ import com.xiii.libertycity.core.commands.punish.*;
 import com.xiii.libertycity.core.commands.server.*;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.utils.FileUtils;
+import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
 import com.xiii.libertycity.roleplay.events.RegisterEvent;
@@ -37,6 +38,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new RegisterEvent(), this);
         Bukkit.getPluginManager().registerEvents(new AnkleBreakEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new CustomChat(), this);
 
         // PHASE 1
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -101,6 +103,7 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("list").setExecutor(new ListCommand());
             Bukkit.getPluginCommand("day").setExecutor(new TimeSetCommand());
             Bukkit.getPluginCommand("LCDBB1BETA").setExecutor(new TestCommand());
+            Bukkit.getPluginCommand("chat").setExecutor(new CustomChat());
             Bukkit.getConsoleSender().sendMessage("Phase 3 PASSED.");
 
         }, 30);
