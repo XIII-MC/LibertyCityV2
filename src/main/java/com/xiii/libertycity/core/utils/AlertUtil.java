@@ -20,6 +20,9 @@ public class AlertUtil {
                 case 3:
                     if(p.hasPermission(permission)) p.sendMessage("§c§l[AC]§r " + message);
                     break;
+                case 4:
+                    if(p.hasPermission(permission)) p.sendMessage(message);
+                    break;
             }
         }
     }
