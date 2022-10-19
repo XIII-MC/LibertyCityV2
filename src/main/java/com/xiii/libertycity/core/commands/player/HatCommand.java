@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class HatCommand implements CommandExecutor {
 
@@ -15,7 +16,8 @@ public class HatCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("hat")) {
             if(sender instanceof Player) {
                 if (p.getItemInHand() != null && p.getItemInHand().getType() != null) {
-                    p.getInventory().setHelmet(p.getItemInHand());
+                    ItemStack helmet = new ItemStack(p.getInventory().getItem(p.getInventory().getHeldItemSlot()).getType(), 1);
+                    p.getInventory().setHelmet(helmet);
                     InventoryUtils.removeOne(p.getInventory(), p.getItemInHand());
                 }
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
