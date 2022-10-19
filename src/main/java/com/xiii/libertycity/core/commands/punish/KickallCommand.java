@@ -19,32 +19,30 @@ public class KickallCommand implements CommandExecutor {
 
             for(Player p : Bukkit.getOnlinePlayers()) {
 
-                if(!p.hasPermission("LibertyCity.bypass.kickall")) {
+                PlayerData data = Data.data.getUserData(p);
+                data.silentKick = true;
 
-                    PlayerData data = Data.data.getUserData(p);
-                    data.silentKick = true;
+                if (args.length == 0) {
 
-                    if(args.length == 0) {
+                    p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
 
-                        p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                } else {
 
-                    } else {
-
-                        String newStringConverted = "";
-                        for (int i = 1; i < args.length; i++) {
-                            newStringConverted += args[i] + " ";
-                        }
-                        String kickReason = "";
-
-                        p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
-
+                    String newStringConverted = "";
+                    for (int i = 0; i < args.length; i++) {
+                        newStringConverted += args[i] + " ";
                     }
+                    String kickReason = "";
+                    kickReason = newStringConverted;
+
+                    p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
 
                 }
 
+
             }
 
-            AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé tous le serveur.", "LibertyCity.staff.alert", 0);
+            AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé tous les joueurs du serveur.", "LibertyCity.staff.alert", 0);
 
         }
 
