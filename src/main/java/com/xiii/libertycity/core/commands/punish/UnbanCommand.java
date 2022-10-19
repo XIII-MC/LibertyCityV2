@@ -27,33 +27,33 @@ public class UnbanCommand implements CommandExecutor {
 
                 OfflinePlayer target = Bukkit.getServer().getPlayer(args[0]);
 
-                if(banList.isBanned(target.getName())) {
+                if(banList.isBanned(args[0])) {
 
-                    banList.pardon(target.getName());
-                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni §8" + target.getName(), "LibertyCity.staff.alerts", 0);
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été débanni");
+                    banList.pardon(args[0]);
+                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni §8" + args[0], "LibertyCity.staff.alerts", 0);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + args[0] + " §fa été débanni");
 
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! §e" + target.getName() + " §cn'est pas banni");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! §e" + args[0] + " §cn'est pas banni");
 
             } else if(args.length == 2) {
 
                 OfflinePlayer target = Bukkit.getServer().getPlayer(args[0]);
 
-                if(banList.isBanned(target.getName())) {
+                if(banList.isBanned(args[0])) {
 
-                    banList.pardon(target.getName());
-                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni §8" + target.getName(), "LibertyCity.staff.alerts", 0);
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été débanni");
+                    banList.pardon(args[0]);
+                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni §8" + args[0], "LibertyCity.staff.alerts", 0);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + args[0] + " §fa été débanni");
 
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! §e" + target.getName() + " §cn'est pas banni");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! §e" + args[0] + " §cn'est pas banni");
 
                 if(banListIP.isBanned(((Player) target).getAddress().getHostName())) {
 
-                    banList.pardon(((Player) target).getAddress().getHostName());
-                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni l'IP de §8" + target.getName(), "LibertyCity.staff.alerts", 0);
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fl'IP de §e" + target.getName() + " §fa été débanni");
+                    banListIP.pardon(((Player) target).getAddress().getHostName());
+                    AlertUtil.staffAlert("§8" + sender.getName() + " §7a débanni l'IP de §8" + args[0], "LibertyCity.staff.alerts", 0);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fl'IP de §e" + args[0] + " §fa été débanni");
 
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! L'IP de §e" + target.getName() + " §cn'est pas banni");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! L'IP de §e" + args[0] + " §cn'est pas banni");
 
             }
 
