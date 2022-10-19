@@ -14,8 +14,8 @@ public class MsgCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
 
-        if(command.getName().equalsIgnoreCase("msg")) {
-            if(args.length < 2) p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /msg <Joueur> <Message>");
+        if(command.getName().equalsIgnoreCase("sms")) {
+            if(args.length < 2) p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /sms <Joueur> <Message>");
             else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);
                 if (sender instanceof Player) {
@@ -30,6 +30,10 @@ public class MsgCommand implements CommandExecutor {
                                 message += args[i] + " ";
                             }
                             sender.sendMessage("§7[§a§lVous" + "§r §6--> §a§l" + tar.rpPrenom + " §2§l" + tar.rpNom + " §7(" + target.getName() + ")] §f" + message);
+                            for(Player pl : Bukkit.getOnlinePlayers()) {
+                                PlayerData pData = Data.data.getUserData(pl);
+                                if(pData.spyMsg || pData.spyChatGlobal) pl.sendMessage("§c§l[SC] §7[§a§l" + send.rpPrenom + " §2§l" + send.rpNom + " §7(" + sender.getName() + "§7)" + "§r §6--> §a§l" + tar.rpPrenom + " §2§l" + tar.rpNom + " §7(" + target.getName() + ")] §f" + message);
+                            }
                             PlayerData data = Data.data.getUserData(target);
                             if (!data.ignoredPlayers.contains(sender.getName())) {
                                 target.sendMessage("§7[§a§l" + send.rpPrenom + " §2§l" + send.rpNom + " §7(" + sender.getName() + "§7)" + "§r §6--> §a§lMoi§7] §f" + message);
