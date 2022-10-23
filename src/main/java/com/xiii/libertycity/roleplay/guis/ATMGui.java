@@ -143,144 +143,150 @@ public class ATMGui implements Listener, CommandExecutor {
     public void onATMClick(InventoryClickEvent e) {
 
         //Cancel inventory clicks if the container's name is part of the ATM system
-        if(e.getClickedInventory().getName().contains("ATM")) e.setCancelled(true);
+        if(e.getClickedInventory() != null && e.getClickedInventory().getName() != null) {
+            if (e.getClickedInventory().getName().contains("ATM")) e.setCancelled(true);
 
-        //Run async
-        Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
+            //Run async
+            Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
 
-            //Get Data & Player
-            PlayerData data = Data.data.getUserData((Player) e.getWhoClicked());
-            Player p = (Player) e.getWhoClicked();
+                //Get Data & Player
+                PlayerData data = Data.data.getUserData((Player) e.getWhoClicked());
+                Player p = (Player) e.getWhoClicked();
 
-            //Main ATM
-            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §2§lATM")) {
-                if(e.getRawSlot() == 11) ATMDeposit(p);
-                if(e.getRawSlot() == 13) p.closeInventory();
-                if(e.getRawSlot() == 15) ATMWithdraw(p);
-            }
-
-            //Deposit ATM
-            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §a§lATM §7(D)")) {
-
-                //To save time & performance check if the return item is clicked now
-                if(e.getRawSlot() == 35) ATM(p);
-
-                //Get clicked item as Material and ItemStack
-                Material item = e.getCurrentItem().getType();
-                ItemStack im = new ItemStack(item);
-
-                //Get Item amount in player's inventory & the money he wants to deposit
-                amount = InventoryUtils.getAmount(p, im);
-                String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§aDéposer ", "");
-                String newS = s.replaceAll("\\$", "");
-                int money = Integer.parseInt(newS);
-
-                //If clicked slot is any of the ATM's items
-                if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
-
-                    //Check if there's items earlier to save time & performance
-                    if(amount > 0) {
-
-                        //If its to deposit everything
-                        if (e.isRightClick()) {
-
-                            //Remove all items from player's inventory
-                            e.getWhoClicked().getInventory().remove(item);
-
-                            //Add amount of bills * the value of the bill to the player's bank AKA deposit money
-                            data.rpBank += (amount * money);
-
-                            //Tell how much money the player deposited when exiting the ATM
-                            depMoney += (amount * money);
-
-                        //If its to deposite 1 by 1
-                        } else if (e.isLeftClick()) {
-
-                            //If there's only 1 item, use default remove all method
-                            if (amount == 1) e.getWhoClicked().getInventory().remove(item);
-
-                            //If there's more than 1 item, remove only 1 from player's inventory
-                            else if (amount > 1) InventoryUtils.removeOne(p.getInventory(), new ItemStack(item));
-
-                            //Add the value of the bill to the player's bank AKA deposit money
-                            data.rpBank += money;
-
-                            //Tell how much money the player deposited when exiting the ATM
-                            depMoney += money;
-
-                        }
-
-                    //If the player doesn't have any bills in his inventory
-                    } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de billets!");
+                //Main ATM
+                if (e.getClickedInventory().getName().equalsIgnoreCase("                 §2§lATM")) {
+                    if (e.getRawSlot() == 11) ATMDeposit(p);
+                    if (e.getRawSlot() == 13) p.closeInventory();
+                    if (e.getRawSlot() == 15) ATMWithdraw(p);
                 }
-            }
 
-            //Withdraw ATM
-            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §c§lATM §7(W)")) {
+                //Deposit ATM
+                if (e.getClickedInventory().getName().equalsIgnoreCase("                 §a§lATM §7(D)")) {
 
-                //To save time & performance check if the return item is clicked
-                if(e.getRawSlot() == 35) ATM(p);
+                    //To save time & performance check if the return item is clicked now
+                    if (e.getRawSlot() == 35) ATM(p);
 
-                //Get clicked item as Material & ItemStack
-                Material item = e.getCurrentItem().getType();
-                ItemStack im = new ItemStack(item);
+                    //Get clicked item as Material and ItemStack
+                    Material item = e.getCurrentItem().getType();
+                    ItemStack im = new ItemStack(item);
 
-                //Get the money the player wants to withdraw
-                String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§cRetirer ", "");
-                String newS = s.replaceAll("\\$", "");
-                int money = Integer.parseInt(newS);
+                    //Get Item amount in player's inventory & the money he wants to deposit
+                    amount = InventoryUtils.getAmount(p, im);
+                    String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§aDéposer ", "");
+                    String newS = s.replaceAll("\\$", "");
+                    int money = Integer.parseInt(newS);
 
-                //If clicked slot is any of the ATM's items
-                if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
+                    //If clicked slot is any of the ATM's items
+                    if (e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
 
-                    //If its to withdraw 8 by 8
-                    if(e.isRightClick()) {
+                        //Check if there's items earlier to save time & performance
+                        if (amount > 0) {
 
-                        //If the player has enough money to withdraw
-                        if(data.rpBank >= (money * 8)) {
+                            //If its to deposit everything
+                            if (e.isRightClick()) {
 
-                            //Set new variable as the clicked item with the amount of bills to withdraw
-                            ItemStack imA = new ItemStack(e.getCurrentItem().getType(), 8);
+                                //Remove all items from player's inventory
+                                e.getWhoClicked().getInventory().remove(item);
 
-                            //If player has enough space in his inventory
-                            if(InventoryUtils.canStore(p, imA)) {
+                                //Add amount of bills * the value of the bill to the player's bank AKA deposit money
+                                data.rpBank += (amount * money);
 
-                                //Remove the withdrew money from the player's bank AKA withdraw money
-                                data.rpBank -= (money * 8);
+                                //Tell how much money the player deposited when exiting the ATM
+                                depMoney += (amount * money);
 
-                                //Tell how much money the player withdrew when exiting the ATM
-                                whdMoney += (money * 8);
+                                //If its to deposite 1 by 1
+                            } else if (e.isLeftClick()) {
 
-                                //Add withdrew bills to the player's inventory
-                                e.getWhoClicked().getInventory().addItem(imA);
+                                //If there's only 1 item, use default remove all method
+                                if (amount == 1) e.getWhoClicked().getInventory().remove(item);
 
-                            //If player doesn't have enough space in his inventory
-                            } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de place dans votre inventaire!");
-                        //If player doesn't have enough money in his bank account
-                        } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
+                                    //If there's more than 1 item, remove only 1 from player's inventory
+                                else if (amount > 1) InventoryUtils.removeOne(p.getInventory(), new ItemStack(item));
 
-                    //If its to withdraw 1 by 1
-                    } else if(e.isLeftClick()) {
+                                //Add the value of the bill to the player's bank AKA deposit money
+                                data.rpBank += money;
 
-                        //If player has enough money to withdraw
-                        if(data.rpBank >= money) {
+                                //Tell how much money the player deposited when exiting the ATM
+                                depMoney += money;
 
-                            //Remove the withdraw money from the player's bank AKA withdraw money
-                            data.rpBank -= money;
+                            }
 
-                            //Tell how much money the player withdrew when exiting the ATM
-                            whdMoney += money;
-
-                            //Add withdrew bill to the player's inventory
-                            e.getWhoClicked().getInventory().addItem(im);
-
-                        //If player doesn't have enough money in his bank account
-                        } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
+                            //If the player doesn't have any bills in his inventory
+                        } else
+                            e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de billets!");
                     }
                 }
-            }
 
-        });
+                //Withdraw ATM
+                if (e.getClickedInventory().getName().equalsIgnoreCase("                 §c§lATM §7(W)")) {
+
+                    //To save time & performance check if the return item is clicked
+                    if (e.getRawSlot() == 35) ATM(p);
+
+                    //Get clicked item as Material & ItemStack
+                    Material item = e.getCurrentItem().getType();
+                    ItemStack im = new ItemStack(item);
+
+                    //Get the money the player wants to withdraw
+                    String s = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§cRetirer ", "");
+                    String newS = s.replaceAll("\\$", "");
+                    int money = Integer.parseInt(newS);
+
+                    //If clicked slot is any of the ATM's items
+                    if (e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
+
+                        //If its to withdraw 8 by 8
+                        if (e.isRightClick()) {
+
+                            //If the player has enough money to withdraw
+                            if (data.rpBank >= (money * 8)) {
+
+                                //Set new variable as the clicked item with the amount of bills to withdraw
+                                ItemStack imA = new ItemStack(e.getCurrentItem().getType(), 8);
+
+                                //If player has enough space in his inventory
+                                if (InventoryUtils.canStore(p, imA)) {
+
+                                    //Remove the withdrew money from the player's bank AKA withdraw money
+                                    data.rpBank -= (money * 8);
+
+                                    //Tell how much money the player withdrew when exiting the ATM
+                                    whdMoney += (money * 8);
+
+                                    //Add withdrew bills to the player's inventory
+                                    e.getWhoClicked().getInventory().addItem(imA);
+
+                                    //If player doesn't have enough space in his inventory
+                                } else
+                                    e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de place dans votre inventaire!");
+                                //If player doesn't have enough money in his bank account
+                            } else
+                                e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
+
+                            //If its to withdraw 1 by 1
+                        } else if (e.isLeftClick()) {
+
+                            //If player has enough money to withdraw
+                            if (data.rpBank >= money) {
+
+                                //Remove the withdraw money from the player's bank AKA withdraw money
+                                data.rpBank -= money;
+
+                                //Tell how much money the player withdrew when exiting the ATM
+                                whdMoney += money;
+
+                                //Add withdrew bill to the player's inventory
+                                e.getWhoClicked().getInventory().addItem(im);
+
+                                //If player doesn't have enough money in his bank account
+                            } else
+                                e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
+                        }
+                    }
+                }
+
+            });
+        }
     }
 
     @EventHandler
