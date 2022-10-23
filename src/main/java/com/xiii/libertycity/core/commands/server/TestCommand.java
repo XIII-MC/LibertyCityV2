@@ -2,6 +2,7 @@ package com.xiii.libertycity.core.commands.server;
 
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,8 +22,9 @@ public class TestCommand implements CommandExecutor {
             // Previous tests list :
 
                 // - TEST_1 : testing PlayerData flexibility to new variables | SUCCESS.
+                // - DEBUG_1 : debugging player data output to fix playerData being global | SUCCESS.
 
-            // Test section. | CASE: ???? : ????
+            // Test section. | CASE: ??? : ???
 
 
 

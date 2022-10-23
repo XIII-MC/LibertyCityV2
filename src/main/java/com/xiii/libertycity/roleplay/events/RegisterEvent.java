@@ -58,11 +58,11 @@ public class RegisterEvent implements Listener {
             PlayerData data = Data.data.getUserData(e.getPlayer());
 
             if (data.playerID <= 0) {
-                e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Débutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
             } else {
                 if (data.joinDate == null) {
                     Bukkit.broadcastMessage("");
-                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §f rejoint la ville !");
+                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ") " + "§f rejoint la ville !");
                     Bukkit.broadcastMessage("");
                     data.joinDate = TimeUtil.getFullDate();
                 }
@@ -155,6 +155,10 @@ public class RegisterEvent implements Listener {
                                 //Set the player's rpNom to the tempName to confirm
                                 data.rpNom = tempName;
 
+                                //Add both first & last name to the database
+                                server.rpPrenom.add(data.rpPrenom);
+                                server.rpNom.add(data.rpNom);
+
                                 //Tell the player his name has been permanently set
                                 e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||", "§6§k§l||§r §7Pour finir entrez votre §e§nÂge RP§r §6§k§l||", 0, 14000, 0);
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fBien le bonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f!");
@@ -242,7 +246,8 @@ public class RegisterEvent implements Listener {
                         data.rpCurrentJob = "§eCitoyen";
 
                         //Set player's ID, update globalServerID and update averageAge
-                        data.playerID = server.globalID + 1;
+                        server.globalID++;
+                        data.playerID = server.globalID;
                         server.averageAge.add(data.rpAge);
 
                         //Kick player to finalize registration
@@ -250,7 +255,7 @@ public class RegisterEvent implements Listener {
                         String kickMessage = ("§8§m+--------------------------+" + "\n" + "§4§l§k|||§r §fBienvenue §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||" + "\n" + "§c§k§l||§r §7Amusez vous bien ! §c§k§l||§r" + "\n" + " " + "\n" + "§8§oVous avez été engregistré, reconectez-vous !" + "\n" + "§8§m+--------------------------+");
                         Bukkit.getScheduler().runTask(LibertyCity.INSTANCE, () -> e.getPlayer().kickPlayer(kickMessage));
 
-                    } else e.getPlayer().kickPlayer("§cErreur: RegisterEvent.java (237) -> isWaitingPrenom=" + isWaitingPrenom + " isWaitingNom=" + isWaitingNom + " isWaitingAge=" + isWaitingAge + " tempPrenom=" + tempPrenom + "tempName=" + tempName + " tempAge=" + tempAge + " rpPrenom=" + data.rpPrenom + " rpNom=" + data.rpNom + " rpAge=" + data.rpAge);
+                    }
 
                 }
 
@@ -288,12 +293,17 @@ public class RegisterEvent implements Listener {
                                 data.rpAge = tempAge;
 
                                 //Tell the player his name has been permanently set
-                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fAlors pour bien confirmé le tous, vous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + data.rpAge + "§f, correct ?");
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fAlors pour bien confirmé le tous, vous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + data.rpAge + "ans§f, correct ?");
 
                             }
 
                         //Check if player's answer contains no options
                         } else if(optNo.contains(e.getMessage())) {
+
+                            //Remove both first & last name from database
+                            server.rpPrenom.remove(data.rpPrenom);
+                            server.rpNom.remove(data.rpNom);
+                            server.averageAge.remove(data.rpAge);
 
                             //Reset wait state
                             isWaitingAge = true;
@@ -304,6 +314,9 @@ public class RegisterEvent implements Listener {
                             data.rpPrenom = null;
                             data.rpNom = null;
                             data.rpAge = 0;
+                            tempPrenom = null;
+                            tempName = null;
+                            tempAge = 0;
 
                             //Inform player of taken actions and make him restart the process properly
                             e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);

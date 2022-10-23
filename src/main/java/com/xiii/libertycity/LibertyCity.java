@@ -109,6 +109,18 @@ public final class LibertyCity extends JavaPlugin {
         }, 30);
         Bukkit.getConsoleSender().sendMessage("Plugin loaded");
 
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §630 seconde§f!");
+        },270*20, 270*20);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §610 seconde§f!");
+        },300*20, 300*20);
+
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "clearlag");
+        },310*20, 310*20);
+
     }
 
     @Override

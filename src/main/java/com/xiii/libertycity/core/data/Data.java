@@ -11,6 +11,13 @@ public enum Data {
     public final ArrayList<PlayerData> users = new ArrayList<>();
     public final ArrayList<ServerData> servers = new ArrayList<>();
 
+    public boolean isServerAlreadyRegistered(Server p) {
+        return getServerData(p) != null;
+    }
+    public boolean isAlreadyRegistered(Player p) {
+        return getUserData(p) != null;
+    }
+
     public void registerUser(Player p) {
         if (!isAlreadyRegistered(p)) {
             PlayerData pd = new PlayerData(p.getName(), p.getUniqueId());
@@ -25,22 +32,10 @@ public enum Data {
         }
     }
 
-    public boolean isServerAlreadyRegistered(Server p) {
-        return getServerData(p) != null;
-    }
-
-    public boolean isAlreadyRegistered(Player p) {
-        return getUserData(p) != null;
-    }
-
-    public ArrayList<PlayerData> getUsers() {
-        return this.users;
-    }
 
     public PlayerData getUserData(Player p) {
         for (PlayerData user : users) {
-            if (user.uuid.toString().contains(p.getUniqueId().toString())) {
-
+            if (user.uuid.toString().equals(p.getUniqueId().toString())) {
                 return user;
             }
         }
@@ -52,6 +47,10 @@ public enum Data {
             return user;
         }
         return null;
+    }
+
+    public void deletePlayerData(Player p) {
+        if(isAlreadyRegistered(p)) this.users.remove(p);
     }
 
 }

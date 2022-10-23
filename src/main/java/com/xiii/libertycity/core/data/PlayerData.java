@@ -36,7 +36,7 @@ public class PlayerData implements java.io.Serializable {
     public boolean allowMsg = true;
     public List<String> ignoredPlayers = new ArrayList<>();
 
-    public int playerID;
+    public int playerID = -1;
     public String rpPrenom;
     public String rpNom;
     public int rpAge;

@@ -10,13 +10,22 @@ import org.bukkit.entity.Player;
 
 public class ClearLagCommand implements CommandExecutor {
 
+    public static int getItemsOnTheGround() {
+        int i = 0;
+        for(Entity current : Bukkit.getWorld("world").getEntities()) {
+            if (current.getType() == EntityType.DROPPED_ITEM) {
+                i++;
+            }
+        }
+        return i;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         int i = 0;
 
         if(command.getName().equalsIgnoreCase("clearlag")) {
-            Player p = (Player) sender;
-            for(Entity current : p.getWorld().getEntities()) {
+            for(Entity current : Bukkit.getWorld("world").getEntities()) {
                 if(current.getType() == EntityType.DROPPED_ITEM) {
                     i++;
                     current.remove();

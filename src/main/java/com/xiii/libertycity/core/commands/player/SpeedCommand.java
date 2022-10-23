@@ -18,10 +18,10 @@ public class SpeedCommand implements CommandExecutor {
                     if (!args[0].contains("walk") || !args[0].contains("fly")) {
                         final float newIntConverted = Float.parseFloat(args[0]);
                         if (p.isOnGround()) {
-                            p.setWalkSpeed((newIntConverted + 1f) / 10);
+                            p.setWalkSpeed((newIntConverted) / 10);
                             p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de marche est désormais §6" + args[0]);
                         } else {
-                            p.setFlySpeed((newIntConverted + 1f) / 10);
+                            p.setFlySpeed((newIntConverted) / 10);
                             p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de vol est désormais §6" + args[0]);
                         }
                     } else
@@ -31,10 +31,10 @@ public class SpeedCommand implements CommandExecutor {
                 if(sender instanceof Player) {
                     final float newIntConverted = Float.parseFloat(args[1]);
                     if (args[0].equalsIgnoreCase("walk")) {
-                        p.setWalkSpeed((newIntConverted + 1f) / 10);
+                        p.setWalkSpeed((newIntConverted) / 10);
                         p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de marche est désormais §6" + args[0]);
                     } else if (args[0].equalsIgnoreCase("fly")) {
-                        p.setFlySpeed((newIntConverted + 1f) / 10);
+                        p.setFlySpeed((newIntConverted) / 10);
                         p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de vol est désormais §6" + args[0]);
                     }
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
@@ -43,11 +43,11 @@ public class SpeedCommand implements CommandExecutor {
                 if(target.isOnline()) {
                     final float newIntConverted = Float.parseFloat(args[1]);
                     if (args[0].equalsIgnoreCase("walk")) {
-                        target.setWalkSpeed((newIntConverted + 1f) / 10);
+                        target.setWalkSpeed((newIntConverted) / 10);
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de marche est désormais §6" + args[3]);
                         p.sendMessage("§2§lLiberty§a§lCity §7» §fVitesse de marche pour §e" + target.getName() + " §fmise à §6" + args[3]);
                     } else if (args[0].equalsIgnoreCase("fly")) {
-                        target.setFlySpeed((newIntConverted + 1f) / 10);
+                        target.setFlySpeed((newIntConverted) / 10);
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVotre vitesse de vol est désormais §6" + args[3]);
                         p.sendMessage("§2§lLiberty§a§lCity §7» §fVitesse de vol pour §e" + target.getName() + " §fmise à §6" + args[3]);
                     }

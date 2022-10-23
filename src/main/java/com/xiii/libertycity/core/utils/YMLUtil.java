@@ -24,8 +24,12 @@ public class YMLUtil {
     public static List<String> getWarps() {
         List<String> names = new ArrayList<>();
         File warpsFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/");
-        for(File file : warpsFolder.listFiles()) {
-            if(file.getName().endsWith("yml")) names.add(file.getName().replace(".yml", ""));
+        try {
+            for (File file : warpsFolder.listFiles()) {
+                if (file.getName().endsWith("yml")) names.add(file.getName().replace(".yml", ""));
+            }
+        } catch(java.lang.NullPointerException e) {
+            return new ArrayList<>();
         }
         return names;
     }
