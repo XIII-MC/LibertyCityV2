@@ -155,10 +155,10 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                 // Send message under specified format
                                 if (pData.rpCurrentChat == 0)
-                                    p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
                                 if (pData.spyChatHRP || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
-                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
                             }
                         }
                         if (data.chatBanHRP || data.isMuted) {
@@ -174,10 +174,10 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                     // Send message under specified format
                                     if (pData.rpCurrentChat == 0)
-                                        p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
                                     if (pData.spyChatHRP || pData.spyChatGlobal)
-                                        p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
-                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
                                 }
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6HRP§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
