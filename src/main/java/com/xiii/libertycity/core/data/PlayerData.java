@@ -70,6 +70,7 @@ public class PlayerData implements java.io.Serializable {
     public transient double lastX;
     public transient double lastZ;
     public transient int afkTime;
+    public transient Player lastSearchedPlayer;
 
     public PlayerData(String name, UUID uuid) {
         this.uuid = uuid;

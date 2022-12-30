@@ -14,6 +14,7 @@ import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
 import com.xiii.libertycity.roleplay.events.RegisterEvent;
 import com.xiii.libertycity.roleplay.guis.*;
+import com.xiii.libertycity.roleplay.items.SearchItem;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AnkleBreakEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
         Bukkit.getPluginManager().registerEvents(new CustomChat(), this);
+        Bukkit.getPluginManager().registerEvents(new SearchItem(), this);
 
         // PHASE 1
         Bukkit.getScheduler().runTaskLater(this, () -> {

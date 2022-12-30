@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,25 +26,26 @@ public class SearchItem implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.INSTANCE, () -> {
 
             PlayerData data = Data.data.getUserData(e.getPlayer());
+            Entity target = e.getRightClicked();
+            Player player = e.getPlayer();
 
-            if(data.rpCurrentJob == "§bPolicier") {
+            if (target.getType().equals(EntityType.PLAYER) && player.getInventory().getItemInMainHand().getTypeId() == 7428) {
 
-                Entity target = e.getRightClicked();
-                Player player = e.getPlayer();
+                if (data.rpCurrentJob == "§bPolicier") {
 
-                if (target.getType().equals(EntityType.PLAYER) && player.getInventory().getItemInMainHand().getTypeId() == 7428) {
                     HumanEntity targetPlayer = (HumanEntity) target;
                     Inventory targetInventory = targetPlayer.getInventory();
-
-                    player.sendMessage("§2§lLiberty§a§lCity §7» §fVous fouillé §e" + targetPlayer);
                     PlayerData temp = Data.data.getUserData((Player) targetPlayer);
+
+                    player.sendMessage("§2§lLiberty§a§lCity §7» §fVous fouillé §a" + temp.rpPrenom + " §2" + temp.rpNom + " §7(" + targetPlayer.getName() + ")");
+                    data.lastSearchedPlayer = (Player) targetPlayer;
                     temp.inSearch = true;
                     data.isSearching = true;
-                    target.sendMessage("§2§lLiberty§a§lCity §7» §fVous vous faites fouillé par §e" + player);
+                    target.sendMessage("§2§lLiberty§a§lCity §7» §fVous vous faites fouiller par §a" + data.rpPrenom + " §2" + data.rpNom + " §7(" + player.getName() + ")");
                     player.openInventory(targetInventory);
-                }
 
-            } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas de la Police !");
+                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas de la Police !");
+            }
         });
     }
 
@@ -55,6 +58,39 @@ public class SearchItem implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void inventoryClose(InventoryCloseEvent e) {
         PlayerData data = Data.data.getUserData((Player) e.getPlayer());
+        if(data.isSearching) {
+            PlayerData temp = Data.data.getUserData(data.lastSearchedPlayer);
+            data.isSearching = false;
+            temp.inSearch = false;
+            data.lastSearchedPlayer.sendMessage("§2§lLiberty§a§lCity §7» §fLa fouille a été terminé par l'officier de Police.");
+
+        }
+
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void cancelSearchLeave(PlayerQuitEvent e) {
+        PlayerData data = Data.data.getUserData(e.getPlayer());
+        if(data.isSearching) {
+            PlayerData temp = Data.data.getUserData(data.lastSearchedPlayer);
+            data.isSearching = false;
+            temp.inSearch = false;
+            data.lastSearchedPlayer.sendMessage("§2§lLiberty§a§lCity §7» §fLa fouille c'est terminé car l'officier de Police c'est déconnecté.");
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void cancelSearchDamage(EntityDamageByEntityEvent e) {
+        if(e.getEntity() instanceof Player) {
+            PlayerData data = Data.data.getUserData((Player) e.getEntity());
+            if (data.isSearching) {
+                PlayerData temp = Data.data.getUserData(data.lastSearchedPlayer);
+                data.isSearching = false;
+                temp.inSearch = false;
+                data.lastSearchedPlayer.sendMessage("§2§lLiberty§a§lCity §7» §fLa fouille c'est terminé car l'officier de Police a été attaqué.");
+                ((Player) e.getEntity()).closeInventory();
+            }
+        }
     }
 
 }
