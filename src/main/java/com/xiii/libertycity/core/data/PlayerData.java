@@ -67,6 +67,9 @@ public class PlayerData implements java.io.Serializable {
     public transient Player lastDm;
     public transient double lastChat = 999999;
     public transient boolean silentKick = false;
+    public transient double lastX;
+    public transient double lastZ;
+    public transient int afkTime;
 
     public PlayerData(String name, UUID uuid) {
         this.uuid = uuid;

@@ -1,5 +1,6 @@
 package com.xiii.libertycity.core.commands.server;
 
+import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import org.bukkit.Bukkit;
@@ -23,10 +24,9 @@ public class TestCommand implements CommandExecutor {
 
                 // - TEST_1 : testing PlayerData flexibility to new variables | SUCCESS.
                 // - DEBUG_1 : debugging player data output to fix playerData being global | SUCCESS.
+                // - TEST_2 : test AntiAFK system | SUCCESS.
 
             // Test section. | CASE: ??? : ???
-
-
 
         }
 
