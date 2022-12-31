@@ -166,7 +166,7 @@ public class BanCommand implements CommandExecutor {
                         banDuration = Integer.parseInt(banDurationConverter) * 31557600000L;
                     }
 
-                    Date banExpireDate = new Date(System.currentTimeMillis() + banDuration);
+                    Date banExpireDate = new Date(System.currentTimeMillis() + (banDuration + 100L));
                     targetData.banExpiration = banExpireDate;
 
                     // Convert ms to date
