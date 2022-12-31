@@ -173,5 +173,6 @@ public final class LibertyCity extends JavaPlugin {
     @Override
     public void onDisable() {
         FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
+        Bukkit.getScheduler().cancelAllTasks();
     }
 }

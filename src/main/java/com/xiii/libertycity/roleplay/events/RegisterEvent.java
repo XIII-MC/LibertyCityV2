@@ -62,7 +62,7 @@ public class RegisterEvent implements Listener {
             } else {
                 if (data.joinDate == null) {
                     Bukkit.broadcastMessage("");
-                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ") " + "§f rejoint la ville !");
+                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §7(" + e.getPlayer().getName() + ") " + "§frejoint la ville !");
                     Bukkit.broadcastMessage("");
                     data.joinDate = TimeUtil.getFullDate();
                 }

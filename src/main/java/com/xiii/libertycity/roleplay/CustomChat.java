@@ -5,6 +5,7 @@ import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
+import com.xiii.libertycity.core.utils.YMLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomChat implements Listener, CommandExecutor {
 
@@ -136,10 +140,19 @@ public class CustomChat implements Listener, CommandExecutor {
             // Initialize PlayerData & ServerData
             PlayerData data = Data.data.getUserData(e.getPlayer());
             ServerData server = Data.data.getServerData(Bukkit.getServer());
+            String chatFormat = "";
 
             // Prevent spam :pray: + null safety
             if(data.playerID > 0) {
-                if (((System.currentTimeMillis() - data.lastChat >= server.chatCooldownGlobal)) || e.getPlayer().hasPermission("LibertyCity.bypass.chatcooldown")) {
+                if(e.getPlayer().hasPermission("LibertyCity.staffchat") && e.getMessage().startsWith("#")) {
+                    AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7» " + e.getMessage().replaceFirst("#", ""), "LibertyCity.staffalert", 0);
+                    Pattern pt = Pattern.compile("\\§+.");
+                    Matcher match = pt.matcher("§4§lSTAFF §7» " + "§8" + e.getPlayer().getName() + " §7» " + e.getMessage().replaceFirst("#", ""));
+                    String output = match.replaceAll("");
+                    YMLUtil.log(output, null, null);
+                }
+
+                if ((((System.currentTimeMillis() - data.lastChat >= server.chatCooldownGlobal)) || e.getPlayer().hasPermission("LibertyCity.bypass.chatcooldown")) && !e.getMessage().startsWith("#")) {
 
                     // Even if this isn't possible, its just safety.
                     if (data.rpCurrentChat < 0 || data.rpCurrentChat > 3) data.rpCurrentChat = 0;
@@ -152,13 +165,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                 // Initialize the looped player's PlayerData
                                 PlayerData pData = Data.data.getUserData(p);
+                                chatFormat = "§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage();
 
                                 // Send message under specified format
                                 if (pData.rpCurrentChat == 0)
-                                    p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                    p.sendMessage(chatFormat);
                                 if (pData.spyChatHRP || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
-                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§c§l[CS] " + chatFormat);
                             }
                         }
                         if (data.chatBanHRP || data.isMuted) {
@@ -171,13 +184,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                     // Initialize the looped player's PlayerData
                                     PlayerData pData = Data.data.getUserData(p);
+                                    chatFormat = "§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage();
 
                                     // Send message under specified format
                                     if (pData.rpCurrentChat == 0)
-                                        p.sendMessage("§7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                        p.sendMessage(chatFormat);
                                     if (pData.spyChatHRP || pData.spyChatGlobal)
-                                        p.sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
-                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§3§LHRP§7) §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §8| §e" + e.getPlayer().getName() + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§c§l[CS] " + chatFormat);
                                 }
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6HRP§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
@@ -193,13 +206,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                 // Initialize the looped player's PlayerData
                                 PlayerData pData = Data.data.getUserData(p);
+                                chatFormat = "§7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                 // Send message under specified format
                                 if (pData.rpCurrentChat == 1)
-                                    p.sendMessage("§7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage(chatFormat);
                                 if (pData.spyChatRP || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] §7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§c§l[CS] " + chatFormat);
                             }
                         }
                         if (data.chatBanRP || data.isMuted) {
@@ -212,13 +225,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                     // Initialize the looped player's PlayerData
                                     PlayerData pData = Data.data.getUserData(p);
+                                    chatFormat = "§7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                     // Send message under specified format
                                     if (pData.rpCurrentChat == 1)
-                                        p.sendMessage("§7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage(chatFormat);
                                     if (pData.spyChatRP || pData.spyChatGlobal)
-                                        p.sendMessage("§c§l[CS] §7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§2§LRP§7) §f" + data.rpCurrentJob + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§c§l[CS] " + chatFormat);
                                 }
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6RP§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
@@ -234,13 +247,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                 // Initialize the looped player's PlayerData
                                 PlayerData pData = Data.data.getUserData(p);
+                                chatFormat = "§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                 // Send message under specified format
                                 if (pData.rpCurrentChat == 2)
-                                    p.sendMessage("§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage(chatFormat);
                                 if (pData.spyChatPolice || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] §7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§c§l[CS] " + chatFormat);
                             }
                         }
                         if (data.chatBanPolice || data.isMuted) {
@@ -253,13 +266,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                     // Initialize the looped player's PlayerData
                                     PlayerData pData = Data.data.getUserData(p);
+                                    chatFormat = "§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                     // Send message under specified format
                                     if (pData.rpCurrentChat == 2)
-                                        p.sendMessage("§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage(chatFormat);
                                     if (pData.spyChatPolice || pData.spyChatGlobal)
-                                        p.sendMessage("§c§l[CS] §7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§c§l[CS] " + chatFormat);
                                 }
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6Police§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
@@ -275,13 +288,13 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                 // Initialize the looped player's PlayerData
                                 PlayerData pData = Data.data.getUserData(p);
+                                chatFormat = "§7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                 // Send message under specified format
                                 if (pData.rpCurrentChat == 3)
-                                    p.sendMessage("§7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage(chatFormat);
                                 if (pData.spyChatGang || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] §7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                    p.sendMessage("§c§l[CS] " + chatFormat);
                             }
                         }
                         if (data.chatBanGang || data.isMuted) {
@@ -294,19 +307,25 @@ public class CustomChat implements Listener, CommandExecutor {
 
                                     // Initialize the looped player's PlayerData
                                     PlayerData pData = Data.data.getUserData(p);
+                                    chatFormat = "§7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
 
                                     // Send message under specified format
                                     if (pData.rpCurrentChat == 3)
-                                        p.sendMessage("§7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage(chatFormat);
                                     if (pData.spyChatGang || pData.spyChatGlobal)
-                                        p.sendMessage("§c§l[CS] §7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
-                                    Bukkit.getConsoleSender().sendMessage("§c§l[CS] §7(§4§LGang§7) §f" + data.rpGangRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage());
+                                        p.sendMessage("§c§l[CS] " + chatFormat);
                                 }
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6Gang§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
                         }
 
                     }
+
+                    Pattern pt = Pattern.compile("\\§+.");
+                    Matcher match = pt.matcher(chatFormat);
+                    String output = match.replaceAll("");
+                    YMLUtil.log(output, null, null);
+
                 } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cVeuillez patientez entre chaque messages.");
                 data.lastChat = System.currentTimeMillis();
             }

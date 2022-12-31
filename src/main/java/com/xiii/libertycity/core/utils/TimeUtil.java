@@ -6,25 +6,26 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class TimeUtil {
 
     public static String getFullDate() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return (dtf.format(now));
+        Date date = new Date();
+        SimpleDateFormat dtf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return (dtf.format(date));
     }
 
     public static String getDate() {
-        DateFormat dtf = new SimpleDateFormat("dd/MM/yyyy");
-        LocalDate now = LocalDate.now();
-        return (dtf.format(now));
+        Date date = new Date();
+        SimpleDateFormat dtf = new SimpleDateFormat("dd/MM/yyyy");
+        return (dtf.format(date));
     }
 
     public static String getTime() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime now = LocalTime.now();
-        return (dtf.format(now));
+        Date date = new Date();
+        SimpleDateFormat dtf = new SimpleDateFormat("HH:mm:ss");
+        return (dtf.format(date));
     }
 
 }

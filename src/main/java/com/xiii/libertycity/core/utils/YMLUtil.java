@@ -7,7 +7,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class YMLUtil {
@@ -76,6 +79,43 @@ public class YMLUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void log(String message, String customFolderPath, String customFilePath) {
+        //new SimpleDateFormat("dd/MM/yyyy); | DateFormat
+        //new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"); | SimpleDateFormat
+
+        Date date = new Date();
+        SimpleDateFormat displayDate = new SimpleDateFormat("dd_MM_yyyy");
+        SimpleDateFormat fullDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss-SSS");
+
+        File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/");
+        File logFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/" + displayDate.format(date) + ".yml");
+
+        if (customFolderPath != null) fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + customFolderPath);
+        if (customFilePath != null) logFile = new File(LibertyCity.INSTANCE.getDataFolder() + customFilePath);
+
+        if (!fileFolder.exists()) fileFolder.mkdir();
+
+        if (!logFile.exists()) {
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(logFile);
+        File finalLogFile = logFile;
+
+        cfg.set(fullDate.format(date), message);
+
+        try {
+            cfg.save(finalLogFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
