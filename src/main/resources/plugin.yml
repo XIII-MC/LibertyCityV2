@@ -3,6 +3,7 @@ version: '${project.version}'
 main: com.xiii.libertycity.LibertyCity
 authors: [ XIII___ ]
 description: LibertyCity's plugin
+api-version: 1.13
 commands:
   clearchat:
     aliases: cc, chatclear
