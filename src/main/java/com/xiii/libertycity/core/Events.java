@@ -1,10 +1,12 @@
 package com.xiii.libertycity.core;
 
+import com.keenant.tabbed.item.PlayerTabItem;
 import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.displays.ScoreboardDisplay;
+import com.xiii.libertycity.core.displays.TABDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.FileUtils;
 import org.bukkit.Bukkit;
@@ -49,7 +51,7 @@ public class Events implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) throws ReflectiveOperationException {
         Data.data.registerUser(e.getPlayer());
         PlayerData data = Data.data.getUserData(e.getPlayer());
         if (data.playerID <= 0) e.setJoinMessage("");
@@ -59,7 +61,29 @@ public class Events implements Listener {
             AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a rejoint le serveur", "LibertyCity.staff.alert", 0);
             e.setJoinMessage("");
         }
-        if(data.playerID > 0) ScoreboardDisplay.updateScoreboard(e.getPlayer());
+        TABDisplay.updateTablist(e.getPlayer());
+        if(data.playerID > 0) {
+            // Player list update
+            int row = 2;
+            int column = 2;
+            for (Player player : Bukkit.getOnlinePlayers()) {
+
+                // Switch column
+                if(row > 18 && column == 2) {
+                    column++;
+                    row = 0;
+                }
+
+                // Player list is full
+                if(row > 19 && column == 3) return;
+
+                TABDisplay.tab.set(column, row, new PlayerTabItem(player));
+                row++;
+            }
+            TABDisplay.tab.batchUpdate(); // sends the packets!
+
+            ScoreboardDisplay.updateScoreboard(e.getPlayer());
+        }
     }
 
 }
