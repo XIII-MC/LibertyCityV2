@@ -16,22 +16,12 @@ public class PingCommand implements CommandExecutor {
             if(sender instanceof Player) {
                 if (args.length == 0) {
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §fCalcule en cours, veuillez patientez...");
-                    try {
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez une latence de §6" + PingUtil.getPing((Player) sender) + "ms");
-                    } catch (ReflectiveOperationException e) {
-                        e.printStackTrace();
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cUne erreur est survenue.");
-                    }
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez une latence de §6" + PingUtil.getPing((Player) sender) + "ms");
                 } else {
                     Player target = Bukkit.getServer().getPlayer(args[0]);
                     if (target.isOnline()) {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fCalcule en cours, veuillez patientez...");
-                        try {
-                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa une latence de §6" + PingUtil.getPing(target) + "ms");
-                        } catch (ReflectiveOperationException e) {
-                            e.printStackTrace();
-                            sender.sendMessage("§2§lLiberty§a§lCity §7» §cUne erreur est survenue.");
-                        }
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa une latence de §6" + PingUtil.getPing(target) + "ms");
                     } else
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
                 }
