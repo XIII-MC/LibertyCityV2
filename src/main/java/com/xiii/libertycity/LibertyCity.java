@@ -1,5 +1,6 @@
 package com.xiii.libertycity;
 
+import com.keenant.tabbed.Tabbed;
 import com.xiii.libertycity.core.Events;
 import com.xiii.libertycity.core.commands.chat.*;
 import com.xiii.libertycity.core.commands.player.*;
@@ -9,6 +10,7 @@ import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.utils.ChatUtils;
 import com.xiii.libertycity.core.utils.FileUtils;
+import com.xiii.libertycity.core.utils.LagCalculator;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
@@ -25,7 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class LibertyCity extends JavaPlugin {
 
     public static LibertyCity INSTANCE;
-
+    public static Tabbed tabInstance;
     public static Plugin getInstance() {
         return INSTANCE;
     }
@@ -33,10 +35,13 @@ public final class LibertyCity extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
+        tabInstance = new Tabbed(this);
 
         Data.data.registerServer(Bukkit.getServer());
         FileUtils.readServerData();
         FileUtils.readPlayerData();
+
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagCalculator(), 100L, 1L);
 
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
