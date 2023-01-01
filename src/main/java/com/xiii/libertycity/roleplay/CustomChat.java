@@ -4,6 +4,7 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.YMLUtil;
 import org.bukkit.Bukkit;
@@ -126,7 +127,7 @@ public class CustomChat implements Listener, CommandExecutor {
             }
 
             if(args.length > 1) sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Usage: /chat (RP,HRP,Police,Gang)");
-
+            if(args.length > 0) ScoreboardDisplay.updateScoreboard((Player) sender);
         }
 
         return true;

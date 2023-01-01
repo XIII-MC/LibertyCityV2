@@ -28,11 +28,9 @@ public class TestCommand implements CommandExecutor {
                 // - TEST_1 : testing PlayerData flexibility to new variables | SUCCESS.
                 // - DEBUG_1 : debugging player data output to fix playerData being global | SUCCESS.
                 // - TEST_2 : test AntiAFK system | SUCCESS.
+                // - TEST_3 : log message to yml file | SUCCESS.
 
-            // Test section. | CASE: TEST_3 : log message to yml file
-            if(args[0].length() <= 0) player.sendMessage("Message null.");
-            if(args[0].length() > 0) YMLUtil.log(args[0], null, null);
-            player.sendMessage("Message logged.");
+            // Test section. | CASE: ??? : ???
 
         }
 

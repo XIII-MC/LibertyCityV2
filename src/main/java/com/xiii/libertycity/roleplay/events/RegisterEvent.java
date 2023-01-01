@@ -117,20 +117,30 @@ public class RegisterEvent implements Listener {
                             //Check if String follows ABC alphabet
                             if(e.getMessage().matches("[a-zA-Z]+")) {
 
-                                //Set temp variable to his message
-                                tempName = e.getMessage();
+                                // If player's rpName fits the 24 charcters limit
+                                if(e.getMessage().length() <= 24) {
 
-                                //Check if rpPrenom is fitting the length size requirement
-                                if (tempName.length() >= 3 && tempName.length() <= 20) {
+                                    //Set temp variable to his message
+                                    tempName = e.getMessage();
 
-                                    //If the rpNom fits the length requirement, ask for confirmation and trigger it
-                                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + tempName + "§f, c'est bien ça ? §7(Oui/Non)");
-                                    isWaitingNom = false;
+                                    //Check if rpPrenom is fitting the length size requirement
+                                    if (tempName.length() >= 3 && tempName.length() <= 20) {
 
-                                }
+                                        //If the rpNom fits the length requirement, ask for confirmation and trigger it
+                                        e.getPlayer().sendMessage(" ");
+                                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + tempName + "§f, c'est bien ça ? §7(Oui/Non)");
+                                        isWaitingNom = false;
+
+                                    }
+
+                                } else
+                                    e.getPlayer().sendMessage(" ");
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §eNom RP§c est trop long! (Max 24 caractères)");
 
                                 //If player's message isn't conform to the ABC alphabet
-                            } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
+                            } else
+                                e.getPlayer().sendMessage(" ");
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
 
                             //If player didn't pass the database check
                         } else {
@@ -139,6 +149,7 @@ public class RegisterEvent implements Listener {
                             data.rpPrenom = null;
                             isWaitingPrenom = true;
                             tempPrenom = null;
+                            e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Une personne s'appelle déja comme ça ! Veuillez entrez votre §ePrénom RP");
 
                         }
@@ -161,6 +172,7 @@ public class RegisterEvent implements Listener {
 
                                 //Tell the player his name has been permanently set
                                 e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||", "§6§k§l||§r §7Pour finir entrez votre §e§nÂge RP§r §6§k§l||", 0, 14000, 0);
+                                e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fBien le bonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f!");
 
                             }
@@ -170,6 +182,7 @@ public class RegisterEvent implements Listener {
 
                             //Reset wait state & tell the player to restart procedure
                             isWaitingNom = true;
+                            e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince! Veulliez reécrire votre §eNom RP§c s'il vous plaît!");
 
                         }
@@ -189,20 +202,30 @@ public class RegisterEvent implements Listener {
                         //Check if String follows ABC alphabet
                         if(e.getMessage().matches("[a-zA-Z]+")) {
 
-                            //Set temp variable to his message
-                            tempPrenom = e.getMessage();
+                            // If player's rpPrenom fits the 24 charcaters limit
+                            if(e.getMessage().length() <= 24) {
 
-                            //Check if rpPrenom is fitting the length size requirement
-                            if (tempPrenom.length() >= 3 && tempPrenom.length() <= 20) {
+                                //Set temp variable to his message
+                                tempPrenom = e.getMessage();
 
-                                //If the rpPrenom fits the length requirement, ask for confirmation and trigger it
-                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + tempPrenom + "§f, c'est bien ça ? §7(Oui/Non)");
-                                isWaitingPrenom = false;
+                                //Check if rpPrenom is fitting the length size requirement
+                                if (tempPrenom.length() >= 3 && tempPrenom.length() <= 20) {
 
-                            }
+                                    //If the rpPrenom fits the length requirement, ask for confirmation and trigger it
+                                    e.getPlayer().sendMessage(" ");
+                                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + tempPrenom + "§f, c'est bien ça ? §7(Oui/Non)");
+                                    isWaitingPrenom = false;
+
+                                }
+
+                            } else
+                                e.getPlayer().sendMessage(" ");
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est trop long! (Max 24 caractères)");
 
                         //If player's message isn't conform to the ABC alphabet
-                        } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
+                        } else
+                            e.getPlayer().sendMessage(" ");
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
 
                     //If we are in waiting for a rpPrenom confirmation
                     } else {
@@ -218,6 +241,7 @@ public class RegisterEvent implements Listener {
 
                                 //Tell the player his name has been permanently set
                                 e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §f! §4§l§k|||", "§6§k§l||§r §7Continuez avec votre §e§nNom RP§r §6§k§l||", 0, 14000, 0);
+                                e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fBien le bonjour §a§l" + data.rpPrenom + "§f!");
 
                             }
@@ -227,6 +251,7 @@ public class RegisterEvent implements Listener {
 
                             //Reset wait state & tell the player to restart procedure
                             isWaitingPrenom = true;
+                            e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince! Veulliez reécrire votre §ePrénom RP§c s'il vous plaît!");
 
                         }
@@ -275,6 +300,7 @@ public class RegisterEvent implements Listener {
                         if(tempAge >= 18 && tempAge <= 90) {
 
                             //If the rpAge fits the int requirement, ask for confirmation and trigger it
+                            e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + tempAge + "ans§f, c'est bien ça ? §7(Oui/Non)");
                             isWaitingAge = false;
 
@@ -293,6 +319,7 @@ public class RegisterEvent implements Listener {
                                 data.rpAge = tempAge;
 
                                 //Tell the player his name has been permanently set
+                                e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fAlors pour bien confirmé le tous, vous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + data.rpAge + "ans§f, correct ?");
 
                             }
@@ -320,6 +347,7 @@ public class RegisterEvent implements Listener {
 
                             //Inform player of taken actions and make him restart the process properly
                             e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                            e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
 
                         }

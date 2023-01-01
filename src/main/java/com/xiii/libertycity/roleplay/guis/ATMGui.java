@@ -3,6 +3,7 @@ package com.xiii.libertycity.roleplay.guis;
 import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -190,6 +191,7 @@ public class ATMGui implements Listener, CommandExecutor {
 
                                 //Add amount of bills * the value of the bill to the player's bank AKA deposit money
                                 data.rpBank += (amount * money);
+                                ScoreboardDisplay.updateScoreboard(p);
 
                                 //Tell how much money the player deposited when exiting the ATM
                                 depMoney += (amount * money);
@@ -205,6 +207,7 @@ public class ATMGui implements Listener, CommandExecutor {
 
                                 //Add the value of the bill to the player's bank AKA deposit money
                                 data.rpBank += money;
+                                ScoreboardDisplay.updateScoreboard(p);
 
                                 //Tell how much money the player deposited when exiting the ATM
                                 depMoney += money;
@@ -249,6 +252,7 @@ public class ATMGui implements Listener, CommandExecutor {
 
                                     //Remove the withdrew money from the player's bank AKA withdraw money
                                     data.rpBank -= (money * 8);
+                                    ScoreboardDisplay.updateScoreboard(p);
 
                                     //Tell how much money the player withdrew when exiting the ATM
                                     whdMoney += (money * 8);
@@ -271,6 +275,7 @@ public class ATMGui implements Listener, CommandExecutor {
 
                                 //Remove the withdraw money from the player's bank AKA withdraw money
                                 data.rpBank -= money;
+                                ScoreboardDisplay.updateScoreboard(p);
 
                                 //Tell how much money the player withdrew when exiting the ATM
                                 whdMoney += money;

@@ -43,8 +43,8 @@ public class PlayerData implements java.io.Serializable {
     public int rpBank;
     public int rpCurrentChat;
     public String rpCurrentJob = "§eCitoyen";
-    public String rpPoliceRank = "§b§kAucun";
-    public String rpGangRank = "§c§kAucun";
+    public String rpPoliceRank;
+    public String rpGangRank;
     public boolean isVerified;
     public String joinDate;
 

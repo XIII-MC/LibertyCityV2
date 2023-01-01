@@ -4,6 +4,7 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.FileUtils;
 import org.bukkit.Bukkit;
@@ -25,6 +26,7 @@ public class Events implements Listener {
             ServerData server = Data.data.getServerData(Bukkit.getServer());
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (server.vanishedPlayers.contains(p)) {
+                    // TODO: Test
                     p.hidePlayer(LibertyCity.INSTANCE, (Player) Bukkit.getOnlinePlayers());
                     p.showPlayer(LibertyCity.INSTANCE, (Player) server.vanishedPlayers);
                     p.setDisplayName("§7[V] §f" + p.getName());
@@ -57,6 +59,7 @@ public class Events implements Listener {
             AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a rejoint le serveur", "LibertyCity.staff.alert", 0);
             e.setJoinMessage("");
         }
+        if(data.playerID > 0) ScoreboardDisplay.updateScoreboard(e.getPlayer());
     }
 
 }
