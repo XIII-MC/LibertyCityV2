@@ -1,16 +1,11 @@
 package com.xiii.libertycity.core.commands.server;
 
-import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
-import com.xiii.libertycity.core.utils.YMLUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.text.SimpleDateFormat;
 
 public class TestCommand implements CommandExecutor {
 

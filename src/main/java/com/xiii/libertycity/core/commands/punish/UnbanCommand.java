@@ -1,7 +1,5 @@
 package com.xiii.libertycity.core.commands.punish;
 
-import com.xiii.libertycity.core.data.Data;
-import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;

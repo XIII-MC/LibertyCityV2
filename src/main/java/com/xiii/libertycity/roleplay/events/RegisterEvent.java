@@ -6,7 +6,6 @@ import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.utils.TimeUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

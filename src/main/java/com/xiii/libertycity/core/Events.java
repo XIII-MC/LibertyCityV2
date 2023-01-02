@@ -10,12 +10,10 @@ import com.xiii.libertycity.core.displays.TABDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.FileUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -28,7 +26,7 @@ public class Events implements Listener {
             ServerData server = Data.data.getServerData(Bukkit.getServer());
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (server.vanishedPlayers.contains(p)) {
-                    // TODO: Test
+                    // TODO: Test it
                     p.hidePlayer(LibertyCity.INSTANCE, (Player) Bukkit.getOnlinePlayers());
                     p.showPlayer(LibertyCity.INSTANCE, (Player) server.vanishedPlayers);
                     p.setDisplayName("§7[V] §f" + p.getName());
@@ -48,10 +46,12 @@ public class Events implements Listener {
             AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a quitté le serveur", "LibertyCity.staff.alert", 0);
             e.setQuitMessage("");
         }
+        LibertyCity.tabInstance.destroyTabList(e.getPlayer());
+        TABDisplay.pingHandle.cancel();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent e) throws ReflectiveOperationException {
+    public void onJoin(PlayerJoinEvent e) {
         Data.data.registerUser(e.getPlayer());
         PlayerData data = Data.data.getUserData(e.getPlayer());
         if (data.playerID <= 0) e.setJoinMessage("");

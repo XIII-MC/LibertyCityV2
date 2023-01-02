@@ -1,11 +1,6 @@
 package com.xiii.libertycity.roleplay.guis;
 
-import com.xiii.libertycity.LibertyCity;
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 
 public class BinGui implements Listener {
 

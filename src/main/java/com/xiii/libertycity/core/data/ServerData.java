@@ -2,7 +2,6 @@ package com.xiii.libertycity.core.data;
 
 import org.bukkit.entity.Player;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 

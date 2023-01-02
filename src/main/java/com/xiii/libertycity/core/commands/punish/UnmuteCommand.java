@@ -3,13 +3,11 @@ package com.xiii.libertycity.core.commands.punish;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class UnmuteCommand implements CommandExecutor {
 

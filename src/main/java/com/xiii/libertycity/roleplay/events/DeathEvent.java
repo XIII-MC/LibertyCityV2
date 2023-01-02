@@ -1,10 +1,8 @@
 package com.xiii.libertycity.roleplay.events;
 
-import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
