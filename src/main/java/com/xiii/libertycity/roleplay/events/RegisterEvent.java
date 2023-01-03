@@ -132,15 +132,16 @@ public class RegisterEvent implements Listener {
 
                                     }
 
-                                } else
+                                } else {
                                     e.getPlayer().sendMessage(" ");
-                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §eNom RP§c est trop long! (Max 24 caractères)");
+                                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §eNom RP§c est trop long! (Max 24 caractères)");
+                                }
 
                                 //If player's message isn't conform to the ABC alphabet
-                            } else
+                            } else {
                                 e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
-
+                            }
                             //If player didn't pass the database check
                         } else {
 
@@ -217,15 +218,15 @@ public class RegisterEvent implements Listener {
 
                                 }
 
-                            } else
+                            } else {
                                 e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est trop long! (Max 24 caractères)");
-
+                            }
                         //If player's message isn't conform to the ABC alphabet
-                        } else
+                        } else {
                             e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
-
+                        }
                     //If we are in waiting for a rpPrenom confirmation
                     } else {
 

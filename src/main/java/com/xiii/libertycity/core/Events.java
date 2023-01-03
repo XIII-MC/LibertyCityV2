@@ -5,6 +5,7 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.displays.BossBarDisplay;
 import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.displays.TABDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
@@ -48,6 +49,7 @@ public class Events implements Listener {
         }
         LibertyCity.tabInstance.destroyTabList(e.getPlayer());
         TABDisplay.pingHandle.cancel();
+        LibertyCity.bossBar.removePlayer(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -62,6 +64,7 @@ public class Events implements Listener {
             e.setJoinMessage("");
         }
         TABDisplay.updateTablist(e.getPlayer());
+        BossBarDisplay.updateBossBar(e.getPlayer());
         if(data.playerID > 0) {
             // Player list update
             int row = 2;

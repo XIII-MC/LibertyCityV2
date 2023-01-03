@@ -1,0 +1,5 @@
+test player list
+historique sanctions
+warns system sanction
+make boss bar display cleaner (*)
+convert utils (132000 -> 132k)

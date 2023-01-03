@@ -2,6 +2,7 @@ package com.xiii.libertycity.core.commands.server;
 
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.displays.BossBarDisplay;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +26,8 @@ public class TestCommand implements CommandExecutor {
                 // - TEST_2 : test AntiAFK system | SUCCESS.
                 // - TEST_3 : log message to yml file | SUCCESS.
 
-            // Test section. | CASE: ??? : ???
+            // Test section. | CASE: DEV_1 : Dev debug for custom boss bar
+            BossBarDisplay.updateBossBar(player);
 
         }
 

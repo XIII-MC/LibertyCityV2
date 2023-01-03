@@ -30,7 +30,6 @@ public class ClearLagCommand implements CommandExecutor {
                     current.remove();
                 }
             }
-            Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLes éboueurs ont ramassé §6" + i + " §fordures");
         }
 
         return true;

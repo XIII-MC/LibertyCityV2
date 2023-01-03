@@ -11,6 +11,7 @@ import com.xiii.libertycity.core.commands.punish.*;
 import com.xiii.libertycity.core.commands.server.*;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.ChatUtils;
 import com.xiii.libertycity.core.utils.FileUtils;
 import com.xiii.libertycity.core.utils.LagCalculator;
@@ -21,7 +22,11 @@ import com.xiii.libertycity.roleplay.events.RegisterEvent;
 import com.xiii.libertycity.roleplay.guis.ATMGui;
 import com.xiii.libertycity.roleplay.guis.BinGui;
 import com.xiii.libertycity.roleplay.items.SearchItem;
+import com.xiii.libertycity.core.displays.BossBarDisplay;
 import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,11 +38,14 @@ public final class LibertyCity extends JavaPlugin {
     public static Plugin getInstance() {
         return INSTANCE;
     }
+    public static BossBar bossBar;
 
     @Override
     public void onEnable() {
         INSTANCE = this;
         tabInstance = new Tabbed(this);
+        bossBar = Bukkit.createBossBar("§4§LERROR_43", BarColor.RED, BarStyle.SEGMENTED_6);
+        BossBarDisplay.init();
 
         Data.data.registerServer(Bukkit.getServer());
         FileUtils.readServerData();
@@ -123,27 +131,6 @@ public final class LibertyCity extends JavaPlugin {
         }, 30);
         Bukkit.getConsoleSender().sendMessage("Plugin loaded");
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §630 seconde§f!");
-        },270*20, 270*20);
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §610 seconde§f!");
-        },300*20, 300*20);
-
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            if(ClearLagCommand.getItemsOnTheGround() > 0) Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "clearlag");
-        },310*20, 310*20);
-
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            Bukkit.broadcastMessage("");
-            ChatUtils.sendCenteredMessage(null, "§8[§a§lINFORMATION§8]§e", true);
-            Bukkit.broadcastMessage("§8» §fUne question, un problème ? Utiliser §6/helpop §f!");
-            Bukkit.broadcastMessage("§8» §fUn FreeKill, joueur non RP ? Utilisez §6/report <Joueur> <Raison>");
-            Bukkit.broadcastMessage("§8» §fLes recrutement staff sont §a§nouvert§r§f !");
-            Bukkit.broadcastMessage("");
-        },1800*20, 1800*20);
-
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for(Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage("§8§m+---------------------------------------+");
@@ -151,25 +138,7 @@ public final class LibertyCity extends JavaPlugin {
                 p.sendMessage("§8§m+---------------------------------------+");
                 PlayerData pData = Data.data.getUserData(p);
                 pData.rpBank += 10;
-
-                // AntiAFK
-                if((pData.lastX - p.getLocation().getX() <= 5 && pData.lastX - p.getLocation().getX() >= -5) && (pData.lastZ - p.getLocation().getZ() <= 5 && pData.lastZ - p.getLocation().getZ() >= -5)) {
-                    p.sendTitle("§4§l§k|||§r §c§lAFK §4§l§k|||§r", "§7Veuillez bouger ou vous serez §cexplusé§7.", 0, 9*20, 2);
-                    Bukkit.getScheduler().runTaskLater(LibertyCity.INSTANCE, () -> {
-                        if((pData.lastX - p.getLocation().getX() <= 5 && pData.lastX - p.getLocation().getX() >= -5) && (pData.lastZ - p.getLocation().getZ() <= 5 && pData.lastZ - p.getLocation().getZ() >= -5)) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kick " + p.getName() + " AFK-TX (10+ minutes)");
-                    }, 10*20);
-                }
-
-                if((pData.lastZ - p.getLocation().getZ() <= 5 && pData.lastZ - p.getLocation().getZ() >= -5) && (pData.lastX - p.getLocation().getX() <= 5 && pData.lastX - p.getLocation().getX() >= -5)) {
-                    p.sendTitle("§4§l§k|||§r §c§lAFK §4§l§k|||§r", "§7Veuillez bouger ou vous serez §cexplusé§7.", 0, 9*20, 2);
-                    Bukkit.getScheduler().runTaskLater(LibertyCity.INSTANCE, () -> {
-                        if((pData.lastZ - p.getLocation().getZ() <= 5 && pData.lastZ - p.getLocation().getZ() >= -5) && (pData.lastX - p.getLocation().getX() <= 5 && pData.lastX - p.getLocation().getX() >= -5)) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kick " + p.getName() + " AFK-TZ (10+ minutes)");
-                    }, 10*20);
-                }
-
-                pData.lastX = p.getLocation().getX();
-                pData.lastZ = p.getLocation().getZ();
-
+                ScoreboardDisplay.updateScoreboard(p);
             }
         },600*20, 600*20);
 
