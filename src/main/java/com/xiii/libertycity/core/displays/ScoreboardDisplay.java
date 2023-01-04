@@ -2,6 +2,7 @@ package com.xiii.libertycity.core.displays;
 
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.utils.MoneyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -66,7 +67,7 @@ public class ScoreboardDisplay {
         replaceScore(objective, 8, "§2§7§m--------------------");
         replaceScore(objective, 7,"§6§nInformations§r §7»");
         replaceScore(objective, 6, "§5 ");
-        replaceScore(objective, 5," Argent §7» §6§l$" + data.rpBank);
+        replaceScore(objective, 5," Argent §7» §6§l$" + MoneyUtils.getBank(p, true));
         replaceScore(objective, 4," Travail §7» " + data.rpCurrentJob);
         if(data.rpPoliceRank != null) replaceScore(objective, 3, " Rang §7» §B§l" + data.rpPoliceRank);
         if(data.rpGangRank != null) replaceScore(objective, 3, " Gang §7» §4§l" + data.rpGangRank);

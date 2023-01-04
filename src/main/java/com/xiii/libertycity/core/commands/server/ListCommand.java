@@ -11,13 +11,14 @@ import java.util.List;
 
 public class ListCommand implements CommandExecutor {
 
-    List<String> playerNames = new ArrayList<>();
-    int playerAmount = 0;
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(command.getName().equalsIgnoreCase("list")) {
+
+            List<String> playerNames = new ArrayList<>();
+            int playerAmount = 0;
+
             for(Player p : Bukkit.getOnlinePlayers()) {
                 playerAmount++;
                 playerNames.add(p.getName());

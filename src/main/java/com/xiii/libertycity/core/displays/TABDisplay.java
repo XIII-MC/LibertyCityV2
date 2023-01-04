@@ -1,5 +1,7 @@
 package com.xiii.libertycity.core.displays;
 
+import com.keenant.tabbed.Tabbed;
+import com.keenant.tabbed.item.BlankTabItem;
 import com.keenant.tabbed.item.PlayerTabItem;
 import com.keenant.tabbed.item.TextTabItem;
 import com.keenant.tabbed.tablist.TableTabList;
@@ -8,7 +10,9 @@ import com.keenant.tabbed.util.Skins;
 import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.utils.LagCalculator;
+import com.xiii.libertycity.core.utils.MoneyUtils;
 import com.xiii.libertycity.core.utils.PingUtil;
 import com.xiii.libertycity.core.utils.TimeUtil;
 import org.apache.commons.lang.StringUtils;
@@ -42,16 +46,52 @@ public class TABDisplay implements Listener {
     public static final Skin WORKER = new Skin("eyJ0aW1lc3RhbXAiOjE1ODY1Njc2NzAyNzMsInByb2ZpbGVJZCI6ImJlY2RkYjI4YTJjODQ5YjRhOWIwOTIyYTU4MDUxNDIwIiwicHJvZmlsZU5hbWUiOiJTdFR2Iiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS82OWE2MDBhYjBhODMwOTcwNjViOTVhZTI4NGY4MDU5OTYxNzc0NjA5YWRiM2RiZDNhNGNhMjY5ZDQ0NDA5NTUxIn19fQ==", "MfRt6pmgd9s/zFTX3UQbOObeP1smeWhETCMrdi4s1WF6YOQw2q7L+c0cAQV6Kq7nNenm5ptzZMkwwkIKSzJptaAKdk2vvFOLvxMZbG5YhQhPCkh+krG89GxIE4cUHieHvUb1iA37hUduNWdUIUceL2cmIIsw2Q+20Zu26DxEukFKYfZpWAEADXrTi8/yyCbdIuwX17OpGQeXU9AwcY+Gm6o794X9FShMYcmab5VKzzhr3mhGOhwcSlfVS5ZiECMzCROG/5LG3ondRCDBCh8yx9xiEwOC1u9+jSTO4FGnpcFWpWnUZ0GF+TBpzqV0H05t2zsc4kqsy8nMlnq6NW5WppmAwoEcKaqicUWFNonyMQij2iZGnSTdunzrmRo3gbZmJI9EhYy3X+E9cWPxPoizDYeQbdM7c+WUHxt6JpTe9S85mpLWOEd3F1oKsMyK7dBpJQ0k4S+yo4If8newWJlqLq/V0KfXUrt39dGF2Wh+LpshWVnOYJN2omf0l4SOVafmoYNG5mQ8pVUs3I+Z1HaLe3wEZIVur6hJ6SpBH+2ZprUjSVZnOmKl9w2IHxNiFJiMUsxGsc99Zf29QT2EOVBVgcAkC/LsVnC5qWeXKFG2U0J6cUlqEQUmUuUW8lBvc6hHOBWdhBTDO7PtaGXHJK/Qn1oLMpApUC3qe68f4YSMh3M=");
     public static final Skin MEDAL = new Skin("ewogICJ0aW1lc3RhbXAiIDogMTY3MjY4Mzk5Njc4MiwKICAicHJvZmlsZUlkIiA6ICJjMTNkYzkxZjg1YjA0ZWM4OGU2NDk5YzdjZDc4Zjk3MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJjYXNzdGhlY3J5cHRpZCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ODAwMmIyOTllOGQzMjdjZjRjMjFkMjJjNzgyYzFiMjAwMWQyNGZiNmQ4ZDI2MWFmOGQ4Y2EzODYxYmFmOGIyIiwKICAgICAgIm1ldGFkYXRhIiA6IHsKICAgICAgICAibW9kZWwiIDogInNsaW0iCiAgICAgIH0KICAgIH0KICB9Cn0=", "eINuOYYoDGdm1bdYUuq8SkH2Nn7neRyDWTqITEcjmM9GEialakOMpztOA8dA477TzqUXmqmxr2UOwj9LPBSHXiY/BBMNxc93NF1buAAiTVRlrRRztpxS/HZvE0NjVR/hsV69hnGSeEe9Uumg2w4C7SZjB0panjUHtslfyMJFn6ea658EQ3Op9IENmTPz7My7OLfuhDfXgPYYkbuCQS+w+7JTj/kUCkzRVFNuhuIbCAI5o2l5NA9eEMMNxB/dSWbHJb2J6E2I9XG8WecFzriISf7+ujWU5bNodJyzzmrpSwZpfKZhNct7YGaaFHZf79aqAPMV64mXGyzj3qbPsL2sTQ1ER/1l4/b6tpOiyqXvT9ItkfzRBTUv8v9Iq3R6VGDSs0E/y23t+6aib/gbkQo+1j3DlfVoVgT3dfSiFwhkMgq/DfTH1JKhlw3nkC7lQYeBk3amGfixp+IHCrJ0SDeu7jsVpEgCK5FCaF6rTmpl6suIOLtE2AYPN6swiYcSMg8klPEWIKqpCe6tkxWOvFHLQOtz8eUSpqNAoQH1Xx2SwSLvQ7x1d9RWkbibyeADg7j7+SDMXaXlQHLAsSrmlSeWzFrfuptcTgSmWKQsSCMvNmBOuYqLn9FtKbG6h4FJPqstfJNZcboeSXHYtXJqjJZs3K7S8qp2BlvRFGhIDb0rZDc=");
 
-    public static TableTabList tab;
     public static BukkitTask pingHandle;
 
-    public static void updateTablist(Player p) {
+    public static void updatePlayerList() {
+        //TableTabList tab = null;
+        for (Player player : Bukkit.getOnlinePlayers()) {
 
-        tab = LibertyCity.tabInstance.newTableTabList(p);
+            int row = 2;
+            int column = 2;
+
+            TableTabList tab = (TableTabList) LibertyCity.tabInstance.getTabList(player);
+            //tab.setBatchEnabled(true);
+
+            // Switch column
+            if (row > 18 && column == 2) {
+                column++;
+                row = 0;
+            }
+
+            // Player list is full
+            if (row > 19 && column == 3) return;
+
+            ServerData server = Data.data.getServerData(Bukkit.getServer());
+            for(Player p : Bukkit.getOnlinePlayers()) {
+                if(!server.vanishedPlayers.contains(p)) {
+                    tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
+                    tab.set(column, row, new PlayerTabItem(p));
+                    row++;
+                } else {
+                    tab.set(column, row, new TextTabItem(" ", 0, QUESTION_MARK));
+                    row++;
+                }
+            }
+            //tab.batchUpdate();
+        }
+        //tab.setBatchEnabled(false);
+    }
+
+    public static void updateTablist(Player p) {
+        // Tabbed.getTabbed(LibertyCity.getPlugin(LibertyCity.class)).newTableTabList(p);
+        // java -jar mc.jar --ip game7.falixserver.net --port 16316 --delay 3000 --logincmd login --registercmd register -t 5 -n bot
+        TableTabList tab = Tabbed.getTabbed(LibertyCity.getPlugin(LibertyCity.class)).newTableTabList(p);
         tab.setHeader("§2§LLiberty§a§lCity §4§lRP" + "\n");
         tab.setFooter("\n" + "§7Site Web » §7www.§2liberty§acity§7.§4fr" + "\n" + "§7TeamSpeak » ts.§2liberty§acity§7.§4fr" + "\n" + "§7Discord » discord.§2liberty§acity.§4fr");
 
         PlayerData data = Data.data.getUserData(p);
+        ServerData server = Data.data.getServerData(Bukkit.getServer());
         if(data == null) return;
         String currentChat = "§4§LERROR23";
 
@@ -99,7 +139,7 @@ public class TABDisplay implements Listener {
         // Column 0
         tab.set(0, 0, new TextTabItem(StringUtils.center("§2§nServeur§r", 34), 0, FULL_DARK_GREEN));
         tab.set(0, 2, new TextTabItem(" §7IP » §2liberty§acity§7.§4fr", 0, INTERNET));
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + Bukkit.getOnlinePlayers().size() + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.DEFAULT_SKIN)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - server.vanishedPlayers.size()) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.DEFAULT_SKIN)), 20, 20);
         tab.set(0, 5, new TextTabItem(StringUtils.center("§2§nInformations§r", 34), 0, FULL_DARK_GREEN));
         // COL 0 | ROW 7 TAKEN
         // COL 0 | ROW 8 TAKEN
@@ -118,7 +158,7 @@ public class TABDisplay implements Listener {
         tab.set(1, 4, new TextTabItem(" §7Âge » §c§l" + data.rpAge + " ans", 0, INFO));
         tab.set(1, 5, new TextTabItem(" §7Pseudo » §4§l" + p.getName(), 0, Skins.getPlayer(p.getName())));
         tab.set(1, 7, new TextTabItem(StringUtils.center("§6§nInformations§r", 34), 0, FULL_GOLD));
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () ->  tab.set(1, 9, new TextTabItem(" §7Argent » §6§l$" + data.rpBank, 0, MONEY)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () ->  tab.set(1, 9, new TextTabItem(" §7Argent » §6§l$" + MoneyUtils.getBank(p, true), 0, MONEY)), 20, 20);
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(1, 10, new TextTabItem(" §7Travail » " + data.rpCurrentJob, 0, WORKER)), 20, 20);
         tab.set(1, 11, new TextTabItem(" §7Niveau » §8§kAucun", 0, MEDAL));
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
@@ -129,28 +169,9 @@ public class TABDisplay implements Listener {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(1, 12, new TextTabItem(" §7Chat sélectionné » " + finalCurrentChat, 0, CHAT_BUBBLE)), 20, 20);
 
         // Column 2 & 3
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(2, 0, new TextTabItem(StringUtils.center("§2§nJoueurs en ligne§r §7(" + Bukkit.getOnlinePlayers().size() + ")", 34), 0, FULL_LIME)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(2, 0, new TextTabItem(StringUtils.center("§2§nJoueurs en ligne§r §7(" + (Bukkit.getOnlinePlayers().size() - server.vanishedPlayers.size()) + ")", 34), 0, FULL_LIME)), 20, 20);
         for(int i = 2; i < 20; i++) tab.set(2, i, new TextTabItem(" ", 0, QUESTION_MARK));
         for(int h = 0; h < 20; h++) tab.set(3, h, new TextTabItem(" ", 0, QUESTION_MARK));
-
-        // Player list update
-        int row = 2;
-        int column = 2;
-        for (Player player : Bukkit.getOnlinePlayers()) {
-
-            // Switch column
-            if(row > 18 && column == 2) {
-                column++;
-                row = 0;
-            }
-
-            // Player list is full
-            if(row > 19 && column == 3) return;
-
-            tab.set(column, row, new PlayerTabItem(player));
-            row++;
-        }
-        tab.batchUpdate(); // sends the packets!
 
     }
 

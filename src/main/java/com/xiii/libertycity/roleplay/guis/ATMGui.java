@@ -4,7 +4,9 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.displays.ScoreboardDisplay;
+import com.xiii.libertycity.core.utils.ConvertUtils;
 import com.xiii.libertycity.core.utils.InventoryUtils;
+import com.xiii.libertycity.core.utils.MoneyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -30,9 +32,9 @@ public class ATMGui implements Listener, CommandExecutor {
             p.closeInventory();
             Inventory ATM = Bukkit.createInventory(p.getPlayer(), 27, "                 §2§lATM");
             ItemStack glass = (createGuiItem(Material.STAINED_GLASS_PANE, " ", " "));
-            ItemStack deposit = (createGuiItem(Material.GOLD_NUGGET, "§aDéposer de l'argent", "", "§7§oVotre §n§6§oargent§r§7§o sera ajouté de votre §n§6§obanque§r§7§o §7§o!", "§7Vous avez §6" + data.rpBank + "§6$ §7(Banque)"));
+            ItemStack deposit = (createGuiItem(Material.GOLD_NUGGET, "§aDéposer de l'argent", "", "§7§oVotre §n§6§oargent§r§7§o sera ajouté de votre §n§6§obanque§r§7§o §7§o!", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7(Banque)"));
             ItemStack close = (createGuiItem(Material.BARRIER, "§cFermer le menu", " ", "§7Cliquer pour fermer le menu."));
-            ItemStack withdraw = (createGuiItem(Material.IRON_NUGGET, "§cRetiré de l'argent", "", "§7§oL'§6§o§nargent§r§7§o sera retiré de votre §6§o§nbanque§r§7§o !", "§7Vous avez §6" + data.rpBank + "§6$ §7(Banque)"));
+            ItemStack withdraw = (createGuiItem(Material.IRON_NUGGET, "§cRetiré de l'argent", "", "§7§oL'§6§o§nargent§r§7§o sera retiré de votre §6§o§nbanque§r§7§o !", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7(Banque)"));
 
             for(int i = 0; i < 27; i++) {
                 ATM.setItem(i,glass);
@@ -100,18 +102,18 @@ public class ATMGui implements Listener, CommandExecutor {
             Inventory ATMWithdraw = Bukkit.createInventory(p.getPlayer(), 36, "                 §c§lATM §7(W)");
             ItemStack glass = (createGuiItem(Material.STAINED_GLASS_PANE, " ", " "));
             ItemStack close = (createGuiItem(Material.ARROW, "§cRetourner a l'ATM", " ", "§7Cliqué(e) pour retourner au menu de l'ATM."));
-            ItemStack oneDollarBill = (createGuiItem(Material.CLAY_BRICK, "§cRetirer 1$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack twoDollarBill = (createGuiItem(Material.COAL, "§cRetirer 2$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack fiveDollarBill = (createGuiItem(Material.IRON_NUGGET, "§cRetirer 5$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack tenDollarBill = (createGuiItem(Material.GOLD_NUGGET, "§cRetirer 10$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack twentyDollarBill = (createGuiItem(Material.IRON_INGOT, "§cRetirer 20$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack fiftyDollarBill = (createGuiItem(Material.GOLD_INGOT, "§cRetirer 50$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack oneHundredDollarBill = (createGuiItem(Material.COAL_BLOCK, "§cRetirer 100$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack twoHundredDollarBill = (createGuiItem(Material.IRON_BLOCK, "§cRetirer 200$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack fiveHundredDollarBill = (createGuiItem(Material.GOLD_BLOCK, "§cRetirer 500$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack oneThousandDollarBill = (createGuiItem(Material.DIAMOND, "§cRetirer 1000$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack twoThousandDollarBill = (createGuiItem(Material.EMERALD, "§cRetirer 2000$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
-            ItemStack fiveThousandDollarBill = (createGuiItem(Material.NETHER_STAR, "§cRetirer 5000$", " ", "§7Vous avez §6" + data.rpBank + "§6$ §7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack oneDollarBill = (createGuiItem(Material.CLAY_BRICK, "§cRetirer 1$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack twoDollarBill = (createGuiItem(Material.COAL, "§cRetirer 2$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack fiveDollarBill = (createGuiItem(Material.IRON_NUGGET, "§cRetirer 5$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack tenDollarBill = (createGuiItem(Material.GOLD_NUGGET, "§cRetirer 10$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack twentyDollarBill = (createGuiItem(Material.IRON_INGOT, "§cRetirer 20$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack fiftyDollarBill = (createGuiItem(Material.GOLD_INGOT, "§cRetirer 50$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack oneHundredDollarBill = (createGuiItem(Material.COAL_BLOCK, "§cRetirer 100$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack twoHundredDollarBill = (createGuiItem(Material.IRON_BLOCK, "§cRetirer 200$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack fiveHundredDollarBill = (createGuiItem(Material.GOLD_BLOCK, "§cRetirer 500$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack oneThousandDollarBill = (createGuiItem(Material.DIAMOND, "§cRetirer 1000$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack twoThousandDollarBill = (createGuiItem(Material.EMERALD, "§cRetirer 2000$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
+            ItemStack fiveThousandDollarBill = (createGuiItem(Material.NETHER_STAR, "§cRetirer 5000$", " ", "§7Vous avez §6$" + data.rpBank + " §7(" + ConvertUtils.format(data.rpBank) + "§) 7en banque", " ", "§7Clique §e§ndroit§7 pour tous retirer.", "§7Clique §e§ngauche§7 pour retirer 1 par 1."));
 
             for(int i = 0; i < 36; i++) {
                 ATMWithdraw.setItem(i,glass);
@@ -190,8 +192,7 @@ public class ATMGui implements Listener, CommandExecutor {
                                 e.getWhoClicked().getInventory().remove(item);
 
                                 //Add amount of bills * the value of the bill to the player's bank AKA deposit money
-                                data.rpBank += (amount * money);
-                                ScoreboardDisplay.updateScoreboard(p);
+                                MoneyUtils.addMoney(p,amount * money);
 
                                 //Tell how much money the player deposited when exiting the ATM
                                 depMoney += (amount * money);
@@ -206,8 +207,7 @@ public class ATMGui implements Listener, CommandExecutor {
                                 else if (amount > 1) InventoryUtils.removeOne(p.getInventory(), new ItemStack(item));
 
                                 //Add the value of the bill to the player's bank AKA deposit money
-                                data.rpBank += money;
-                                ScoreboardDisplay.updateScoreboard(p);
+                                MoneyUtils.addMoney(p, money);
 
                                 //Tell how much money the player deposited when exiting the ATM
                                 depMoney += money;
@@ -242,17 +242,13 @@ public class ATMGui implements Listener, CommandExecutor {
                         if (e.isRightClick()) {
 
                             //If the player has enough money to withdraw
-                            if (data.rpBank >= (money * 8)) {
+                            if (MoneyUtils.removeMoney(p, money * 8, true)) {
 
                                 //Set new variable as the clicked item with the amount of bills to withdraw
                                 ItemStack imA = new ItemStack(e.getCurrentItem().getType(), 8);
 
                                 //If player has enough space in his inventory
                                 if (InventoryUtils.canStore(p, imA)) {
-
-                                    //Remove the withdrew money from the player's bank AKA withdraw money
-                                    data.rpBank -= (money * 8);
-                                    ScoreboardDisplay.updateScoreboard(p);
 
                                     //Tell how much money the player withdrew when exiting the ATM
                                     whdMoney += (money * 8);
@@ -271,11 +267,7 @@ public class ATMGui implements Listener, CommandExecutor {
                         } else if (e.isLeftClick()) {
 
                             //If player has enough money to withdraw
-                            if (data.rpBank >= money) {
-
-                                //Remove the withdraw money from the player's bank AKA withdraw money
-                                data.rpBank -= money;
-                                ScoreboardDisplay.updateScoreboard(p);
+                            if (MoneyUtils.removeMoney(p, money, true)) {
 
                                 //Tell how much money the player withdrew when exiting the ATM
                                 whdMoney += money;

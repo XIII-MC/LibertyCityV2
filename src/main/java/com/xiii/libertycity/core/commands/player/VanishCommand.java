@@ -27,7 +27,7 @@ public class VanishCommand implements CommandExecutor {
                         data.isVanished = false;
                         server.vanishedPlayers.remove(snder);
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            snder.showPlayer(LibertyCity.INSTANCE, p);
+                            p.showPlayer(LibertyCity.INSTANCE, snder);
                         }
                         snder.setPlayerListName(snder.getName());
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus invisible");
@@ -37,7 +37,7 @@ public class VanishCommand implements CommandExecutor {
                         data.isVanished = true;
                         server.vanishedPlayers.add(snder);
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            if (!server.vanishedPlayers.contains(p)) snder.hidePlayer(LibertyCity.INSTANCE, p);
+                            if (!server.vanishedPlayers.contains(p)) p.hidePlayer(LibertyCity.INSTANCE, snder);
                         }
                         snder.setPlayerListName("§7[V] §f" + snder.getName());
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");
@@ -52,7 +52,7 @@ public class VanishCommand implements CommandExecutor {
                         trget.isVanished = false;
                         server.vanishedPlayers.remove(target);
                         for(Player p : Bukkit.getOnlinePlayers()) {
-                            target.showPlayer(LibertyCity.INSTANCE, p);
+                            p.showPlayer(LibertyCity.INSTANCE, target);
                         }
                         target.setPlayerListName(target.getName());
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus invisible");
@@ -62,7 +62,7 @@ public class VanishCommand implements CommandExecutor {
                         trget.isVanished = true;
                         server.vanishedPlayers.add(target);
                         for(Player p : Bukkit.getOnlinePlayers()) {
-                            if(!server.vanishedPlayers.contains(p)) target.hidePlayer(LibertyCity.INSTANCE, p);
+                            if(!server.vanishedPlayers.contains(p)) p.hidePlayer(LibertyCity.INSTANCE, target);
                         }
                         target.setPlayerListName("§7[V] §f" + target.getName());
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");

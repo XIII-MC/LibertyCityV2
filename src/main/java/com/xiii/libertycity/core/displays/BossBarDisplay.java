@@ -61,7 +61,7 @@ public class BossBarDisplay {
 
             }
 
-        }.runTaskTimerAsynchronously(LibertyCity.INSTANCE, (20*60), (20*60));
+        }.runTaskTimerAsynchronously(LibertyCity.INSTANCE, (20*1800), (20*1800));
 
         clearLagTask = new BukkitRunnable() {
 

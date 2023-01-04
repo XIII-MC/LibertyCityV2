@@ -15,6 +15,7 @@ import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.ChatUtils;
 import com.xiii.libertycity.core.utils.FileUtils;
 import com.xiii.libertycity.core.utils.LagCalculator;
+import com.xiii.libertycity.core.utils.MoneyUtils;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
@@ -136,9 +137,7 @@ public final class LibertyCity extends JavaPlugin {
                 p.sendMessage("§8§m+---------------------------------------+");
                 p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez reçu §6$10 §7(Aide de l'Etat)");
                 p.sendMessage("§8§m+---------------------------------------+");
-                PlayerData pData = Data.data.getUserData(p);
-                pData.rpBank += 10;
-                ScoreboardDisplay.updateScoreboard(p);
+                MoneyUtils.addMoney(p, 10);
             }
         },600*20, 600*20);
 

@@ -2,7 +2,9 @@ package com.xiii.libertycity.core.commands.server;
 
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.displays.BossBarDisplay;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +19,7 @@ public class TestCommand implements CommandExecutor {
 
             // Initialize player and data.
             Player player = (Player) sender;
+            ServerData serverData = Data.data.getServerData(Bukkit.getServer());
             PlayerData playerData = Data.data.getUserData(player);
 
             // Previous tests list :
@@ -25,9 +28,10 @@ public class TestCommand implements CommandExecutor {
                 // - DEBUG_1 : debugging player data output to fix playerData being global | SUCCESS.
                 // - TEST_2 : test AntiAFK system | SUCCESS.
                 // - TEST_3 : log message to yml file | SUCCESS.
+                // - DEV_1 : Dev debug for custom boss bar
 
-            // Test section. | CASE: DEV_1 : Dev debug for custom boss bar
-            BossBarDisplay.updateBossBar(player);
+            // Test section. | CASE: DEBUG_2 : debugging player rpname, rpprenom db
+            Bukkit.broadcastMessage("nom=" + serverData.rpNom + " prenom=" + serverData.rpPrenom);
 
         }
 

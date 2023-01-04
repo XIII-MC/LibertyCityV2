@@ -29,8 +29,8 @@ public class NearCommand implements CommandExecutor {
                     }
                 }
                 if (playersWithinRange.size() > 0) {
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + playersWithinRange.size() + " §fjoueurs trouvés dans un rayon de §6" + range + " §f: " + playersWithinRange);
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §fAucun joueur trouvé dans un rayon de §6" + range);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + playersWithinRange.size() + " §fjoueurs trouvés dans un rayon de §6" + range + " blocs" + " §f: §e" + playersWithinRange);
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §fAucun joueur trouvé dans un rayon de §6" + range + " blocs");
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 

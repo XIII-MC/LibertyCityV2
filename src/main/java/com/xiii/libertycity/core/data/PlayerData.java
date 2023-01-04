@@ -40,7 +40,7 @@ public class PlayerData implements java.io.Serializable {
     public String rpPrenom;
     public String rpNom;
     public int rpAge;
-    public int rpBank;
+    public long rpBank;
     public int rpCurrentChat;
     public String rpCurrentJob = "§eCitoyen";
     public String rpPoliceRank;
@@ -63,13 +63,10 @@ public class PlayerData implements java.io.Serializable {
     //TEMP
     public transient boolean isSearching = false;
     public transient boolean inSearch = false;
-    public transient double lastReport = 90000;
+    public transient long lastReport = 90000L;
     public transient Player lastDm;
-    public transient double lastChat = 999999;
+    public transient long lastChat = 999999L;
     public transient boolean silentKick = false;
-    public transient double lastX;
-    public transient double lastZ;
-    public transient int afkTime;
     public transient Player lastSearchedPlayer;
 
     public PlayerData(String name, UUID uuid) {
