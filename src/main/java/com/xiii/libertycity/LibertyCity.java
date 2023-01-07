@@ -12,10 +12,7 @@ import com.xiii.libertycity.core.commands.server.*;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.displays.ScoreboardDisplay;
-import com.xiii.libertycity.core.utils.ChatUtils;
-import com.xiii.libertycity.core.utils.FileUtils;
-import com.xiii.libertycity.core.utils.LagCalculator;
-import com.xiii.libertycity.core.utils.MoneyUtils;
+import com.xiii.libertycity.core.utils.*;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
@@ -31,6 +28,9 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
 
 public final class LibertyCity extends JavaPlugin {
 
@@ -48,11 +48,18 @@ public final class LibertyCity extends JavaPlugin {
         bossBar = Bukkit.createBossBar("§4§LERROR_43", BarColor.RED, BarStyle.SEGMENTED_6);
         BossBarDisplay.init();
 
-        Data.data.registerServer(Bukkit.getServer());
-        FileUtils.readServerData();
+        try {
+            TestUtils.readObjectFromFile(new File(LibertyCity.INSTANCE.getDataFolder() + "/server/data/"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         FileUtils.readPlayerData();
+        Data.data.registerServer(Bukkit.getServer());
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagCalculator(), 100L, 1L);
+        //Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer())), 1, 1);
 
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
@@ -147,7 +154,11 @@ public final class LibertyCity extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
+        try {
+            TestUtils.writeObjectToFile(Data.data.getServerData(Bukkit.getServer()), new File(LibertyCity.INSTANCE.getDataFolder() + "/server/data/"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Bukkit.getScheduler().cancelAllTasks();
     }
 }

@@ -50,37 +50,41 @@ public class TABDisplay implements Listener {
 
     public static void updatePlayerList() {
         //TableTabList tab = null;
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(LibertyCity.INSTANCE, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
 
-            int row = 2;
-            int column = 2;
+                int row = 2;
+                int column = 2;
 
-            TableTabList tab = (TableTabList) LibertyCity.tabInstance.getTabList(player);
-            //tab.setBatchEnabled(true);
+                TableTabList tab = (TableTabList) LibertyCity.tabInstance.getTabList(player);
+                //tab.setBatchEnabled(true);
 
-            // Switch column
-            if (row > 18 && column == 2) {
-                column++;
-                row = 0;
-            }
+                // Switch column
+                if (row > 18 && column == 2) {
+                    column++;
+                    row = 0;
+                }
 
-            // Player list is full
-            if (row > 19 && column == 3) return;
+                // Player list is full
+                if (row > 19 && column == 3) return;
 
-            ServerData server = Data.data.getServerData(Bukkit.getServer());
-            for(Player p : Bukkit.getOnlinePlayers()) {
-                if(!server.vanishedPlayers.contains(p)) {
+                ServerData server = Data.data.getServerData(Bukkit.getServer());
+                for (Player p : Bukkit.getOnlinePlayers()) {
                     tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
-                    tab.set(column, row, new PlayerTabItem(p));
-                    row++;
-                } else {
-                    tab.set(column, row, new TextTabItem(" ", 0, QUESTION_MARK));
+                    if (!server.vanishedPlayers.contains(p)) {
+                        tab.set(column, row, new PlayerTabItem(p));
+                        row++;
+                    }
+                }
+                for (Player vp : server.vanishedPlayers) {
+                    tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
+                    tab.set(column, row, new PlayerTabItem(vp));
                     row++;
                 }
+                //tab.batchUpdate();
             }
-            //tab.batchUpdate();
-        }
-        //tab.setBatchEnabled(false);
+            //tab.setBatchEnabled(false);
+        }, 20L);
     }
 
     public static void updateTablist(Player p) {
@@ -139,7 +143,13 @@ public class TABDisplay implements Listener {
         // Column 0
         tab.set(0, 0, new TextTabItem(StringUtils.center("§2§nServeur§r", 34), 0, FULL_DARK_GREEN));
         tab.set(0, 2, new TextTabItem(" §7IP » §2liberty§acity§7.§4fr", 0, INTERNET));
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - server.vanishedPlayers.size()) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.DEFAULT_SKIN)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
+            int removeCount = 0;
+            for(Player vp : server.vanishedPlayers) {
+                if(vp.isOnline()) removeCount++;
+            }
+            tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - removeCount) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.getPlayer("?")));
+        }, 20L, 20L);
         tab.set(0, 5, new TextTabItem(StringUtils.center("§2§nInformations§r", 34), 0, FULL_DARK_GREEN));
         // COL 0 | ROW 7 TAKEN
         // COL 0 | ROW 8 TAKEN
@@ -169,7 +179,13 @@ public class TABDisplay implements Listener {
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(1, 12, new TextTabItem(" §7Chat sélectionné » " + finalCurrentChat, 0, CHAT_BUBBLE)), 20, 20);
 
         // Column 2 & 3
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(2, 0, new TextTabItem(StringUtils.center("§2§nJoueurs en ligne§r §7(" + (Bukkit.getOnlinePlayers().size() - server.vanishedPlayers.size()) + ")", 34), 0, FULL_LIME)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
+            int removeCount = 0;
+            for(Player vp : server.vanishedPlayers) {
+                if(vp.isOnline()) removeCount++;
+            }
+            tab.set(2, 0, new TextTabItem(StringUtils.center("§2§nJoueurs en ligne§r §7(" + (Bukkit.getOnlinePlayers().size() - removeCount) + ")", 34), 0, FULL_LIME));
+        }, 20L, 20L);
         for(int i = 2; i < 20; i++) tab.set(2, i, new TextTabItem(" ", 0, QUESTION_MARK));
         for(int h = 0; h < 20; h++) tab.set(3, h, new TextTabItem(" ", 0, QUESTION_MARK));
 

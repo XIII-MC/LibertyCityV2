@@ -4,6 +4,7 @@ import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.displays.BossBarDisplay;
+import com.xiii.libertycity.core.utils.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,6 +33,11 @@ public class TestCommand implements CommandExecutor {
 
             // Test section. | CASE: DEBUG_2 : debugging player rpname, rpprenom db
             Bukkit.broadcastMessage("nom=" + serverData.rpNom + " prenom=" + serverData.rpPrenom);
+            Bukkit.broadcastMessage("gblID=" + serverData.globalID);
+            Bukkit.broadcastMessage("-");
+            //FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
+            Bukkit.broadcastMessage("nom=" + serverData.rpNom + " prenom=" + serverData.rpPrenom);
+            Bukkit.broadcastMessage("gblID=" + serverData.globalID);
 
         }
 

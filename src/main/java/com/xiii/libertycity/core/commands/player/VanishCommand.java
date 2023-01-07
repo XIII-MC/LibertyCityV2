@@ -4,6 +4,7 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.displays.TABDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -37,7 +38,7 @@ public class VanishCommand implements CommandExecutor {
                         data.isVanished = true;
                         server.vanishedPlayers.add(snder);
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            if (!server.vanishedPlayers.contains(p)) p.hidePlayer(LibertyCity.INSTANCE, snder);
+                            if (!server.vanishedPlayers.contains(p) || !p.hasPermission("LibertyCity.seevanishedplayers")) p.hidePlayer(LibertyCity.INSTANCE, snder);
                         }
                         snder.setPlayerListName("§7[V] §f" + snder.getName());
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");
@@ -62,7 +63,7 @@ public class VanishCommand implements CommandExecutor {
                         trget.isVanished = true;
                         server.vanishedPlayers.add(target);
                         for(Player p : Bukkit.getOnlinePlayers()) {
-                            if(!server.vanishedPlayers.contains(p)) p.hidePlayer(LibertyCity.INSTANCE, target);
+                            if(!server.vanishedPlayers.contains(p) || !p.hasPermission("LibertyCity.seevanishedplayers")) p.hidePlayer(LibertyCity.INSTANCE, target);
                         }
                         target.setPlayerListName("§7[V] §f" + target.getName());
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");
@@ -73,7 +74,7 @@ public class VanishCommand implements CommandExecutor {
 
             }
         }
-
+        TABDisplay.updatePlayerList();
         return true;
     }
 }

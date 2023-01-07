@@ -37,15 +37,15 @@ public class RegisterEvent implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
             if (data.playerID <= 0) {
-                isWaitingAge = true;
-                isWaitingPrenom = true;
-                isWaitingNom = true;
+                data.isWaitingAge = true;
+                data.isWaitingPrenom = true;
+                data.isWaitingNom = true;
                 data.rpPrenom = null;
                 data.rpNom = null;
                 data.rpAge = 0;
-                tempPrenom = null;
-                tempName = null;
-                tempAge = 0;
+                data.tempPrenom = null;
+                data.tempName = null;
+                data.tempAge = 0;
             }
         });
     }
@@ -70,15 +70,6 @@ public class RegisterEvent implements Listener {
 
         });
     }
-
-    private int tempAge;
-    private String tempName;
-    private String tempPrenom;
-
-    private boolean isWaitingPrenom = true;
-    private boolean isWaitingNom = true;
-    private boolean isWaitingAge = true;
-
 
     //Listen to chat messages to register player properly
     @EventHandler
@@ -108,7 +99,7 @@ public class RegisterEvent implements Listener {
                 if(data.rpPrenom != null && data.rpNom == null && data.rpAge == 0) {
 
                     //If we are waiting for his rpPrenom variable to be set
-                    if(isWaitingNom) {
+                    if(data.isWaitingNom) {
 
                         //Check database to make sure no one else is registered as the same first and last name
                         if(!server.rpPrenom.contains(data.rpPrenom) && !server.rpNom.contains(e.getMessage())) {
@@ -120,15 +111,15 @@ public class RegisterEvent implements Listener {
                                 if(e.getMessage().length() <= 24) {
 
                                     //Set temp variable to his message
-                                    tempName = e.getMessage();
+                                    data.tempName = e.getMessage();
 
                                     //Check if rpPrenom is fitting the length size requirement
-                                    if (tempName.length() >= 3 && tempName.length() <= 20) {
+                                    if (data.tempName.length() >= 3 && data.tempName.length() <= 20) {
 
                                         //If the rpNom fits the length requirement, ask for confirmation and trigger it
                                         e.getPlayer().sendMessage(" ");
-                                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + tempName + "§f, c'est bien ça ? §7(Oui/Non)");
-                                        isWaitingNom = false;
+                                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.tempName + "§f, c'est bien ça ? §7(Oui/Non)");
+                                        data.isWaitingNom = false;
 
                                     }
 
@@ -143,15 +134,16 @@ public class RegisterEvent implements Listener {
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
                             }
                             //If player didn't pass the database check
-                        } else {
+                        }
+                        if(server.rpPrenom.contains(data.rpPrenom) && server.rpNom.contains(e.getMessage())) {
 
                             //Inform player and reset rpPrenom
                             data.rpPrenom = null;
-                            isWaitingPrenom = true;
-                            tempPrenom = null;
+                            data.isWaitingPrenom = true;
+                            data.tempPrenom = null;
                             e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Une personne s'appelle déja comme ça ! Veuillez entrez votre §ePrénom RP");
-
+                            return;
                         }
 
                         //If we are in waiting for a rpNom confirmation
@@ -160,11 +152,11 @@ public class RegisterEvent implements Listener {
                         //Check if player's answer contains yes options
                         if(optYes.contains(e.getMessage())) {
 
-                            //Re check if tempPrenom isn't null, as safety
-                            if (tempName != null) {
+                            //Re check if data.tempPrenom isn't null, as safety
+                            if (data.tempName != null) {
 
-                                //Set the player's rpNom to the tempName to confirm
-                                data.rpNom = tempName;
+                                //Set the player's rpNom to the data.tempName to confirm
+                                data.rpNom = data.tempName;
 
                                 //Add both first & last name to the database
                                 server.rpPrenom.add(data.rpPrenom);
@@ -178,10 +170,11 @@ public class RegisterEvent implements Listener {
                             }
 
                             //Check if player's answer contains no options
-                        } else if(optNo.contains(e.getMessage())) {
+                        }
+                        if(optNo.contains(e.getMessage())) {
 
                             //Reset wait state & tell the player to restart procedure
-                            isWaitingNom = true;
+                            data.isWaitingNom = true;
                             e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince! Veulliez reécrire votre §eNom RP§c s'il vous plaît!");
 
@@ -197,7 +190,7 @@ public class RegisterEvent implements Listener {
                 if(data.rpPrenom == null && data.rpNom == null && data.rpAge == 0) {
                     
                     //If we are waiting for his rpPrenom variable to be set
-                    if(isWaitingPrenom) {
+                    if(data.isWaitingPrenom) {
                         
                         //Check if String follows ABC alphabet
                         if(e.getMessage().matches("[a-zA-Z]+")) {
@@ -206,15 +199,15 @@ public class RegisterEvent implements Listener {
                             if(e.getMessage().length() <= 24) {
 
                                 //Set temp variable to his message
-                                tempPrenom = e.getMessage();
+                                data.tempPrenom = e.getMessage();
 
                                 //Check if rpPrenom is fitting the length size requirement
-                                if (tempPrenom.length() >= 3 && tempPrenom.length() <= 20) {
+                                if (data.tempPrenom.length() >= 3 && data.tempPrenom.length() <= 20) {
 
                                     //If the rpPrenom fits the length requirement, ask for confirmation and trigger it
                                     e.getPlayer().sendMessage(" ");
-                                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + tempPrenom + "§f, c'est bien ça ? §7(Oui/Non)");
-                                    isWaitingPrenom = false;
+                                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.tempPrenom + "§f, c'est bien ça ? §7(Oui/Non)");
+                                    data.isWaitingPrenom = false;
 
                                 }
 
@@ -233,11 +226,11 @@ public class RegisterEvent implements Listener {
                         //Check if player's answer contains yes options
                         if(optYes.contains(e.getMessage())) {
 
-                            //Re check if tempPrenom isn't null, as safety
-                            if (tempPrenom != null) {
+                            //Re check if data.tempPrenom isn't null, as safety
+                            if (data.tempPrenom != null) {
 
-                                //Set the player's rpPrenom to the tempPrenom to confirm
-                                data.rpPrenom = tempPrenom;
+                                //Set the player's rpPrenom to the data.tempPrenom to confirm
+                                data.rpPrenom = data.tempPrenom;
 
                                 //Tell the player his name has been permanently set
                                 e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §f! §4§l§k|||", "§6§k§l||§r §7Continuez avec votre §e§nNom RP§r §6§k§l||", 0, 14000, 0);
@@ -247,10 +240,11 @@ public class RegisterEvent implements Listener {
                             }
 
                         //Check if player's answer contains no options
-                        } else if(optNo.contains(e.getMessage())) {
+                        }
+                        if(optNo.contains(e.getMessage())) {
 
                             //Reset wait state & tell the player to restart procedure
-                            isWaitingPrenom = true;
+                            data.isWaitingPrenom = true;
                             e.getPlayer().sendMessage(" ");
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince! Veulliez reécrire votre §ePrénom RP§c s'il vous plaît!");
 
@@ -264,7 +258,7 @@ public class RegisterEvent implements Listener {
                 if(data.rpPrenom != null && data.rpNom != null && data.rpAge >= 18) {
 
                     //Check if all wait times are disabled
-                    if(!isWaitingPrenom && !isWaitingNom && !isWaitingAge && tempPrenom != null && tempName != null && tempAge >= 18 && optYes.contains(e.getMessage())) {
+                    if(!data.isWaitingPrenom && !data.isWaitingNom && !data.isWaitingAge && data.tempPrenom != null && data.tempName != null && data.tempAge >= 18 && optYes.contains(e.getMessage())) {
 
                         //Set all required variables to the roleplay of the player
                         data.rpCurrentChat = 0;
@@ -282,27 +276,54 @@ public class RegisterEvent implements Listener {
 
                     }
 
+                    if(optNo.contains(e.getMessage())) {
+
+                        //Remove both first & last name from database
+                        server.rpPrenom.remove(data.rpPrenom);
+                        server.rpNom.remove(data.rpNom);
+                        server.averageAge.remove(data.rpAge);
+
+                        //Reset wait state
+                        data.isWaitingAge = true;
+                        data.isWaitingPrenom = true;
+                        data.isWaitingNom = true;
+
+                        //Reset previously set variables
+                        data.rpPrenom = null;
+                        data.rpNom = null;
+                        data.rpAge = 0;
+                        data.tempPrenom = null;
+                        data.tempName = null;
+                        data.tempAge = 0;
+
+                        //Inform player of taken actions and make him restart the process properly
+                        e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                        e.getPlayer().sendMessage(" ");
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
+
+                    }
+
                 }
 
                 //Register age (rpAge) | Check if rpPrenom & rpNom aren't null but rpAge is null
                 if(data.rpPrenom != null && data.rpNom != null && data.rpAge == 0) {
 
                     //If we are waiting for his rpAge variable to be set
-                    if(isWaitingAge) {
+                    if(data.isWaitingAge) {
 
                         //Set temp variable to his message
-                        tempAge = Integer.parseInt(e.getMessage());
+                        if(!optYes.contains(e.getMessage())) data.tempAge = Integer.parseInt(e.getMessage());
 
                         //Check if String follows ABC alphabet
                         //        (NOT NEEDED)
 
                         //Check if rpPrenom is fitting the length size requirement
-                        if(tempAge >= 18 && tempAge <= 90) {
+                        if(data.tempAge >= 18 && data.tempAge <= 90) {
 
                             //If the rpAge fits the int requirement, ask for confirmation and trigger it
                             e.getPlayer().sendMessage(" ");
-                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + tempAge + "ans§f, c'est bien ça ? §7(Oui/Non)");
-                            isWaitingAge = false;
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + data.tempAge + "ans§f, c'est bien ça ? §7(Oui/Non)");
+                            data.isWaitingAge = false;
 
                         }
 
@@ -312,43 +333,17 @@ public class RegisterEvent implements Listener {
                         //Check if player's answer contains yes options
                         if(optYes.contains(e.getMessage())) {
 
-                            //Re check if tempAge isn't null, as safety
-                            if (tempAge != 0) {
+                            //Re check if data.tempAge isn't null, as safety
+                            if (data.tempAge != 0) {
 
-                                //Set the player's rpAge to the tempAge to confirm
-                                data.rpAge = tempAge;
+                                //Set the player's rpAge to the data.tempAge to confirm
+                                data.rpAge = data.tempAge;
 
                                 //Tell the player his name has been permanently set
                                 e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fAlors pour bien confirmé le tous, vous vous appelez §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §fet vous avez §6" + data.rpAge + "ans§f, correct ?");
 
                             }
-
-                        //Check if player's answer contains no options
-                        } else if(optNo.contains(e.getMessage())) {
-
-                            //Remove both first & last name from database
-                            server.rpPrenom.remove(data.rpPrenom);
-                            server.rpNom.remove(data.rpNom);
-                            server.averageAge.remove(data.rpAge);
-
-                            //Reset wait state
-                            isWaitingAge = true;
-                            isWaitingPrenom = true;
-                            isWaitingNom = true;
-
-                            //Reset previously set variables
-                            data.rpPrenom = null;
-                            data.rpNom = null;
-                            data.rpAge = 0;
-                            tempPrenom = null;
-                            tempName = null;
-                            tempAge = 0;
-
-                            //Inform player of taken actions and make him restart the process properly
-                            e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
-                            e.getPlayer().sendMessage(" ");
-                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
 
                         }
 

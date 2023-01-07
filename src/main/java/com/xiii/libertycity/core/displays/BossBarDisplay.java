@@ -27,7 +27,7 @@ public class BossBarDisplay {
             @Override
             public void run() {
                 // 15 seconds: 1 / (20*15)
-                if(!(bossBar.getProgress() <= 0)) bossBar.setProgress(bossBar.getProgress() - 0.0033);
+                if((bossBar.getProgress() >= 0.0033)) bossBar.setProgress(bossBar.getProgress() - 0.0033);
             }
 
         }.runTaskTimerAsynchronously(LibertyCity.INSTANCE, 1, 1);
