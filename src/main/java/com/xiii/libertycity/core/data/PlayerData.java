@@ -2,13 +2,10 @@ package com.xiii.libertycity.core.data;
 
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerData implements java.io.Serializable {
-    private static final long serialVersionUID = 1113799434508676095L;
+    private static final long serialVersionUID = 1L;
 
     public UUID uuid;
     public Player player;

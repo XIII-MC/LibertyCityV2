@@ -321,11 +321,7 @@ public class CustomChat implements Listener, CommandExecutor {
                         }
 
                     }
-
-                    Pattern pt = Pattern.compile("\\§+.");
-                    Matcher match = pt.matcher(chatFormat);
-                    String output = match.replaceAll("");
-                    YMLUtil.log(output, null, null);
+                    YMLUtil.log(chatFormat, null, null);
 
                 } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cVeuillez patientez entre chaque messages.");
                 data.lastChat = System.currentTimeMillis();

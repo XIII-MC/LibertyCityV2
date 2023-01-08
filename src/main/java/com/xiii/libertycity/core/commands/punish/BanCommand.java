@@ -4,6 +4,7 @@ import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.TimeUtil;
+import com.xiii.libertycity.core.utils.YMLUtil;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -40,6 +41,7 @@ public class BanCommand implements CommandExecutor {
                     banList.addBan(target.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", null, sender.getName());
                     AlertUtil.staffAlert("§8" + sender.getName() + " §7a banni §8" + target.getName(), "LibertyCity.staff.alert", 0);
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Comme ce joueur ne c'est jamais connecté, il a était banni a vie avec une raison non spécifiée. Vous ne pouvez pas changer la durée ni la raison du bannissement.");
+                    YMLUtil.log("BAN - " + target.getName() + " banni par " + sender.getName() + " - raison: " + "Non Spécifiée" + " - durée: " + "permanent" + " silencieux: false", "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                 }
 
                 // If duration is permanent
@@ -58,6 +60,7 @@ public class BanCommand implements CommandExecutor {
                         // Run ban on the server
                         ((Player) target).kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                         banList.addBan(target.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", null, sender.getName());
+                        YMLUtil.log("BAN - " + target.getName() + " banni par " + sender.getName() + " - raison: " + targetData.banReason + " - durée: " + targetData.banDuration + " - silencieux: " + targetData.isSilentBan, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été banni du serveur!");
                         AlertUtil.staffAlert("§8" + sender.getName() + " §7a banni §8" + target.getName(), "LibertyCity.staff.alert", 0);
 
@@ -78,6 +81,7 @@ public class BanCommand implements CommandExecutor {
 
                         // Run ban on the server
                         ((Player) target).kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                        YMLUtil.log("BAN - " + target.getName() + " banni par " + sender.getName() + " - raison: " + targetData.banReason + " - durée: " + targetData.banDuration + " - silencieux: " + targetData.isSilentBan, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         if(newStringConverted.contains("-ip")) {
 
                             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -96,6 +100,7 @@ public class BanCommand implements CommandExecutor {
                                     p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                                     banListIP.addBan(p.getAddress().getHostName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", null, sender.getName());
                                     banList.addBan(p.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", null, sender.getName());
+                                    YMLUtil.log("BAN - " + p.getName() + " banni par " + sender.getName() + " - raison: " + pData.banReason + " - durée: " + pData.banDuration + " - silencieux: " + targetData.isSilentBan + " | note: BAN_IP", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
                                 }
                             }
                         } else banList.addBan(target.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", null, sender.getName());
@@ -183,6 +188,7 @@ public class BanCommand implements CommandExecutor {
                         // Run ban on the server
                         ((Player) target).kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                         banList.addBan(target.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", targetData.banExpiration, sender.getName());
+                        YMLUtil.log("BAN - " + target.getName() + " banni par " + sender.getName() + " - raison: " + targetData.banReason + " - durée: " + targetData.banDuration + " - silencieux: " + targetData.isSilentBan, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été banni du serveur!");
                         AlertUtil.staffAlert("§8" + sender.getName() + " §7a banni §8" + target.getName() + " §7pour une durée de §8" + args[1], "LibertyCity.staff.alert", 0);
 
@@ -203,6 +209,7 @@ public class BanCommand implements CommandExecutor {
 
                         // Run ban on the server
                         ((Player) target).kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                        YMLUtil.log("BAN - " + target.getName() + " banni par " + sender.getName() + " - raison: " + targetData.banReason + " - durée: " + targetData.banDuration + " - silencieux: " + targetData.isSilentBan, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         if(newStringConverted.contains("-ip")) {
                             for (Player p : Bukkit.getOnlinePlayers()) {
                                 if (Objects.equals(p.getAddress().getHostName(), target.getPlayer().getAddress().getHostName())) {
@@ -220,6 +227,7 @@ public class BanCommand implements CommandExecutor {
                                     p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                                     banListIP.addBan(p.getAddress().getHostName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", targetData.banExpiration, sender.getName());
                                     banList.addBan(p.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", targetData.banExpiration, sender.getName());
+                                    YMLUtil.log("BAN - " + p.getName() + " banni par " + sender.getName() + " - raison: " + pData.banReason + " - durée: " + pData.banDuration  + " - silencieux: " + targetData.isSilentBan + " | note: BAN_IP", "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                                 }
                             }
                         } else banList.addBan(target.getName(), "§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Banni(e) le §f» §c" + targetData.banDate + "\n" + "§f§l⋅ §7Banni(e) par §f» §c" + targetData.bannedBy + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.banReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction expira le " + targetData.banDisplayDate + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+", targetData.banExpiration, sender.getName());

@@ -95,6 +95,57 @@ public class RegisterEvent implements Listener {
             //If player's ID is null AKA not registered
             if(data.playerID <= 0) {
 
+                //Final registeration checks
+                if(data.rpPrenom != null && data.rpNom != null && data.rpAge >= 18) {
+
+                    //Check if all wait times are disabled
+                    if(!data.isWaitingPrenom && !data.isWaitingNom && !data.isWaitingAge && data.tempPrenom != null && data.tempName != null && data.tempAge >= 18 && optYes.contains(e.getMessage())) {
+
+                        //Set all required variables to the roleplay of the player
+                        data.rpCurrentChat = 0;
+                        data.rpCurrentJob = "§eCitoyen";
+
+                        //Set player's ID, update globalServerID and update averageAge
+                        server.globalID++;
+                        data.playerID = server.globalID;
+                        server.averageAge.add(data.rpAge);
+
+                        //Kick player to finalize registration
+                        e.getPlayer().sendTitle("", "", 0, 0, 0);
+                        String kickMessage = ("§8§m+--------------------------+" + "\n" + "§4§l§k|||§r §fBienvenue §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||" + "\n" + "§c§k§l||§r §7Amusez vous bien ! §c§k§l||§r" + "\n" + " " + "\n" + "§8§oVous avez été engregistré, reconectez-vous !" + "\n" + "§8§m+--------------------------+");
+                        Bukkit.getScheduler().runTask(LibertyCity.INSTANCE, () -> e.getPlayer().kickPlayer(kickMessage));
+
+                    }
+
+                    if(optNo.contains(e.getMessage())) {
+
+                        //Remove both first & last name from database
+                        server.rpPrenom.remove(data.rpPrenom);
+                        server.rpNom.remove(data.rpNom);
+                        server.averageAge.remove(data.rpAge);
+
+                        //Reset wait state
+                        data.isWaitingAge = true;
+                        data.isWaitingPrenom = true;
+                        data.isWaitingNom = true;
+
+                        //Reset previously set variables
+                        data.rpPrenom = null;
+                        data.rpNom = null;
+                        data.rpAge = 0;
+                        data.tempPrenom = null;
+                        data.tempName = null;
+                        data.tempAge = 0;
+
+                        //Inform player of taken actions and make him restart the process properly
+                        e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                        e.getPlayer().sendMessage(" ");
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
+
+                    }
+
+                }
+
                 //Register last name (nom) | Check if rpPrenom isn't null & rpNom and rpAge are null
                 if(data.rpPrenom != null && data.rpNom == null && data.rpAge == 0) {
 
@@ -102,7 +153,7 @@ public class RegisterEvent implements Listener {
                     if(data.isWaitingNom) {
 
                         //Check database to make sure no one else is registered as the same first and last name
-                        if(!server.rpPrenom.contains(data.rpPrenom) && !server.rpNom.contains(e.getMessage())) {
+                        if(!server.rpPrenom.contains(data.rpPrenom) || !server.rpNom.contains(e.getMessage())) {
 
                             //Check if String follows ABC alphabet
                             if(e.getMessage().matches("[a-zA-Z]+")) {
@@ -131,7 +182,7 @@ public class RegisterEvent implements Listener {
                                 //If player's message isn't conform to the ABC alphabet
                             } else {
                                 e.getPlayer().sendMessage(" ");
-                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §ePrénom RP§c est incorect!");
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Votre §eNom RP§c est incorect!");
                             }
                             //If player didn't pass the database check
                         }
@@ -249,57 +300,6 @@ public class RegisterEvent implements Listener {
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince! Veulliez reécrire votre §ePrénom RP§c s'il vous plaît!");
 
                         }
-
-                    }
-
-                }
-
-                //Final registeration checks
-                if(data.rpPrenom != null && data.rpNom != null && data.rpAge >= 18) {
-
-                    //Check if all wait times are disabled
-                    if(!data.isWaitingPrenom && !data.isWaitingNom && !data.isWaitingAge && data.tempPrenom != null && data.tempName != null && data.tempAge >= 18 && optYes.contains(e.getMessage())) {
-
-                        //Set all required variables to the roleplay of the player
-                        data.rpCurrentChat = 0;
-                        data.rpCurrentJob = "§eCitoyen";
-
-                        //Set player's ID, update globalServerID and update averageAge
-                        server.globalID++;
-                        data.playerID = server.globalID;
-                        server.averageAge.add(data.rpAge);
-
-                        //Kick player to finalize registration
-                        e.getPlayer().sendTitle("", "", 0, 0, 0);
-                        String kickMessage = ("§8§m+--------------------------+" + "\n" + "§4§l§k|||§r §fBienvenue §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||" + "\n" + "§c§k§l||§r §7Amusez vous bien ! §c§k§l||§r" + "\n" + " " + "\n" + "§8§oVous avez été engregistré, reconectez-vous !" + "\n" + "§8§m+--------------------------+");
-                        Bukkit.getScheduler().runTask(LibertyCity.INSTANCE, () -> e.getPlayer().kickPlayer(kickMessage));
-
-                    }
-
-                    if(optNo.contains(e.getMessage())) {
-
-                        //Remove both first & last name from database
-                        server.rpPrenom.remove(data.rpPrenom);
-                        server.rpNom.remove(data.rpNom);
-                        server.averageAge.remove(data.rpAge);
-
-                        //Reset wait state
-                        data.isWaitingAge = true;
-                        data.isWaitingPrenom = true;
-                        data.isWaitingNom = true;
-
-                        //Reset previously set variables
-                        data.rpPrenom = null;
-                        data.rpNom = null;
-                        data.rpAge = 0;
-                        data.tempPrenom = null;
-                        data.tempName = null;
-                        data.tempAge = 0;
-
-                        //Inform player of taken actions and make him restart the process properly
-                        e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
-                        e.getPlayer().sendMessage(" ");
-                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
 
                     }
 

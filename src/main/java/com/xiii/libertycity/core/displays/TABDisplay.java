@@ -71,15 +71,19 @@ public class TABDisplay implements Listener {
                 ServerData server = Data.data.getServerData(Bukkit.getServer());
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
-                    if (!server.vanishedPlayers.contains(p)) {
-                        tab.set(column, row, new PlayerTabItem(p));
-                        row++;
+                    if(server.vanishedPlayers != null) {
+                        if (!server.vanishedPlayers.contains(p)) {
+                            tab.set(column, row, new PlayerTabItem(p));
+                            row++;
+                        }
                     }
                 }
-                for (Player vp : server.vanishedPlayers) {
-                    tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
-                    tab.set(column, row, new PlayerTabItem(vp));
-                    row++;
+                if(server.vanishedPlayers != null) {
+                    for (Player vp : server.vanishedPlayers) {
+                        tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
+                        tab.set(column, row, new PlayerTabItem(vp));
+                        row++;
+                    }
                 }
                 //tab.batchUpdate();
             }
@@ -145,8 +149,10 @@ public class TABDisplay implements Listener {
         tab.set(0, 2, new TextTabItem(" §7IP » §2liberty§acity§7.§4fr", 0, INTERNET));
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
             int removeCount = 0;
-            for(Player vp : server.vanishedPlayers) {
-                if(vp.isOnline()) removeCount++;
+            if(server.vanishedPlayers != null) {
+                for (Player vp : server.vanishedPlayers) {
+                    if (vp.isOnline()) removeCount++;
+                }
             }
             tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - removeCount) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.getPlayer("?")));
         }, 20L, 20L);
@@ -181,8 +187,10 @@ public class TABDisplay implements Listener {
         // Column 2 & 3
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
             int removeCount = 0;
-            for(Player vp : server.vanishedPlayers) {
-                if(vp.isOnline()) removeCount++;
+            if(server.vanishedPlayers != null ) {
+                for (Player vp : server.vanishedPlayers) {
+                    if (vp.isOnline()) removeCount++;
+                }
             }
             tab.set(2, 0, new TextTabItem(StringUtils.center("§2§nJoueurs en ligne§r §7(" + (Bukkit.getOnlinePlayers().size() - removeCount) + ")", 34), 0, FULL_LIME));
         }, 20L, 20L);

@@ -18,16 +18,13 @@ public class FileUtils {
         try {
             if (!LibertyCity.INSTANCE.getDataFolder().exists())
                 LibertyCity.INSTANCE.getDataFolder().mkdir();
-            File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "//server//");
-            if (!fileFolder.exists()) fileFolder.mkdir();
-            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "//server//", "CONSOLE" + ".MCI");
+            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/");
+            if (!filefolder.exists()) filefolder.mkdir();
+            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/", "CONSOLE" + ".libertycity");
             if (!file.exists()) {
                 file.createNewFile();
-            } else {
-                file.delete();
-                file.createNewFile();
             }
-            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "//server//" + "CONSOLE" + ".MCI");
+            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/server/" + "CONSOLE" + ".libertycity");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
@@ -38,39 +35,28 @@ public class FileUtils {
     }
 
     public static void readServerData() {
-        File configFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "//server//");
+        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/");
 
-        if (configFolder.listFiles() == null || Objects.requireNonNull(configFolder.listFiles()).length < 1) {
+        if (configsfolder.listFiles() == null || Objects.requireNonNull(configsfolder.listFiles()).length < 1) {
             System.out.println("§eWARN: No ServerData found");
             return;
         } else {
-            for (final File file : Objects.requireNonNull(configFolder.listFiles())) {
-                try {
-                    FileInputStream fileIn = new FileInputStream(file.getPath());
-                    ObjectInputStream in = new ObjectInputStream(fileIn);
-                    Data.data.servers.add((ServerData) in.readObject());
-                    in.close();
-                    fileIn.close();
-                } catch (IOException i) {
-                    i.printStackTrace();
-                    return;
-                } catch (ClassNotFoundException c) {
-                    System.out.println("§eERROR: ServerData class not found");
-                    c.printStackTrace();
-                    return;
-                }
-            }
-        }
-    }
-
-    public static void deletePlayerData(UUID uuid, Player p) {
-        if(LibertyCity.INSTANCE.getDataFolder().exists()) {
-            File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
-            if(fileFolder.exists()) {
-                File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/", uuid + ".LCT");
-                if(file.exists() && !file.isDirectory()) {
-                    file.delete();
-                    Data.data.deletePlayerData(p);
+            for (final File file : Objects.requireNonNull(configsfolder.listFiles())) {
+                if(!file.isDirectory()) {
+                    try {
+                        FileInputStream fileIn = new FileInputStream(file.getPath());
+                        ObjectInputStream in = new ObjectInputStream(fileIn);
+                        Data.data.servers.add((ServerData) in.readObject());
+                        in.close();
+                        fileIn.close();
+                    } catch (IOException i) {
+                        i.printStackTrace();
+                        return;
+                    } catch (ClassNotFoundException c) {
+                        System.out.println("§eERROR: ServerData class not found");
+                        c.printStackTrace();
+                        return;
+                    }
                 }
             }
         }
@@ -80,16 +66,13 @@ public class FileUtils {
         try {
             if (!LibertyCity.INSTANCE.getDataFolder().exists())
                 LibertyCity.INSTANCE.getDataFolder().mkdir();
-            File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
-            if (!fileFolder.exists()) fileFolder.mkdir();
-            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/", data.getUuid() + ".LCT");
+            File filefolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
+            if (!filefolder.exists()) filefolder.mkdir();
+            File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/", data.getUuid() + ".libertycity");
             if (!file.exists()) {
                 file.createNewFile();
-            } else {
-                file.delete();
-                file.createNewFile();
             }
-            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/players/" + data.getUuid() + ".LCT");
+            FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/players/" + data.getUuid() + ".libertycity");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
@@ -100,27 +83,26 @@ public class FileUtils {
     }
 
     public static void readPlayerData() {
-        File configFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
+        File configsfolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/");
 
-        if (configFolder.listFiles() == null || Objects.requireNonNull(configFolder.listFiles()).length < 1) {
+        if (configsfolder.listFiles() == null || Objects.requireNonNull(configsfolder.listFiles()).length < 1) {
             System.out.println("§eWARN: No PlayerData found");
+            return;
         } else {
-            for (final File file : Objects.requireNonNull(configFolder.listFiles())) {
-                if(!file.isDirectory()) {
-                    try {
-                        FileInputStream fileIn = new FileInputStream(file.getPath());
-                        ObjectInputStream in = new ObjectInputStream(fileIn);
-                        Data.data.users.add((PlayerData) in.readObject());
-                        in.close();
-                        fileIn.close();
-                    } catch (IOException i) {
-                        i.printStackTrace();
-                        return;
-                    } catch (ClassNotFoundException c) {
-                        System.out.println("§cERROR: PlayerData class not found");
-                        c.printStackTrace();
-                        return;
-                    }
+            for (final File file : Objects.requireNonNull(configsfolder.listFiles())) {
+                try {
+                    FileInputStream fileIn = new FileInputStream(file.getPath());
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    Data.data.users.add((PlayerData) in.readObject());
+                    in.close();
+                    fileIn.close();
+                } catch (IOException i) {
+                    i.printStackTrace();
+                    return;
+                } catch (ClassNotFoundException c) {
+                    System.out.println("§cERROR: PlayerData class not found");
+                    c.printStackTrace();
+                    return;
                 }
             }
         }

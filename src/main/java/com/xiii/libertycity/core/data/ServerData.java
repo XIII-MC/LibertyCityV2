@@ -3,12 +3,11 @@ package com.xiii.libertycity.core.data;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerData implements Serializable {
-    private static final long serialVersionUID = 1213799434508676095L;
+public class ServerData implements java.io.Serializable {
+    private static final long serialVersionUID = 2L;
 
     public int globalID;
     public boolean chatStateGlobal = true;

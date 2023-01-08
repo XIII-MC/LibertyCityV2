@@ -8,9 +8,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class YMLUtil {
 
@@ -84,15 +88,26 @@ public class YMLUtil {
         //new SimpleDateFormat("dd/MM/yyyy); | DateFormat
         //new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"); | SimpleDateFormat
 
+        Pattern pt = Pattern.compile("\\§+.");
+        Matcher match = pt.matcher(message);
+        String output = match.replaceAll("");
+
         Date date = new Date();
-        SimpleDateFormat displayDate = new SimpleDateFormat("dd_MM_yyyy");
+        SimpleDateFormat displayDate = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat fullDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss-SSS");
 
         File fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/");
-        File logFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/" + displayDate.format(date) + ".yml");
+        File logFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/" + displayDate.format(date) + ".log");
 
         if (customFolderPath != null) fileFolder = new File(LibertyCity.INSTANCE.getDataFolder() + customFolderPath);
         if (customFilePath != null) logFile = new File(LibertyCity.INSTANCE.getDataFolder() + customFilePath);
+
+        // ZIP the previous log file.
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate lastDay = now.minusDays(1);
+        GZIPUtils.compressGzipFile(new File(LibertyCity.INSTANCE.getDataFolder() + "/server/logs/" + lastDay.format(formatter) + ".log"), LibertyCity.INSTANCE.getDataFolder() + "/server/logs/" + lastDay.format(formatter) + ".gz");
+
 
         if (!fileFolder.exists()) fileFolder.mkdir();
 
@@ -107,7 +122,7 @@ public class YMLUtil {
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(logFile);
         File finalLogFile = logFile;
 
-        cfg.set(fullDate.format(date), message);
+        cfg.set(fullDate.format(date), output);
 
         try {
             cfg.save(finalLogFile);

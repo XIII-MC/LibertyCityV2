@@ -26,12 +26,15 @@ public class Events implements Listener {
     @EventHandler
     public void forVanish(PlayerJoinEvent e) {
         ServerData server = Data.data.getServerData(Bukkit.getServer());
-        for (Player vp : server.vanishedPlayers) {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                // TODO: Test it
-                p.hidePlayer(LibertyCity.INSTANCE, vp);
-                if(p.hasPermission("LibertyCity.seevanishedplayers") || server.vanishedPlayers.contains(p)) p.showPlayer(LibertyCity.INSTANCE, vp);
-                vp.setDisplayName("§7[V] §f" + vp.getName());
+        if(server.vanishedPlayers != null) {
+            for (Player vp : server.vanishedPlayers) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    // TODO: Test it
+                    p.hidePlayer(LibertyCity.INSTANCE, vp);
+                    if (p.hasPermission("LibertyCity.seevanishedplayers") || server.vanishedPlayers.contains(p))
+                        p.showPlayer(LibertyCity.INSTANCE, vp);
+                    vp.setDisplayName("§7[V] §f" + vp.getName());
+                }
             }
         }
         TABDisplay.updatePlayerList();

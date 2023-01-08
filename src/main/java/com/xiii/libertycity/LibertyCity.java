@@ -48,18 +48,11 @@ public final class LibertyCity extends JavaPlugin {
         bossBar = Bukkit.createBossBar("§4§LERROR_43", BarColor.RED, BarStyle.SEGMENTED_6);
         BossBarDisplay.init();
 
-        try {
-            TestUtils.readObjectFromFile(new File(LibertyCity.INSTANCE.getDataFolder() + "/server/data/"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        FileUtils.readPlayerData();
-        Data.data.registerServer(Bukkit.getServer());
-
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagCalculator(), 100L, 1L);
-        //Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer())), 1, 1);
+
+        FileUtils.readPlayerData();
+        FileUtils.readServerData();
+        Data.data.registerServer(Bukkit.getServer());
 
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
@@ -137,6 +130,7 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("Phase 3 PASSED.");
 
         }, 30);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer())), 20, 20);
         Bukkit.getConsoleSender().sendMessage("Plugin loaded");
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {

@@ -24,7 +24,7 @@ public class VanishCommand implements CommandExecutor {
                 if(sender instanceof Player) {
                     Player snder = (Player) sender;
                     PlayerData data = Data.data.getUserData(snder);
-                    if (data.isVanished) {
+                    if (data.isVanished && server.vanishedPlayers.contains(snder)) {
                         data.isVanished = false;
                         server.vanishedPlayers.remove(snder);
                         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -33,9 +33,9 @@ public class VanishCommand implements CommandExecutor {
                         snder.setPlayerListName(snder.getName());
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus invisible");
                         AlertUtil.staffAlert("§8" + sender.getName() + " §7n'est plus invisible", "LibertyCity.staff", 0);
-                        server.vanishedPlayers.remove(snder);
                     } else {
                         data.isVanished = true;
+                        assert server != null;
                         server.vanishedPlayers.add(snder);
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             if (!server.vanishedPlayers.contains(p) || !p.hasPermission("LibertyCity.seevanishedplayers")) p.hidePlayer(LibertyCity.INSTANCE, snder);

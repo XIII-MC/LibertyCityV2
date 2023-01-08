@@ -4,6 +4,7 @@ import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.TimeUtil;
+import com.xiii.libertycity.core.utils.YMLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +26,7 @@ public class KickallCommand implements CommandExecutor {
                 if (args.length == 0) {
 
                     p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                    YMLUtil.log("KICKALL - " + p.getName() + " expulsée par " + sender.getName() + " - raison: " + "Non Spécifiée" + " - durée: " + "Aucune", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
 
                 } else {
 
@@ -36,6 +38,7 @@ public class KickallCommand implements CommandExecutor {
                     kickReason = newStringConverted;
 
                     p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                    YMLUtil.log("KICKALL - " + p.getName() + " expulsée par " + sender.getName() + " - raison: " + kickReason + " - durée: " + "Aucune", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
 
                 }
 

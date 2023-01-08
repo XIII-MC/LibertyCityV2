@@ -1,5 +1,3 @@
 historique sanctions
 warns system sanction
 make boss bar display cleaner (*)
-registerevent fix multiple players with same name/last name WTF?
-zip log files after day as passed
