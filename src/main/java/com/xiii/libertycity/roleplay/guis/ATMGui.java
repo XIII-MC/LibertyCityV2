@@ -3,7 +3,6 @@ package com.xiii.libertycity.roleplay.guis;
 import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
-import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.ConvertUtils;
 import com.xiii.libertycity.core.utils.InventoryUtils;
 import com.xiii.libertycity.core.utils.MoneyUtils;

@@ -1,7 +1,6 @@
 package com.xiii.libertycity.core.displays;
 
 import com.keenant.tabbed.Tabbed;
-import com.keenant.tabbed.item.BlankTabItem;
 import com.keenant.tabbed.item.PlayerTabItem;
 import com.keenant.tabbed.item.TextTabItem;
 import com.keenant.tabbed.tablist.TableTabList;

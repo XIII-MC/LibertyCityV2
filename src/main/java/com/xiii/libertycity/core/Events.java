@@ -1,9 +1,5 @@
 package com.xiii.libertycity.core;
 
-import com.keenant.tabbed.Tabbed;
-import com.keenant.tabbed.item.PlayerTabItem;
-import com.keenant.tabbed.tablist.TabList;
-import com.keenant.tabbed.tablist.TableTabList;
 import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;

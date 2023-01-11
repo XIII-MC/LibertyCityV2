@@ -1,6 +1,5 @@
 package com.xiii.libertycity.core.data;
 
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

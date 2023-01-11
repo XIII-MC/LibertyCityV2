@@ -10,9 +10,12 @@ import com.xiii.libertycity.core.commands.player.*;
 import com.xiii.libertycity.core.commands.punish.*;
 import com.xiii.libertycity.core.commands.server.*;
 import com.xiii.libertycity.core.data.Data;
-import com.xiii.libertycity.core.data.PlayerData;
-import com.xiii.libertycity.core.displays.ScoreboardDisplay;
-import com.xiii.libertycity.core.utils.*;
+import com.xiii.libertycity.core.displays.BossBarDisplay;
+import com.xiii.libertycity.core.utils.FileUtils;
+import com.xiii.libertycity.core.utils.LagCalculator;
+import com.xiii.libertycity.core.utils.MoneyUtils;
+import com.xiii.libertycity.core.utils.TestUtils;
+import com.xiii.libertycity.discord.commands.LookUpCommand;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
@@ -20,7 +23,14 @@ import com.xiii.libertycity.roleplay.events.RegisterEvent;
 import com.xiii.libertycity.roleplay.guis.ATMGui;
 import com.xiii.libertycity.roleplay.guis.BinGui;
 import com.xiii.libertycity.roleplay.items.SearchItem;
-import com.xiii.libertycity.core.displays.BossBarDisplay;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -40,6 +50,7 @@ public final class LibertyCity extends JavaPlugin {
         return INSTANCE;
     }
     public static BossBar bossBar;
+    private final String BOT_TOKEN = "MTA2Mjc5Mjg2ODk2NTY2MjcyMA.G8-6hq.7UHoeLfkMn6K04KuqDX7IXFKsUe28gPCGOeSBI";
 
     @Override
     public void onEnable() {
@@ -47,6 +58,19 @@ public final class LibertyCity extends JavaPlugin {
         tabInstance = new Tabbed(this);
         bossBar = Bukkit.createBossBar("§4§LERROR_43", BarColor.RED, BarStyle.SEGMENTED_6);
         BossBarDisplay.init();
+
+        // Discord
+        JDA jda = JDABuilder.createDefault(BOT_TOKEN)
+                .addEventListeners(new LookUpCommand())
+                .setActivity(Activity.watching("0 joueurs"))
+                .build();
+
+        CommandListUpdateAction commands = jda.updateCommands();
+
+        commands.addCommands(
+                Commands.slash("ping", "Calcule la latence entre le bot et discord."));
+
+        commands.queue();
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagCalculator(), 100L, 1L);
 
