@@ -15,7 +15,7 @@ import com.xiii.libertycity.core.utils.FileUtils;
 import com.xiii.libertycity.core.utils.LagCalculator;
 import com.xiii.libertycity.core.utils.MoneyUtils;
 import com.xiii.libertycity.core.utils.TestUtils;
-import com.xiii.libertycity.discord.commands.LookUpCommand;
+import com.xiii.libertycity.discord.commands.SlashCommand;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
 import com.xiii.libertycity.roleplay.events.DeathEvent;
@@ -25,12 +25,11 @@ import com.xiii.libertycity.roleplay.guis.BinGui;
 import com.xiii.libertycity.roleplay.items.SearchItem;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -59,24 +58,11 @@ public final class LibertyCity extends JavaPlugin {
         bossBar = Bukkit.createBossBar("§4§LERROR_43", BarColor.RED, BarStyle.SEGMENTED_6);
         BossBarDisplay.init();
 
-        // Discord
-        JDA jda = JDABuilder.createDefault(BOT_TOKEN)
-                .addEventListeners(new LookUpCommand())
-                .setActivity(Activity.watching("0 joueurs"))
-                .build();
-
-        CommandListUpdateAction commands = jda.updateCommands();
-
-        commands.addCommands(
-                Commands.slash("ping", "Calcule la latence entre le bot et discord."));
-
-        commands.queue();
-
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagCalculator(), 100L, 1L);
 
         FileUtils.readPlayerData();
-        FileUtils.readServerData();
         Data.data.registerServer(Bukkit.getServer());
+        FileUtils.readServerData();
 
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new ATMGui(), this);
@@ -165,6 +151,25 @@ public final class LibertyCity extends JavaPlugin {
                 MoneyUtils.addMoney(p, 10);
             }
         },600*20, 600*20);
+
+        // Discord
+        JDA jda = JDABuilder.createDefault(BOT_TOKEN)
+                .addEventListeners(new SlashCommand())
+                .setActivity(Activity.watching("??? joueurs"))
+                .build();
+
+        CommandListUpdateAction commands = jda.updateCommands();
+
+        commands.addCommands(
+                Commands.slash("ping", "Calcule la latence entre le bot et discord."));
+
+        commands.addCommands(
+                Commands.slash("lookup", "Lookup les informations RP/HRP d'un joueur.")
+                        .addOptions(new OptionData(OptionType.STRING, "joueur", "Pseudo du joueur a lookup")
+                                .setRequired(true))
+        );
+
+        commands.queue();
 
 
 

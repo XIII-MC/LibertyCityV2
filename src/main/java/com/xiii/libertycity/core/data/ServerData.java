@@ -8,7 +8,7 @@ import java.util.List;
 public class ServerData implements java.io.Serializable {
     private static final long serialVersionUID = 2L;
 
-    public int globalID;
+    public int globalID = 0;
     public boolean chatStateGlobal = true;
     public boolean chatStateGang = true;
     public boolean chatStatePolice = true;

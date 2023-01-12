@@ -99,7 +99,7 @@ public class TABDisplay implements Listener {
 
         PlayerData data = Data.data.getUserData(p);
         ServerData server = Data.data.getServerData(Bukkit.getServer());
-        if(data == null) return;
+        if(data == null || server == null) return;
         String currentChat = "§4§LERROR23";
 
         // Establish ping stability

@@ -68,14 +68,13 @@ public class PlayerData implements java.io.Serializable {
     public transient long lastChat = 999999L;
     public transient boolean silentKick = false;
     public transient Player lastSearchedPlayer;
-
     public transient int tempAge = 0;
     public transient String tempPrenom = null;
     public transient String tempName = null;
     public transient String tempNom = null;
-    public boolean isWaitingPrenom = true;
-    public boolean isWaitingNom = true;
-    public boolean isWaitingAge = true;
+    public transient boolean isWaitingPrenom = true;
+    public transient boolean isWaitingNom = true;
+    public transient boolean isWaitingAge = true;
 
     public PlayerData(String name, UUID uuid) {
         this.uuid = uuid;

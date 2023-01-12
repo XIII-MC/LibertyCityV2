@@ -153,7 +153,7 @@ public class RegisterEvent implements Listener {
                     if(data.isWaitingNom) {
 
                         //Check database to make sure no one else is registered as the same first and last name
-                        if(!server.rpPrenom.contains(data.rpPrenom) || !server.rpNom.contains(e.getMessage())) {
+                        if(server == null || !server.rpPrenom.contains(data.rpPrenom) || !server.rpNom.contains(e.getMessage())) {
 
                             //Check if String follows ABC alphabet
                             if(e.getMessage().matches("[a-zA-Z]+")) {
@@ -186,7 +186,7 @@ public class RegisterEvent implements Listener {
                             }
                             //If player didn't pass the database check
                         }
-                        if(server.rpPrenom.contains(data.rpPrenom) && server.rpNom.contains(e.getMessage())) {
+                        if(server != null && server.rpPrenom.contains(data.rpPrenom) && server.rpNom.contains(e.getMessage())) {
 
                             //Inform player and reset rpPrenom
                             data.rpPrenom = null;
