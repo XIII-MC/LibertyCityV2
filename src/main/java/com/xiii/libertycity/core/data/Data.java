@@ -4,6 +4,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public enum Data {
     data;
@@ -32,10 +33,18 @@ public enum Data {
         }
     }
 
-
     public PlayerData getUserData(Player p) {
         for (PlayerData user : users) {
             if (user.uuid.toString().equals(p.getUniqueId().toString())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public PlayerData getUserData(UUID p) {
+        for (PlayerData user : users) {
+            if (user.uuid.toString().equals(p.toString())) {
                 return user;
             }
         }
