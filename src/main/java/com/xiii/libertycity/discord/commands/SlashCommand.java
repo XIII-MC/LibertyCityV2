@@ -16,6 +16,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.awt.*;
+import java.util.UUID;
 
 public class SlashCommand extends ListenerAdapter {
 
@@ -41,17 +42,19 @@ public class SlashCommand extends ListenerAdapter {
                 String joueur = event.getOption("joueur",
                         OptionMapping::getAsString); // used if getOption("reason") is not null (provided)
 
-                OfflinePlayer player = Bukkit.getOfflinePlayer(joueur);
-                PlayerData data = Data.data.getUserData(player.getPlayer());
+                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString("98104d94-dea2-404e-aa62ddba98ff379d"));
+                // 98104d94-dea2-404e-aa62ddba98ff379d
+                PlayerData data = Data.data.getUserData((Player) player);
 
                 if(data == null) event.reply("Joueur non existant.").setEphemeral(true);
                 if(data != null) event.reply("Joueur trouvé!").setEphemeral(true);
 
                 EmbedBuilder builder = new EmbedBuilder();
+                builder.setColor(Color.WHITE);
                 if(player.isOnline()) builder.setColor(Color.GREEN);
                 if(!player.isOnline()) builder.setColor(Color.RED);
                 if(player.isBanned()) builder.setColor(Color.ORANGE);
-                builder.setAuthor("Lookup de " + player.getName());
+                builder.setAuthor("Lookup de " + joueur);
                 builder.addField("ID", String.valueOf(data.playerID), false);
                 builder.addField("Prénom RP", String.valueOf(data.rpPrenom), false);
                 builder.addField("Nom RP", String.valueOf(data.rpNom), false);
