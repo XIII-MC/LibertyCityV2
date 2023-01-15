@@ -67,6 +67,9 @@ public class FileUtils {
             File file = new File(LibertyCity.INSTANCE.getDataFolder() + "/players/", data.getUuid() + ".libertycity");
             if (!file.exists()) {
                 file.createNewFile();
+            } else {
+                file.delete();
+                file.createNewFile();
             }
             FileOutputStream fileOut = new FileOutputStream(LibertyCity.INSTANCE.getDataFolder() + "/players/" + data.getUuid() + ".libertycity");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);

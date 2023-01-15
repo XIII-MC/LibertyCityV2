@@ -5,12 +5,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class PlayerData implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    public UUID uuid;
+    public String uuid;
     public Player player;
     public String name;
 
@@ -76,12 +75,12 @@ public class PlayerData implements java.io.Serializable {
     public transient boolean isWaitingNom = true;
     public transient boolean isWaitingAge = true;
 
-    public PlayerData(String name, UUID uuid) {
+    public PlayerData(String name, String uuid) {
         this.uuid = uuid;
         this.name = name;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 

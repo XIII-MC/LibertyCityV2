@@ -21,9 +21,14 @@ public enum Data {
 
     public void registerUser(Player p) {
         if (!isAlreadyRegistered(p)) {
-            PlayerData pd = new PlayerData(p.getName(), p.getUniqueId());
+            PlayerData pd = new PlayerData(p.getName(), p.getUniqueId().toString());
             this.users.add(pd);
         }
+    }
+
+    public void registerUser(String name, String UUID) {
+        PlayerData pd = new PlayerData(name, UUID);
+        this.users.add(pd);
     }
 
     public void registerServer(Server p) {
@@ -42,9 +47,9 @@ public enum Data {
         return null;
     }
 
-    public PlayerData getUserData(UUID p) {
+    public PlayerData getUserData(String p) {
         for (PlayerData user : users) {
-            if (user.uuid.toString().equals(p.toString())) {
+            if (user.uuid.toString().equals(p)) {
                 return user;
             }
         }

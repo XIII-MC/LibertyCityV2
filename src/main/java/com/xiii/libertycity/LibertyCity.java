@@ -171,8 +171,6 @@ public final class LibertyCity extends JavaPlugin {
 
         commands.queue();
 
-
-
     }
 
     @Override

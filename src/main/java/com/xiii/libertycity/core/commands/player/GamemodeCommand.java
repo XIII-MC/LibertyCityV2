@@ -71,4 +71,97 @@ public class GamemodeCommand implements CommandExecutor {
 
         return true;
     }
+
+    public static class GMS implements CommandExecutor {
+
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+            if (command.getName().equalsIgnoreCase("gms")) {
+                if (args.length < 1) {
+                    Player player = (Player) sender;
+                    player.setGameMode(GameMode.SURVIVAL);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6survie");
+                } else if (args.length == 1) {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.setGameMode(GameMode.SURVIVAL);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fest désormais en §6survie");
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6survie");
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    public static class GMC implements CommandExecutor {
+
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+            if (command.getName().equalsIgnoreCase("gmc")) {
+                if (args.length < 1) {
+                    Player player = (Player) sender;
+                    player.setGameMode(GameMode.CREATIVE);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6créatif");
+                } else if (args.length == 1) {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.setGameMode(GameMode.CREATIVE);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fest désormais en §6créatif");
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6créatif");
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    public static class GMA implements CommandExecutor {
+
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+            if (command.getName().equalsIgnoreCase("gma")) {
+                if (args.length < 1) {
+                    Player player = (Player) sender;
+                    player.setGameMode(GameMode.ADVENTURE);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6aventure");
+                } else if (args.length == 1) {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.setGameMode(GameMode.ADVENTURE);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fest désormais en §6aventure");
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6aventure");
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    public static class GMSP implements CommandExecutor {
+
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+            if (command.getName().equalsIgnoreCase("gmsp")) {
+                if (args.length < 1) {
+                    Player player = (Player) sender;
+                    player.setGameMode(GameMode.SPECTATOR);
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6spectateur");
+                } else if (args.length == 1) {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.setGameMode(GameMode.SPECTATOR);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fest désormais en §6spectateur");
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §6spectateur");
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
 }
