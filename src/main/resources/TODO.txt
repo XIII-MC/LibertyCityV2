@@ -1,3 +1,4 @@
-historique sanctions
 warns system sanction
 make boss bar display cleaner (*)
+re test ALL command and fix all internal errors/NullPointers
+make new bot to differentiate dev from official bot

@@ -52,7 +52,7 @@ public class KickCommand implements CommandExecutor {
                             target.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
                             Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé(e) du serveur!");
                             AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé(e) §8" + target.getName() + "§7, raison: §8" + kickReason, "LibertyCity.staff.alert", 0);
-                            YMLUtil.log("KICK - " + target.getName() + " expulsée par " + sender.getName() + " - raison: " + kickReason + " - durée: " + "Aucune" + " - silencieux: " + "famse", "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
+                            YMLUtil.log("KICK - " + target.getName() + " expulsée par " + sender.getName() + " - raison: " + kickReason + " - durée: " + "Aucune" + " - silencieux: " + "false", "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         }
                     }
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");

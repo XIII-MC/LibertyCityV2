@@ -103,6 +103,7 @@ public class RegisterEvent implements Listener {
 
                         //Set all required variables to the roleplay of the player
                         data.rpCurrentChat = 0;
+                        data.player = e.getPlayer();
                         data.rpCurrentJob = "§eCitoyen";
 
                         //Set player's ID, update globalServerID and update averageAge

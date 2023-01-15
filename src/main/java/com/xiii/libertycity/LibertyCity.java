@@ -14,7 +14,6 @@ import com.xiii.libertycity.core.displays.BossBarDisplay;
 import com.xiii.libertycity.core.utils.FileUtils;
 import com.xiii.libertycity.core.utils.LagCalculator;
 import com.xiii.libertycity.core.utils.MoneyUtils;
-import com.xiii.libertycity.core.utils.TestUtils;
 import com.xiii.libertycity.discord.commands.SlashCommand;
 import com.xiii.libertycity.roleplay.CustomChat;
 import com.xiii.libertycity.roleplay.events.AnkleBreakEvent;
@@ -25,7 +24,9 @@ import com.xiii.libertycity.roleplay.guis.BinGui;
 import com.xiii.libertycity.roleplay.items.SearchItem;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -50,6 +51,7 @@ public final class LibertyCity extends JavaPlugin {
     }
     public static BossBar bossBar;
     private final String BOT_TOKEN = "MTA2Mjc5Mjg2ODk2NTY2MjcyMA.G8-6hq.7UHoeLfkMn6K04KuqDX7IXFKsUe28gPCGOeSBI";
+    private static JDA jda = null;
 
     @Override
     public void onEnable() {
@@ -75,7 +77,6 @@ public final class LibertyCity extends JavaPlugin {
 
         // PHASE 1
         Bukkit.getScheduler().runTaskLater(this, () -> {
-
             Bukkit.getPluginCommand("cooldown").setExecutor(new ChatCooldownCommand());
             Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChatCommand());
             Bukkit.getPluginCommand("mutechat").setExecutor(new MuteChatCommand());
@@ -96,12 +97,11 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("time").setExecutor(new TimeSetCommand());
             Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
             Bukkit.getPluginCommand("unban").setExecutor(new UnbanCommand());
-        }, 10);
+        }, 2);
 
 
         //PHASE 2
         Bukkit.getScheduler().runTaskLater(this, () -> {
-
             Bukkit.getPluginCommand("near").setExecutor(new NearCommand());
             Bukkit.getPluginCommand("ping").setExecutor(new PingCommand());
             Bukkit.getPluginCommand("r").setExecutor(new RCommand());
@@ -122,13 +122,10 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("warps").setExecutor(new WarpsCommand());
             Bukkit.getPluginCommand("sun").setExecutor(new WeatherCommand());
             Bukkit.getPluginCommand("rain").setExecutor(new WeatherCommand());
-            Bukkit.getConsoleSender().sendMessage("Phase 2 PASSED.");
-
-        }, 20);
+        }, 4);
 
         //PHASE 3
         Bukkit.getScheduler().runTaskLater(this, () -> {
-
             Bukkit.getPluginCommand("unmute").setExecutor(new UnmuteCommand());
             Bukkit.getPluginCommand("setwarp").setExecutor(new AddWarpCommand());
             Bukkit.getPluginCommand("clearlag").setExecutor(new ClearLagCommand());
@@ -137,11 +134,14 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("day").setExecutor(new TimeSetCommand());
             Bukkit.getPluginCommand("LCDBB1BETA").setExecutor(new TestCommand());
             Bukkit.getPluginCommand("chat").setExecutor(new CustomChat());
-            Bukkit.getConsoleSender().sendMessage("Phase 3 PASSED.");
+            Bukkit.getPluginCommand("gms").setExecutor(new GamemodeCommand.GMS());
+            Bukkit.getPluginCommand("gmc").setExecutor(new GamemodeCommand.GMC());
+            Bukkit.getPluginCommand("gma").setExecutor(new GamemodeCommand.GMA());
+            Bukkit.getPluginCommand("gmsp").setExecutor(new GamemodeCommand.GMSP());
+        }, 6);
 
-        }, 30);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer())), 20, 20);
-        Bukkit.getConsoleSender().sendMessage("Plugin loaded");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> jda.getPresence().setActivity(Activity.watching(Bukkit.getOnlinePlayers().size() - Data.data.getServerData(Bukkit.getServer()).vanishedPlayers.size() + " joueurs")), 20, 20);
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for(Player p : Bukkit.getOnlinePlayers()) {
@@ -153,7 +153,7 @@ public final class LibertyCity extends JavaPlugin {
         },600*20, 600*20);
 
         // Discord
-        JDA jda = JDABuilder.createDefault(BOT_TOKEN)
+        jda = JDABuilder.createDefault(BOT_TOKEN)
                 .addEventListeners(new SlashCommand())
                 .setActivity(Activity.watching("??? joueurs"))
                 .build();
@@ -167,6 +167,7 @@ public final class LibertyCity extends JavaPlugin {
                 Commands.slash("lookup", "Lookup les informations RP/HRP d'un joueur.")
                         .addOptions(new OptionData(OptionType.STRING, "joueur", "Pseudo du joueur a lookup")
                                 .setRequired(true))
+                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.VIEW_AUDIT_LOGS))
         );
 
         commands.queue();
@@ -175,11 +176,7 @@ public final class LibertyCity extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        try {
-            TestUtils.writeObjectToFile(Data.data.getServerData(Bukkit.getServer()), new File(LibertyCity.INSTANCE.getDataFolder() + "/server/data/"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
         Bukkit.getScheduler().cancelAllTasks();
     }
 }

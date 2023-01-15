@@ -39,6 +39,7 @@ public class Events implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         PlayerData data = Data.data.getUserData(e.getPlayer());
+        data.onlineState = false;
         if (data.playerID <= 0 || e.getPlayer().hasPermission("LibertyCity.silentquit")) e.setQuitMessage("");
         else if (!e.getPlayer().hasPermission("LibertyCity.silentquit")) e.setQuitMessage("§7(§4§l-§7) §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ")");
         if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentquit")) {
@@ -57,6 +58,7 @@ public class Events implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Data.data.registerUser(e.getPlayer());
         PlayerData data = Data.data.getUserData(e.getPlayer());
+        data.onlineState = true;
         if (data.playerID <= 0 || e.getPlayer().hasPermission("LibertyCity.silentjoin")) e.setJoinMessage("");
         else if (!e.getPlayer().hasPermission("LibertyCity.silentjoin")) e.setJoinMessage("§7(§2§l+§7) §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ")");
         if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentjoin")) {

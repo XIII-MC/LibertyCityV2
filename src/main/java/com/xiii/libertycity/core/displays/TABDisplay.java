@@ -153,7 +153,7 @@ public class TABDisplay implements Listener {
                     if (vp.isOnline()) removeCount++;
                 }
             }
-            tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - removeCount) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.getPlayer("?")));
+            tab.set(0, 3, new TextTabItem(" §7Joueurs » §a" + (Bukkit.getOnlinePlayers().size() - removeCount) + "§7/§2" + Bukkit.getMaxPlayers(), 0, Skins.getPlayer("Steveeeee")));
         }, 20L, 20L);
         tab.set(0, 5, new TextTabItem(StringUtils.center("§2§nInformations§r", 34), 0, FULL_DARK_GREEN));
         // COL 0 | ROW 7 TAKEN

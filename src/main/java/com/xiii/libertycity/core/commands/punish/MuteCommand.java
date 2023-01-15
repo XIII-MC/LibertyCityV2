@@ -184,7 +184,7 @@ public class MuteCommand implements CommandExecutor {
                     if(args.length <= 2) {
 
                         server.mutedPlayer.add(target.getPlayer().getName());
-                        YMLUtil.log("MUTE - " + target.getName() + " rendu muet par " + sender.getName() + " - raison: " + targetData.muteReason + " - durée: " + targetData.muteDuration + " - silencieux: " + targetData.isSilentMute, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
+                        YMLUtil.log("MUTE - " + target.getName() + " rendu muet par " + sender.getName() + " - raison: " + targetData.muteReason + " - durée: " + targetData.muteDisplayDate + " - silencieux: " + targetData.isSilentMute, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                         ((Player) target).sendMessage("§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + targetData.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + targetData.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + targetData.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
                         Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été rendu muet!");
                         AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu muet §8" + target.getName() + " §7jusqu'au §8" + targetData.muteDisplayDate, "LibertyCity.staff.alert", 0);
@@ -231,12 +231,12 @@ public class MuteCommand implements CommandExecutor {
 
                                     p.sendMessage("§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + targetData.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + targetData.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + targetData.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
                                     server.mutedIPs.add(p.getAddress().getHostName());
-                                    YMLUtil.log("MUTE - " + p.getName() + " rendu muet par " + sender.getName() + " - raison: " + pData.muteReason + " - durée: " + pData.muteDuration + " - silencieux: " + pData.isSilentMute, "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
+                                    YMLUtil.log("MUTE - " + p.getName() + " rendu muet par " + sender.getName() + " - raison: " + pData.muteReason + " - durée: " + pData.muteDisplayDate + " - silencieux: " + pData.isSilentMute + " | note: MUTE_IP", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
                                 }
                             }
                         } else {
                             server.mutedPlayer.add(target.getPlayer().getName());
-                            YMLUtil.log("MUTE - " + target.getName() + " rendu muet par " + sender.getName() + " - raison: " + targetData.muteReason + " - durée: " + targetData.muteDuration + " - silencieux: " + targetData.isSilentMute, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
+                            YMLUtil.log("MUTE - " + target.getName() + " rendu muet par " + sender.getName() + " - raison: " + targetData.muteReason + " - durée: " + targetData.muteDisplayDate + " - silencieux: " + targetData.isSilentMute, "/server/punishments/", "/server/punishments/" + target.getUniqueId() + ".yml");
                             ((Player) target).sendMessage("§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + targetData.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + targetData.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + targetData.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + targetData.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
                             AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu muet §8" + target.getName() + " §7silentcieusement, raison §8" + targetData.banReason + " §7jusqu'au §8" + targetData.muteDisplayDate, "LibertyCity.staff.alert", 0);
                         }

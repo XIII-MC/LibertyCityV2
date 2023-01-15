@@ -47,6 +47,22 @@ commands:
     usage: /gamemode
     permission: LibertyCity.gamemode
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  gms:
+    usage: /gms
+    permission: LibertyCity.gamemode.survival
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  gmc:
+    usage: /gmc
+    permission: LibertyCity.gamemode.creative
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  gma:
+    usage: /gma
+    permission: LibertyCity.gamemode.adventure
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  gmsp:
+    usage: /gmsp
+    permission: LibertyCity.gamemode.spectator
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   god:
     usage: /god
     permission: LibertyCity.god

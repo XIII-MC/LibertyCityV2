@@ -10,8 +10,8 @@ public class PlayerData implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
     public String uuid;
-    public Player player;
     public String name;
+    public boolean onlineState = false;
 
     public boolean isSilentBan;
     public String banReason;
@@ -74,6 +74,7 @@ public class PlayerData implements java.io.Serializable {
     public transient boolean isWaitingPrenom = true;
     public transient boolean isWaitingNom = true;
     public transient boolean isWaitingAge = true;
+    public transient Player player;
 
     public PlayerData(String name, String uuid) {
         this.uuid = uuid;

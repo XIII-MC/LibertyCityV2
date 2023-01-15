@@ -4,9 +4,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ChatUtils {
 
     private final static int CENTER_PX = 154;
+
+    public static String removeColorCodes(String message) {
+        Pattern pt = Pattern.compile("\\§+.");
+        Matcher match = pt.matcher(message);
+        String output = match.replaceAll("");
+        return output;
+    }
 
     public static void sendCenteredMessage(Player player, String message, boolean broadcast){
         if(message == null || message.equals("")) player.sendMessage("");
