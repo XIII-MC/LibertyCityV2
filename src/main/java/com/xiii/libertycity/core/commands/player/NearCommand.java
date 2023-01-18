@@ -18,20 +18,25 @@ public class NearCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(command.getName().equalsIgnoreCase("near")) {
-            if (sender instanceof Player) {
-                if (args.length >= 1) {
-                    range = Integer.valueOf(args[0]);
-                } else range = 20;
-                Player snder = (Player) sender;
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.getLocation().distance(snder.getLocation()) <= range) {
-                        playersWithinRange.add(p.getName());
+            try {
+                if (sender instanceof Player) {
+                    if (args.length >= 1) {
+                        range = Integer.valueOf(args[0]);
+                    } else range = 20;
+                    Player snder = (Player) sender;
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.getLocation().distance(snder.getLocation()) <= range) {
+                            playersWithinRange.add(p.getName());
+                        }
                     }
-                }
-                if (playersWithinRange.size() > 0) {
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + playersWithinRange.size() + " §fjoueurs trouvés dans un rayon de §6" + range + " blocs" + " §f: §e" + playersWithinRange);
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §fAucun joueur trouvé dans un rayon de §6" + range + " blocs");
-            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
+                    if (playersWithinRange.size() > 0) {
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + playersWithinRange.size() + " §fjoueurs trouvés dans un rayon de §6" + range + " blocs" + " §f: §e" + playersWithinRange);
+                    } else
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fAucun joueur trouvé dans un rayon de §6" + range + " blocs");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
+            } catch (Exception e) {
+                sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Distance trop grande!");
+            }
         }
 
             playersWithinRange.clear();

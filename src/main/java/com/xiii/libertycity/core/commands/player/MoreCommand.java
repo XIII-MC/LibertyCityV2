@@ -15,7 +15,7 @@ public class MoreCommand implements CommandExecutor {
                 Player p = (Player) sender;
                 if (p.getItemInHand() != null && p.getItemInHand().getType() != null) {
                     p.getItemInHand().setAmount(64);
-                }
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Item invalide.");
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }
 

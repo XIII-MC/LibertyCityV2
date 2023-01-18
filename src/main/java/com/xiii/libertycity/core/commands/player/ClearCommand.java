@@ -19,12 +19,17 @@ public class ClearCommand implements CommandExecutor {
                     p.sendMessage("§2§lLiberty§a§lCity §7» §fVotre inventaire a été vidé");
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
-                Player target = Bukkit.getServer().getPlayer(args[0]);
-                if(target.isOnline()) {
-                    target.getInventory().clear();
-                    target.sendMessage("§2§lLiberty§a§lCity §7» §fVotre inventaire a été vidé");
-                    p.sendMessage("§2§lLiberty§a§lCity §7» Inventaire de §e" + target.getName() + " §fa été vidé");
-                } else p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                try {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.getInventory().clear();
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVotre inventaire a été vidé");
+                        p.sendMessage("§2§lLiberty§a§lCity §7» Inventaire de §e" + target.getName() + " §fa été vidé");
+                    } else
+                        p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                } catch (Exception e) {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
+                }
             }
         }
 

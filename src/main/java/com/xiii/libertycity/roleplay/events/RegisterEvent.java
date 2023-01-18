@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +36,7 @@ public class RegisterEvent implements Listener {
     //Runs when the player leaves without finishing his registration
     @EventHandler
     public void forUnRegister(PlayerQuitEvent e) {
+        kickLater.cancel();
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
             if (data.playerID <= 0) {
@@ -51,13 +54,26 @@ public class RegisterEvent implements Listener {
     }
 
     //Runs after rejoin of the registeration to broadcast a welcome message
+
+    public static BukkitTask kickLater;
+
     @EventHandler
     public void forRegister(PlayerJoinEvent e) {
+
+        kickLater = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                if(Data.data.getUserData(e.getPlayer()).playerID > 0) e.getPlayer().kickPlayer("§cVous avez mis trop de temps a vous enregister.");
+            }
+
+        }.runTaskLater(LibertyCity.INSTANCE, 12000);
+
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
 
             if (data.playerID <= 0) {
-                e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Débutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Débutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 12000, 0);
             } else {
                 if (data.joinDate == null) {
                     Bukkit.broadcastMessage("");
@@ -139,7 +155,7 @@ public class RegisterEvent implements Listener {
                         data.tempAge = 0;
 
                         //Inform player of taken actions and make him restart the process properly
-                        e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
+                        e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7CDébutez par entré votre §e§nPrénom RP§r §6§k§l||", 0, 12000, 0);
                         e.getPlayer().sendMessage(" ");
                         e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAh mince, on va recommencé depuis le début. Veuillez entrez votre §ePrénom RP");
 
@@ -215,7 +231,7 @@ public class RegisterEvent implements Listener {
                                 server.rpNom.add(data.rpNom);
 
                                 //Tell the player his name has been permanently set
-                                e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||", "§6§k§l||§r §7Pour finir entrez votre §e§nÂge RP§r §6§k§l||", 0, 14000, 0);
+                                e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||", "§6§k§l||§r §7Pour finir entrez votre §e§nÂge RP§r §6§k§l||", 0, 12000, 0);
                                 e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fBien le bonjour §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f!");
 
@@ -285,7 +301,7 @@ public class RegisterEvent implements Listener {
                                 data.rpPrenom = data.tempPrenom;
 
                                 //Tell the player his name has been permanently set
-                                e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §f! §4§l§k|||", "§6§k§l||§r §7Continuez avec votre §e§nNom RP§r §6§k§l||", 0, 14000, 0);
+                                e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a§l" + data.rpPrenom + " §f! §4§l§k|||", "§6§k§l||§r §7Continuez avec votre §e§nNom RP§r §6§k§l||", 0, 12000, 0);
                                 e.getPlayer().sendMessage(" ");
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fBien le bonjour §a§l" + data.rpPrenom + "§f!");
 

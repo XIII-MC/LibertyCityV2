@@ -15,10 +15,14 @@ public class HatCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("hat")) {
             if(sender instanceof Player) {
-                if (p.getItemInHand() != null && p.getItemInHand().getType() != null) {
-                    ItemStack helmet = new ItemStack(p.getInventory().getItem(p.getInventory().getHeldItemSlot()).getType(), 1);
-                    p.getInventory().setHelmet(helmet);
-                    InventoryUtils.removeOne(p.getInventory(), p.getItemInHand());
+                try {
+                    if (p.getItemInHand() != null && p.getItemInHand().getType() != null) {
+                        ItemStack helmet = new ItemStack(p.getInventory().getItem(p.getInventory().getHeldItemSlot()).getType(), 1);
+                        p.getInventory().setHelmet(helmet);
+                        InventoryUtils.removeOne(p.getInventory(), p.getItemInHand());
+                    }
+                } catch (Exception e) {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Item invalide.");
                 }
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }

@@ -20,29 +20,32 @@ public class KickallCommand implements CommandExecutor {
 
             for(Player p : Bukkit.getOnlinePlayers()) {
 
-                PlayerData data = Data.data.getUserData(p);
-                data.silentKick = true;
+                if (!p.hasPermission("LibertyCity.bypass.kickall")) {
 
-                if (args.length == 0) {
+                    PlayerData data = Data.data.getUserData(p);
+                    data.silentKick = true;
 
-                    p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
-                    YMLUtil.log("KICKALL - " + p.getName() + " expulsée par " + sender.getName() + " - raison: " + "Non Spécifiée" + " - durée: " + "Aucune", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
+                    if (args.length == 0) {
 
-                } else {
+                        p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §cNon Specifiée" + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                        YMLUtil.log("KICKALL | " + p.getName() + " a était expulsée par " + sender.getName(), "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
 
-                    String newStringConverted = "";
-                    for (int i = 0; i < args.length; i++) {
-                        newStringConverted += args[i] + " ";
+                    } else {
+
+                        String newStringConverted = "";
+                        for (int i = 0; i < args.length; i++) {
+                            newStringConverted += args[i] + " ";
+                        }
+                        String kickReason = "";
+                        kickReason = newStringConverted;
+
+                        p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
+                        YMLUtil.log("KICKALL | " + p.getName() + " a était expulsée par " + sender.getName() + ", raison: " + kickReason, "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
+
                     }
-                    String kickReason = "";
-                    kickReason = newStringConverted;
 
-                    p.kickPlayer("§8§m+--------------------------+" + "\n" + "\n" + "§f§l⋅ §7Explusé(e) le §f» §c" + TimeUtil.getFullDate() + "\n" + "§f§l⋅ §7Explusé(e) par §f» §c" + sender.getName() + "\n" + "§f§l⋅ §7Raison §f» §c" + kickReason + "\n" + "\n" + "§f§l⋅ §c§lCette sanction vous est permanente!" + "\n" + "\n" + "§f§l⋅ §7Si vous souhaiter contésté cette sanction §f» §bdiscord.gg/LibertyCity" + "\n" + "\n" + "§8§m+--------------------------+");
-                    YMLUtil.log("KICKALL - " + p.getName() + " expulsée par " + sender.getName() + " - raison: " + kickReason + " - durée: " + "Aucune", "/server/punishments/", "/server/punishments/" + p.getUniqueId() + ".yml");
 
                 }
-
-
             }
 
             AlertUtil.staffAlert("§8" + sender.getName() + " §7a explusé tous les joueurs du serveur.", "LibertyCity.staff.alert", 0);

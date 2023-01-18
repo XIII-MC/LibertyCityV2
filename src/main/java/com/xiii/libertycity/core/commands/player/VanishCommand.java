@@ -46,30 +46,35 @@ public class VanishCommand implements CommandExecutor {
                     }
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
-                Player target = Bukkit.getServer().getPlayer(args[0]);
-                PlayerData trget = Data.data.getUserData(target);
-                if(target.isOnline()) {
-                    if(trget.isVanished) {
-                        trget.isVanished = false;
-                        server.vanishedPlayers.remove(target);
-                        for(Player p : Bukkit.getOnlinePlayers()) {
-                            p.showPlayer(LibertyCity.INSTANCE, target);
+                try {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    PlayerData trget = Data.data.getUserData(target);
+                    if (target.isOnline()) {
+                        if (trget.isVanished) {
+                            trget.isVanished = false;
+                            server.vanishedPlayers.remove(target);
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                p.showPlayer(LibertyCity.INSTANCE, target);
+                            }
+                            target.setPlayerListName(target.getName());
+                            target.sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus invisible");
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + "§f n'est plus invisible");
+                            AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu §8" + target.getName() + " §7visible", "LibertyCity.staff", 0);
+                        } else {
+                            trget.isVanished = true;
+                            server.vanishedPlayers.add(target);
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                if (!server.vanishedPlayers.contains(p) || !p.hasPermission("LibertyCity.seevanishedplayers"))
+                                    p.hidePlayer(LibertyCity.INSTANCE, target);
+                            }
+                            target.setPlayerListName("§7[V] §f" + target.getName());
+                            target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + "§f est désormais invisible");
+                            AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu §8" + target.getName() + " §7invisible", "LibertyCity.staff", 0);
                         }
-                        target.setPlayerListName(target.getName());
-                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus invisible");
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + "§f n'est plus invisible");
-                        AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu §8" + target.getName() + " §7visible", "LibertyCity.staff", 0);
-                    } else {
-                        trget.isVanished = true;
-                        server.vanishedPlayers.add(target);
-                        for(Player p : Bukkit.getOnlinePlayers()) {
-                            if(!server.vanishedPlayers.contains(p) || !p.hasPermission("LibertyCity.seevanishedplayers")) p.hidePlayer(LibertyCity.INSTANCE, target);
-                        }
-                        target.setPlayerListName("§7[V] §f" + target.getName());
-                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais invisible");
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + "§f est désormais invisible");
-                        AlertUtil.staffAlert("§8" + sender.getName() + " §7a rendu §8" + target.getName() + " §7invisible", "LibertyCity.staff", 0);
                     }
+                } catch (Exception e) {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
                 }
 
             }

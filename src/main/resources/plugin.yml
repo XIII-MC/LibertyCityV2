@@ -136,7 +136,7 @@ commands:
     permission: LibertyCity.vanish
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   ban:
-    usage: /ban
+    usage: §2§lLiberty§a§lCity §7» §cUne erreur est survenue. Code d'erreur (ABORTED_FALSE_NULL_DATA)
     permission: LibertyCity.ban
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   kickall:
@@ -148,7 +148,7 @@ commands:
     permission: LibertyCity.kick
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   mute:
-    usage: /mute
+    usage: §2§lLiberty§a§lCity §7» §cUne erreur est survenue. Code d'erreur (ABORTED_FALSE_NULL_DATA)
     permission: LibertyCity.mute
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   report:
@@ -158,7 +158,7 @@ commands:
     permission: LibertyCity.unban
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   unmute:
-    usage: /unmute
+    usage: §2§lLiberty§a§lCity §7» §cUne erreur est survenue. Code d'erreur (ABORTED_FALSE_NULL_DATA)
     permission: LibertyCity.unmute
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   list:
@@ -211,5 +211,13 @@ commands:
     usage: /LCDBB1BETA
   chat:
     usage: /chat
+  warn:
+    usage: §2§lLiberty§a§lCity §7» §cUne erreur est survenue. Code d'erreur (ABORTED_FALSE_NULL_DATA)
+    permission: LibertyCity.warn
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
+  warns:
+    usage: §2§lLiberty§a§lCity §7» §cUne erreur est survenue. Code d'erreur (ABORTED_FALSE_NULL_DATA)
+    permission: LibertyCity.warns
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
 
 

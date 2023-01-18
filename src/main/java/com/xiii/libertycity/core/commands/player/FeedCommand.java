@@ -19,12 +19,17 @@ public class FeedCommand implements CommandExecutor {
                     p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rassasié");
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
-                Player target = Bukkit.getServer().getPlayer(args[0]);
-                if(target.isOnline()) {
-                    target.setFoodLevel(20);
-                    target.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rassasié");
-                    sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été rassasié");
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                try {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        target.setFoodLevel(20);
+                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rassasié");
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été rassasié");
+                    } else
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                } catch (Exception e) {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
+                }
             }
         }
 

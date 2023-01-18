@@ -11,15 +11,15 @@ public class PlayerData implements java.io.Serializable {
 
     public String uuid;
     public String name;
-    public boolean onlineState = false;
 
-    public boolean isSilentBan;
-    public String banReason;
-    public String banDate;
-    public String banDuration;
-    public Date banExpiration;
-    public String banDisplayDate;
-    public String bannedBy;
+    public boolean isSilentWarn;
+    public String warnReason;
+    public String warnDate;
+    public String warnDuration;
+    public Date warnExpiration;
+    public String warnDisplayDate;
+    public String warnedBy;
+    public List<String> warns = new ArrayList<>();
 
     public boolean isMuted;
     public boolean isSilentMute;
@@ -75,6 +75,14 @@ public class PlayerData implements java.io.Serializable {
     public transient boolean isWaitingNom = true;
     public transient boolean isWaitingAge = true;
     public transient Player player;
+    public transient boolean onlineState = false;
+    public transient boolean isSilentBan;
+    public transient String banReason;
+    public transient String banDate;
+    public transient String banDuration;
+    public transient Date banExpiration;
+    public transient String banDisplayDate;
+    public transient String bannedBy;
 
     public PlayerData(String name, String uuid) {
         this.uuid = uuid;

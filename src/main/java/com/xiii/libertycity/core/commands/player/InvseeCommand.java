@@ -16,12 +16,16 @@ public class InvseeCommand implements CommandExecutor {
             if(sender instanceof Player) {
                 if (args.length == 0) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /invsee <Joueur>");
                 else {
-                    Player target = Bukkit.getServer().getPlayer(args[0]);
-                    if (target.isOnline()) {
-                        p.openInventory(target.getInventory());
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §fOuverture de l'inventaire de §e" + target.getName());
-                    } else
-                        p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                    try {
+                        Player target = Bukkit.getServer().getPlayer(args[0]);
+                        if (target.isOnline()) {
+                            p.openInventory(target.getInventory());
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §fOuverture de l'inventaire de §e" + target.getName());
+                        } else
+                            p.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                    } catch (Exception e) {
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
+                    }
                 }
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }

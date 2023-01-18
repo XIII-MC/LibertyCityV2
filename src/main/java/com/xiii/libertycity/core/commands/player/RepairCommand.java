@@ -15,7 +15,7 @@ public class RepairCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("repair")) {
             if(sender instanceof Player) {
                 Player snder = (Player) sender;
-                if (snder.getItemInHand() != null && snder.getItemInHand() != new ItemStack(Material.AIR)) {
+                if (snder.getItemInHand() != null && !snder.getMainHand().toString().contains("air")) {
                     snder.getItemInHand().setDurability((short) 0);
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §fVotre item a été réparé");
                 } else {

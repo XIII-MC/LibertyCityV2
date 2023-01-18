@@ -16,14 +16,13 @@ public class IgnoreCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("ignore")) {
             if(args.length >= 1) {
                 if(sender instanceof Player) {
-                    Player target = Bukkit.getServer().getPlayer(args[0]);
                     PlayerData data = Data.data.getUserData((Player) sender);
-                    if (!data.ignoredPlayers.contains(target.getName())) {
-                        data.ignoredPlayers.add(target.getName());
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été ignoré");
+                    if (!data.ignoredPlayers.contains(args[0])) {
+                        data.ignoredPlayers.add(args[0]);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + args[0] + " §fa été ignoré");
                     } else {
-                        data.ignoredPlayers.remove(target.getName());
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa n'est plus ignoré");
+                        data.ignoredPlayers.remove(args[0]);
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + args[0] + " §fa n'est plus ignoré");
                     }
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Usage: /ignore <Joueur>");

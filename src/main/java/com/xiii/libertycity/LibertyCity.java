@@ -44,6 +44,9 @@ import java.io.IOException;
 
 public final class LibertyCity extends JavaPlugin {
 
+    // DEV: MTA2NTMxNDQ1NDk4NTc4NTQxNg.GJBEwB.YfdVOSjaLbwFQ3FN2Q3_B07xKaR52K_98JRftM
+    // OFI: MTA2Mjc5Mjg2ODk2NTY2MjcyMA.G8-6hq.7UHoeLfkMn6K04KuqDX7IXFKsUe28gPCGOeSBI
+
     public static LibertyCity INSTANCE;
     public static Tabbed tabInstance;
     public static Plugin getInstance() {
@@ -138,6 +141,10 @@ public final class LibertyCity extends JavaPlugin {
             Bukkit.getPluginCommand("gmc").setExecutor(new GamemodeCommand.GMC());
             Bukkit.getPluginCommand("gma").setExecutor(new GamemodeCommand.GMA());
             Bukkit.getPluginCommand("gmsp").setExecutor(new GamemodeCommand.GMSP());
+            Bukkit.getPluginCommand("warn").setExecutor(new WarnCommand());
+            Bukkit.getPluginCommand("warns").setExecutor(new WarnsCommand());
+            Bukkit.getPluginCommand("tpall").setExecutor(new TeleportCommand.TPAll());
+            Bukkit.getPluginCommand("tphere").setExecutor(new TeleportCommand.TPHere());
         }, 6);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer())), 20, 20);

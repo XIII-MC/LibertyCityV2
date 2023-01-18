@@ -24,18 +24,23 @@ public class FlyCommand implements CommandExecutor {
                     }
                 } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
             } else {
-                Player target = Bukkit.getServer().getPlayer(args[0]);
-                if(target.isOnline()) {
-                    if(!target.getAllowFlight()) {
-                        target.setAllowFlight(true);
-                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais volé");
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fpeut désormais volé");
-                    } else {
-                        target.setAllowFlight(false);
-                        target.sendMessage("§2§lLiberty§a§lCity §7» §fVous ne pouvez plus volé");
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fne peut plus volé");
-                    }
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                try {
+                    Player target = Bukkit.getServer().getPlayer(args[0]);
+                    if (target.isOnline()) {
+                        if (!target.getAllowFlight()) {
+                            target.setAllowFlight(true);
+                            target.sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais volé");
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fpeut désormais volé");
+                        } else {
+                            target.setAllowFlight(false);
+                            target.sendMessage("§2§lLiberty§a§lCity §7» §fVous ne pouvez plus volé");
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fne peut plus volé");
+                        }
+                    } else
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                } catch (Exception e) {
+                    sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
+                }
             }
         }
 

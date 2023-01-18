@@ -18,12 +18,16 @@ public class PingCommand implements CommandExecutor {
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §fCalcule en cours, veuillez patientez...");
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez une latence de §6" + PingUtil.getPing((Player) sender) + "ms");
                 } else {
-                    Player target = Bukkit.getServer().getPlayer(args[0]);
-                    if (target.isOnline()) {
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §fCalcule en cours, veuillez patientez...");
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa une latence de §6" + PingUtil.getPing(target) + "ms");
-                    } else
-                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                    try {
+                        Player target = Bukkit.getServer().getPlayer(args[0]);
+                        if (target.isOnline()) {
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §fCalcule en cours, veuillez patientez...");
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa une latence de §6" + PingUtil.getPing(target) + "ms");
+                        } else
+                            sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! " + target.getName() + " n'est pas en ligne!");
+                    } catch (Exception e) {
+                        sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Joueur introuvable.");
+                    }
                 }
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas un joueur");
         }

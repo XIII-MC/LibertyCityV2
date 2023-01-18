@@ -74,7 +74,7 @@ public class SpyChatCommand implements CommandExecutor {
                                 sender.sendMessage("§2§lLiberty§a§lCity §7» §fSpy chat §6Msg §cdésactivé");
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Usage: /spy (GLOBAL,RP,HRP,POLICE,GANG,MSG)");
                 }
             } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous recevez déja tous les messages");
         }

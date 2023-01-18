@@ -11,6 +11,8 @@ public class ChatUtils {
 
     private final static int CENTER_PX = 154;
 
+    public static String bumper = org.apache.commons.lang.StringUtils.repeat("\n", 35);
+
     public static String removeColorCodes(String message) {
         Pattern pt = Pattern.compile("\\§+.");
         Matcher match = pt.matcher(message);
