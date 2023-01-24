@@ -25,7 +25,6 @@ public class Events implements Listener {
         if(server.vanishedPlayers != null) {
             for (Player vp : server.vanishedPlayers) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    // TODO: Test it
                     p.hidePlayer(LibertyCity.INSTANCE, vp);
                     if (p.hasPermission("LibertyCity.seevanishedplayers") || server.vanishedPlayers.contains(p))
                         p.showPlayer(LibertyCity.INSTANCE, vp);
@@ -42,9 +41,7 @@ public class Events implements Listener {
         data.onlineState = false;
         if (data.playerID <= 0 || e.getPlayer().hasPermission("LibertyCity.silentquit")) e.setQuitMessage("");
         else if (!e.getPlayer().hasPermission("LibertyCity.silentquit")) e.setQuitMessage("§7(§4§l-§7) §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ")");
-        if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentquit")) {
-            AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a quitté le serveur", "LibertyCity.staff.alert", 0);
-        }
+        if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentquit")) AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a quitté le serveur", "LibertyCity.staff.alert", 0);
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
             if (data.playerID > 0) FileUtils.savePlayerData(Data.data.getUserData(e.getPlayer()));
             LibertyCity.tabInstance.destroyTabList(e.getPlayer());
@@ -61,15 +58,14 @@ public class Events implements Listener {
         data.onlineState = true;
         if (data.playerID <= 0 || e.getPlayer().hasPermission("LibertyCity.silentjoin")) e.setJoinMessage("");
         else if (!e.getPlayer().hasPermission("LibertyCity.silentjoin")) e.setJoinMessage("§7(§2§l+§7) §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §8(" + e.getPlayer().getName() + ")");
-        if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentjoin")) {
-            AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a rejoint le serveur", "LibertyCity.staff.alert", 0);
-        }
+        if (data.playerID > 0 && e.getPlayer().hasPermission("LibertyCity.silentjoin")) AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §7a rejoint le serveur", "LibertyCity.staff.alert", 0);
         if (data.playerID > 0) ScoreboardDisplay.updateScoreboard(e.getPlayer());
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
             TABDisplay.updateTablist(e.getPlayer());
             TABDisplay.updatePlayerList();
             BossBarDisplay.updateBossBar(e.getPlayer());
         });
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> FileUtils.savePlayerData(Data.data.getUserData(e.getPlayer())), 20*10, 20*10);
     }
 
 }

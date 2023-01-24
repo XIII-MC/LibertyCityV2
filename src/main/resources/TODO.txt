@@ -1,0 +1,6 @@
+fix /lookup not finding player
+protection map
+add wallet to put cash, CC, ID and that's all | stealable -> data in item lore
+pôle emplois
+link discord
+Système "maladies": démangésons, ruhme ect

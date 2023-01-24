@@ -3,6 +3,7 @@ package com.xiii.libertycity.core.commands.server;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.utils.IDUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,14 +29,12 @@ public class TestCommand implements CommandExecutor {
                 // - TEST_2 : test AntiAFK system | SUCCESS.
                 // - TEST_3 : log message to yml file | SUCCESS.
                 // - DEV_1 : Dev debug for custom boss bar
+                // - DEBUG_2 : debugging player rpname, rpprenom db | SUCCESS.
 
-            // Test section. | CASE: DEBUG_2 : debugging player rpname, rpprenom db
-            Bukkit.broadcastMessage("nom=" + serverData.rpNom + " prenom=" + serverData.rpPrenom);
-            Bukkit.broadcastMessage("gblID=" + serverData.globalID);
-            Bukkit.broadcastMessage("-");
-            //FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
-            Bukkit.broadcastMessage("nom=" + serverData.rpNom + " prenom=" + serverData.rpPrenom);
-            Bukkit.broadcastMessage("gblID=" + serverData.globalID);
+            // Test section. | CASE: UTIL_1 : generating a new ID card
+            IDUtils.createNewID(player, playerData);
+            player.sendMessage("ID Created.");
+
 
         }
 

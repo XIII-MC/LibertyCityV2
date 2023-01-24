@@ -1,9 +1,11 @@
 name: LibertyCity
-version: '${project.version}'
+version: '${git.commit.id.describe-short}'
 main: com.xiii.libertycity.LibertyCity
 authors: [ XIII___ ]
 description: LibertyCity's plugin
 api-version: 1.13
+depend:
+  - ProtocolLib
 commands:
   clearchat:
     aliases: cc, chatclear
@@ -96,8 +98,6 @@ commands:
     permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   ping:
     usage: /ping
-    permission: LibertyCity.ping
-    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   r:
     aliases: respond
     usage: /r
@@ -209,6 +209,9 @@ commands:
     usage: /time
   LCDBB1BETA:
     usage: /LCDBB1BETA
+    aliases: libertycitydebugbeta1BETA
+    permission: PRIVATE.COMMAND.DEV
+    permission-message: §2§lLiberty§a§lCity §7» §cVous n'avez pas la permission requise!
   chat:
     usage: /chat
   warn:

@@ -82,7 +82,7 @@ public class SearchItem implements Listener {
     public void cancelSearchDamage(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
             PlayerData data = Data.data.getUserData((Player) e.getEntity());
-            if (data.isSearching) {
+            if (data != null && data.isSearching) {
                 PlayerData temp = Data.data.getUserData(data.lastSearchedPlayer);
                 data.isSearching = false;
                 temp.inSearch = false;

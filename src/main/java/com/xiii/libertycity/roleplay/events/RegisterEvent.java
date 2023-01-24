@@ -4,6 +4,7 @@ import com.xiii.libertycity.LibertyCity;
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.utils.IDUtils;
 import com.xiii.libertycity.core.utils.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -64,7 +65,7 @@ public class RegisterEvent implements Listener {
 
             @Override
             public void run() {
-                if(Data.data.getUserData(e.getPlayer()).playerID > 0) e.getPlayer().kickPlayer("§cVous avez mis trop de temps a vous enregister.");
+                if(Data.data.getUserData(e.getPlayer()).playerID <= 0) e.getPlayer().kickPlayer("§cVous avez mis trop de temps a vous enregister.");
             }
 
         }.runTaskLater(LibertyCity.INSTANCE, 12000);
@@ -80,6 +81,7 @@ public class RegisterEvent implements Listener {
                     Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a§l" + data.rpPrenom + " §2§l" + data.rpNom + " §7(" + e.getPlayer().getName() + ") " + "§frejoint la ville !");
                     Bukkit.broadcastMessage("");
                     data.joinDate = TimeUtil.getFullDate();
+                    IDUtils.createNewID(e.getPlayer(), Data.data.getUserData(e.getPlayer()));
                 }
             }
 

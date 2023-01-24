@@ -38,8 +38,6 @@ public class BanCommand implements CommandExecutor {
                 UUID targetUUID = APIUtils.getSafeUUID(args[0]);
                 OfflinePlayer target = Bukkit.getOfflinePlayer(targetUUID);
                 PlayerData targetData = Data.data.getUserData(targetUUID.toString());
-                
-                Bukkit.getConsoleSender().sendMessage("" + APIUtils.getSafeUUID(args[0]) + " " + targetData + " " + target);
 
                 // If duration is permanent
                 if(args[1].equalsIgnoreCase("perm") && targetData != null) {

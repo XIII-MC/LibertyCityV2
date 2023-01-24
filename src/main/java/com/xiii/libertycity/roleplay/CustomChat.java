@@ -6,8 +6,10 @@ import com.xiii.libertycity.core.data.PlayerData;
 import com.xiii.libertycity.core.data.ServerData;
 import com.xiii.libertycity.core.displays.ScoreboardDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
+import com.xiii.libertycity.core.utils.InventoryUtils;
 import com.xiii.libertycity.core.utils.YMLUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -153,7 +156,7 @@ public class CustomChat implements Listener, CommandExecutor {
                     YMLUtil.log(output, null, null);
                 }
 
-                if ((((System.currentTimeMillis() - data.lastChat >= server.chatCooldownGlobal)) || e.getPlayer().hasPermission("LibertyCity.bypass.chatcooldown")) && !e.getMessage().startsWith("#")) {
+                if ((((System.currentTimeMillis() - data.lastChat >= server.chatCooldownGlobal)) || e.getPlayer().hasPermission("LibertyCity.bypass.chatcooldown"))) {
 
                     // Even if this isn't possible, its just safety.
                     if (data.rpCurrentChat < 0 || data.rpCurrentChat > 3) data.rpCurrentChat = 0;
@@ -242,27 +245,11 @@ public class CustomChat implements Listener, CommandExecutor {
 
                     if (data.rpCurrentChat == 2) {
 
+                        // TODO: Change ID to proper radio ID
                         if (!data.chatBanPolice && !data.isMuted) {
 
-                            for (Player p : Bukkit.getOnlinePlayers()) {
+                            if(InventoryUtils.hasItem(e.getPlayer(), new ItemStack(Material.getMaterial(4330)))) {
 
-                                // Initialize the looped player's PlayerData
-                                PlayerData pData = Data.data.getUserData(p);
-                                chatFormat = "§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
-
-                                // Send message under specified format
-                                if (pData.rpCurrentChat == 2)
-                                    p.sendMessage(chatFormat);
-                                if (pData.spyChatPolice || pData.spyChatGlobal)
-                                    p.sendMessage("§c§l[CS] " + chatFormat);
-                            }
-                        }
-                        if (data.chatBanPolice || data.isMuted) {
-                            if (System.currentTimeMillis() >= data.muteDuration) {
-                                data.isMuted = false;
-                                data.chatBanPolice = false;
-                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus muet. §7(Automatique)");
-                                AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §8n'est plus muet (automatique)", "LibertyCity.staff.alert", 0);
                                 for (Player p : Bukkit.getOnlinePlayers()) {
 
                                     // Initialize the looped player's PlayerData
@@ -275,6 +262,28 @@ public class CustomChat implements Listener, CommandExecutor {
                                     if (pData.spyChatPolice || pData.spyChatGlobal)
                                         p.sendMessage("§c§l[CS] " + chatFormat);
                                 }
+                            } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous ne disposez pas d'une radio!");
+                        }
+                        if (data.chatBanPolice || data.isMuted) {
+                            if (System.currentTimeMillis() >= data.muteDuration) {
+                                data.isMuted = false;
+                                data.chatBanPolice = false;
+                                e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous n'êtes plus muet. §7(Automatique)");
+                                AlertUtil.staffAlert("§8" + e.getPlayer().getName() + " §8n'est plus muet (automatique)", "LibertyCity.staff.alert", 0);
+                                if(InventoryUtils.hasItem(e.getPlayer(), new ItemStack(Material.getMaterial(4444)))) {
+                                    for (Player p : Bukkit.getOnlinePlayers()) {
+
+                                        // Initialize the looped player's PlayerData
+                                        PlayerData pData = Data.data.getUserData(p);
+                                        chatFormat = "§7(§b§LPolice§7) §f" + data.rpPoliceRank + " §8| §A§L" + data.rpPrenom + " §2§L" + data.rpNom + " §7» §f" + e.getMessage();
+
+                                        // Send message under specified format
+                                        if (pData.rpCurrentChat == 2)
+                                            p.sendMessage(chatFormat);
+                                        if (pData.spyChatPolice || pData.spyChatGlobal)
+                                            p.sendMessage("§c§l[CS] " + chatFormat);
+                                    }
+                                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous ne disposez pas d'une radio!");
                             } else
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes muet(te) du chat §6Police§r" + "\n" + "§8§m+--------------------------+§r" + "\n" + "            §4§lSANCTION§r" + "\n" + "\n" + "§f§l⋅ §7Muet(te) le §f» §c" + data.muteDate + "\n" + "§f§l⋅ §7Muet(te) par §f» §c" + data.mutedBy + "\n" + "§f§l⋅ §7Muet(te) jusqu'au §f» §c" + data.muteDisplayDate + "\n" + "§f§l⋅ §7Raison §f» §c" + data.muteReason + "\n" + "\n" + "§f§l⋅ §7Contestations §f» §bdiscord.gg/LibertyCity" + "\n" + "§8§m+--------------------------+");
                         }
@@ -323,7 +332,7 @@ public class CustomChat implements Listener, CommandExecutor {
                     }
                     YMLUtil.log(chatFormat, null, null);
 
-                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cVeuillez patientez entre chaque messages.");
+                } else if(!e.getMessage().startsWith("#") && e.getPlayer().hasPermission("LibertyCity.bypass.chatcooldown")) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cVeuillez patientez entre chaque messages.");
                 data.lastChat = System.currentTimeMillis();
             }
 

@@ -46,6 +46,7 @@ public class PlayerData implements java.io.Serializable {
     public String rpGangRank;
     public boolean isVerified;
     public String joinDate;
+    public double pin;
 
     public boolean chatBanHRP = false;
     public boolean chatBanRP = false;

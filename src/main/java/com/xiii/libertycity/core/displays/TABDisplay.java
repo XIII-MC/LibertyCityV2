@@ -1,7 +1,6 @@
 package com.xiii.libertycity.core.displays;
 
 import com.keenant.tabbed.Tabbed;
-import com.keenant.tabbed.item.PlayerTabItem;
 import com.keenant.tabbed.item.TextTabItem;
 import com.keenant.tabbed.tablist.TableTabList;
 import com.keenant.tabbed.util.Skin;
@@ -20,6 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class TABDisplay implements Listener {
@@ -56,7 +57,6 @@ public class TABDisplay implements Listener {
                 int column = 2;
 
                 TableTabList tab = (TableTabList) LibertyCity.tabInstance.getTabList(player);
-                //tab.setBatchEnabled(true);
 
                 // Switch column
                 if (row > 18 && column == 2) {
@@ -72,7 +72,8 @@ public class TABDisplay implements Listener {
                     tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
                     if(server.vanishedPlayers != null) {
                         if (!server.vanishedPlayers.contains(p)) {
-                            tab.set(column, row, new PlayerTabItem(p));
+                            PlayerData data = Data.data.getUserData(p);
+                            tab.set(column, row, new TextTabItem("§a" + data.rpPrenom + " §2" + data.rpNom + " §7(" + p.getName() + ")", PingUtil.getPing(p), Skins.getPlayer(p)));
                             row++;
                         }
                     }
@@ -80,13 +81,12 @@ public class TABDisplay implements Listener {
                 if(server.vanishedPlayers != null) {
                     for (Player vp : server.vanishedPlayers) {
                         tab.set(column, row + 1, new TextTabItem(" ", 0, QUESTION_MARK));
-                        tab.set(column, row, new PlayerTabItem(vp));
+                        PlayerData data = Data.data.getUserData(vp);
+                        tab.set(column, row, new TextTabItem("§a" + data.rpPrenom + " §2" + data.rpNom + " §7(" + vp.getName() + ")", PingUtil.getPing(vp), Skins.getPlayer(vp)));
                         row++;
                     }
                 }
-                //tab.batchUpdate();
             }
-            //tab.setBatchEnabled(false);
         }, 20L);
     }
 
@@ -100,7 +100,7 @@ public class TABDisplay implements Listener {
         PlayerData data = Data.data.getUserData(p);
         ServerData server = Data.data.getServerData(Bukkit.getServer());
         if(data == null || server == null) return;
-        String currentChat = "§4§LERROR23";
+        AtomicReference<String> currentChat = new AtomicReference<>("§4§LERROR23");
 
         // Establish ping stability
         pingHandle = new BukkitRunnable() {
@@ -136,12 +136,6 @@ public class TABDisplay implements Listener {
             if(TPSPercentage <= 50) percentageColor = "§0" + TPSPercentage + "%";
             tab.set(0, 7, new TextTabItem(" §7Stabilitée » " + percentageColor, 0, SERVER));
         }, 20, 20);
-
-        // Chat interpreter
-        if(data.rpCurrentChat == 0) currentChat = "§3§LHRP";
-        if(data.rpCurrentChat == 1) currentChat = "§2§LRP";
-        if(data.rpCurrentChat == 2) currentChat = "§b§lPLC";
-        if(data.rpCurrentChat == 3) currentChat = "§4§LGNG";
 
         // Column 0
         tab.set(0, 0, new TextTabItem(StringUtils.center("§2§nServeur§r", 34), 0, FULL_DARK_GREEN));
@@ -180,8 +174,14 @@ public class TABDisplay implements Listener {
             if (data.rpPoliceRank != null) tab.set(2, 11, new TextTabItem(" §7Rang » §b" + data.rpPoliceRank, 0, MEDAL));
             if (data.rpGangRank != null) tab.set(2, 11, new TextTabItem(" §7Gang » §4" + data.rpGangRank, 0, MEDAL));
         }, 20, 20);
-        String finalCurrentChat = currentChat;
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> tab.set(1, 12, new TextTabItem(" §7Chat sélectionné » " + finalCurrentChat, 0, CHAT_BUBBLE)), 20, 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {
+            // Chat interpreter
+            if(data.rpCurrentChat == 0) currentChat.set("§3§LHRP");
+            if(data.rpCurrentChat == 1) currentChat.set("§2§LRP");
+            if(data.rpCurrentChat == 2) currentChat.set("§b§lPLC");
+            if(data.rpCurrentChat == 3) currentChat.set("§4§LGNG");
+            tab.set(1, 12, new TextTabItem(" §7Chat sélectionné » " + currentChat, 0, CHAT_BUBBLE));
+        }, 20, 20);
 
         // Column 2 & 3
         Bukkit.getScheduler().runTaskTimerAsynchronously(LibertyCity.INSTANCE, () -> {

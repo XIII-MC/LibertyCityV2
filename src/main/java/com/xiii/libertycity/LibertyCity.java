@@ -21,6 +21,7 @@ import com.xiii.libertycity.roleplay.events.DeathEvent;
 import com.xiii.libertycity.roleplay.events.RegisterEvent;
 import com.xiii.libertycity.roleplay.guis.ATMGui;
 import com.xiii.libertycity.roleplay.guis.BinGui;
+import com.xiii.libertycity.roleplay.items.IDCard;
 import com.xiii.libertycity.roleplay.items.SearchItem;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -53,7 +54,7 @@ public final class LibertyCity extends JavaPlugin {
         return INSTANCE;
     }
     public static BossBar bossBar;
-    private final String BOT_TOKEN = "MTA2Mjc5Mjg2ODk2NTY2MjcyMA.G8-6hq.7UHoeLfkMn6K04KuqDX7IXFKsUe28gPCGOeSBI";
+    private final String BOT_TOKEN = "MTA2NTMxNDQ1NDk4NTc4NTQxNg.GJBEwB.YfdVOSjaLbwFQ3FN2Q3_B07xKaR52K_98JRftM";
     private static JDA jda = null;
 
     @Override
@@ -77,6 +78,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
         Bukkit.getPluginManager().registerEvents(new CustomChat(), this);
         Bukkit.getPluginManager().registerEvents(new SearchItem(), this);
+        Bukkit.getPluginManager().registerEvents(new IDCard(), this);
 
         // PHASE 1
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -184,6 +186,7 @@ public final class LibertyCity extends JavaPlugin {
     @Override
     public void onDisable() {
         FileUtils.saveServerData(Data.data.getServerData(Bukkit.getServer()));
+        for(Player p : Bukkit.getOnlinePlayers()) FileUtils.savePlayerData(Data.data.getUserData(p));
         Bukkit.getScheduler().cancelAllTasks();
     }
 }
