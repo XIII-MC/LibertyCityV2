@@ -1,6 +1,8 @@
 package com.xiii.libertycity.core.data;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +49,7 @@ public class PlayerData implements java.io.Serializable {
     public boolean isVerified;
     public String joinDate;
     public double pin;
+    public Inventory wallet;
 
     public boolean chatBanHRP = false;
     public boolean chatBanRP = false;

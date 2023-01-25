@@ -18,6 +18,18 @@ public class IDUtils {
 
     public static void createNewID(Player player, PlayerData data) {
         // TODO: Change id to real id
+        // TODO: Change ID to real Wallet ID
+        ItemStack wallet = new ItemStack(Material.getMaterial(4329));
+        ItemMeta wmeta = wallet.getItemMeta();
+        wmeta.setDisplayName("§rPorte feuille");
+        List<String> wlore = new ArrayList<>();
+        wlore.add("");
+        wlore.add("§rPropriétaire » §a" + data.rpPrenom + " §2" + data.rpNom + " §7(" + player.getName() + ")");
+        wlore.add("§rUUID » §8" + player.getUniqueId());
+        wmeta.setLore(wlore);
+        wallet.setItemMeta(wmeta);
+        player.getInventory().addItem(wallet);
+
         ItemStack ID = new ItemStack(Material.getMaterial(4325));
         ItemMeta meta = ID.getItemMeta();
         meta.setDisplayName("§rCarte d'identitée");

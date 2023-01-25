@@ -33,7 +33,7 @@ public class TestCommand implements CommandExecutor {
 
             // Test section. | CASE: UTIL_1 : generating a new ID card
             IDUtils.createNewID(player, playerData);
-            player.sendMessage("ID Created.");
+            player.sendMessage("ID & Wallet Created.");
 
 
         }

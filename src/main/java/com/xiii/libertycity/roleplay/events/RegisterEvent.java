@@ -71,6 +71,7 @@ public class RegisterEvent implements Listener {
         }.runTaskLater(LibertyCity.INSTANCE, 12000);
 
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
+            Data.data.registerUser(e.getPlayer());
             PlayerData data = Data.data.getUserData(e.getPlayer());
 
             if (data.playerID <= 0) {
@@ -128,6 +129,8 @@ public class RegisterEvent implements Listener {
                         server.globalID++;
                         data.playerID = server.globalID;
                         server.averageAge.add(data.rpAge);
+
+                        data.wallet = Bukkit.createInventory(null, 9, "Porte feuille");
 
                         //Kick player to finalize registration
                         e.getPlayer().sendTitle("", "", 0, 0, 0);

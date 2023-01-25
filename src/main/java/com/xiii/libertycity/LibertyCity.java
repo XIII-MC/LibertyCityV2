@@ -23,6 +23,7 @@ import com.xiii.libertycity.roleplay.guis.ATMGui;
 import com.xiii.libertycity.roleplay.guis.BinGui;
 import com.xiii.libertycity.roleplay.items.IDCard;
 import com.xiii.libertycity.roleplay.items.SearchItem;
+import com.xiii.libertycity.roleplay.items.Wallet;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
@@ -79,6 +80,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CustomChat(), this);
         Bukkit.getPluginManager().registerEvents(new SearchItem(), this);
         Bukkit.getPluginManager().registerEvents(new IDCard(), this);
+        Bukkit.getPluginManager().registerEvents(new Wallet(), this);
 
         // PHASE 1
         Bukkit.getScheduler().runTaskLater(this, () -> {
