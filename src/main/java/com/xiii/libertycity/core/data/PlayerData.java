@@ -49,7 +49,6 @@ public class PlayerData implements java.io.Serializable {
     public boolean isVerified;
     public String joinDate;
     public double pin;
-    public Inventory wallet;
 
     public boolean chatBanHRP = false;
     public boolean chatBanRP = false;

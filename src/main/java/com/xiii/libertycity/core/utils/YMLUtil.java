@@ -3,6 +3,7 @@ package com.xiii.libertycity.core.utils;
 import com.xiii.libertycity.LibertyCity;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -17,6 +18,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YMLUtil {
+
+
+    public static FileConfiguration getBackpackYml() {
+
+        File backpacksFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/backpacks.yml");
+
+        return YamlConfiguration.loadConfiguration(backpacksFile);
+
+    }
+
+    public static void saveBackpackYml(FileConfiguration config) {
+
+        try {
+
+            File backpacksFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/backpacks.yml");
+
+            config.save(backpacksFile);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
 
     public static Location loadWarp(String warpName) {
         File warpFile = new File(LibertyCity.INSTANCE.getDataFolder() + "/server/warps/" + warpName + ".yml");

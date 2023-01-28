@@ -2,6 +2,7 @@ package com.xiii.libertycity.core.utils;
 
 import com.xiii.libertycity.core.data.Data;
 import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.data.ServerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,9 +26,11 @@ public class IDUtils {
         List<String> wlore = new ArrayList<>();
         wlore.add("");
         wlore.add("§rPropriétaire » §a" + data.rpPrenom + " §2" + data.rpNom + " §7(" + player.getName() + ")");
-        wlore.add("§rUUID » §8" + player.getUniqueId());
+        ServerData server = Data.data.getServerData(Bukkit.getServer());
+        wlore.add("§rID PTF » §8" + server.globalInventoryID);
         wmeta.setLore(wlore);
         wallet.setItemMeta(wmeta);
+        server.globalInventoryID++;
         player.getInventory().addItem(wallet);
 
         ItemStack ID = new ItemStack(Material.getMaterial(4325));

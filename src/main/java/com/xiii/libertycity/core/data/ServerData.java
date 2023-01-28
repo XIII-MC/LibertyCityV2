@@ -9,6 +9,7 @@ public class ServerData implements java.io.Serializable {
     private static final long serialVersionUID = 2L;
 
     public int globalID = 0;
+    public int globalInventoryID = 0;
     public boolean chatStateGlobal = true;
     public boolean chatStateGang = true;
     public boolean chatStatePolice = true;

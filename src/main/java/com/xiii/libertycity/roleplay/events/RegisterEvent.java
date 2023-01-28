@@ -130,8 +130,6 @@ public class RegisterEvent implements Listener {
                         data.playerID = server.globalID;
                         server.averageAge.add(data.rpAge);
 
-                        data.wallet = Bukkit.createInventory(null, 9, "Porte feuille");
-
                         //Kick player to finalize registration
                         e.getPlayer().sendTitle("", "", 0, 0, 0);
                         String kickMessage = ("§8§m+--------------------------+" + "\n" + "§4§l§k|||§r §fBienvenue §a§l" + data.rpPrenom + " §2§l" + data.rpNom + "§f! §4§l§k|||" + "\n" + "§c§k§l||§r §7Amusez vous bien ! §c§k§l||§r" + "\n" + " " + "\n" + "§8§oVous avez été engregistré, reconectez-vous !" + "\n" + "§8§m+--------------------------+");
