@@ -10,29 +10,60 @@ import com.xiii.libertycity.core.displays.TABDisplay;
 import com.xiii.libertycity.core.utils.AlertUtil;
 import com.xiii.libertycity.core.utils.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class Events implements Listener {
 
     @EventHandler
+    public void forModMode(PlayerInteractEvent e) {
+        Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
+
+            PlayerData data = Data.data.getUserData(e.getPlayer());
+
+            if(data.modMode) {
+
+                if(e.getPlayer().getInventory().getItemInMainHand() == new ItemStack(Material.FEATHER)) {
+
+                    if(e.getPlayer().isFlying()) {
+                        e.getPlayer().setFlying(false);
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous ne pouvez plus voler.");
+                    } else {
+                        e.getPlayer().setFlying(true);
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous pouvez désormais voler.");
+                    }
+
+                }
+
+            }
+
+
+        });
+    }
+
+    @EventHandler
     public void forVanish(PlayerJoinEvent e) {
-        ServerData server = Data.data.getServerData(Bukkit.getServer());
-        if(server.vanishedPlayers != null) {
-            for (Player vp : server.vanishedPlayers) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.hidePlayer(LibertyCity.INSTANCE, vp);
-                    if (p.hasPermission("LibertyCity.seevanishedplayers") || server.vanishedPlayers.contains(p))
-                        p.showPlayer(LibertyCity.INSTANCE, vp);
-                    vp.setDisplayName("§7[V] §f" + vp.getName());
+        Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.INSTANCE, () -> {
+            ServerData server = Data.data.getServerData(Bukkit.getServer());
+            if (server.vanishedPlayers != null) {
+                for (Player vp : server.vanishedPlayers) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.hidePlayer(LibertyCity.INSTANCE, vp);
+                        if (p.hasPermission("LibertyCity.seevanishedplayers") || server.vanishedPlayers.contains(p))
+                            p.showPlayer(LibertyCity.INSTANCE, vp);
+                        vp.setDisplayName("§7[V] §f" + vp.getName());
+                    }
                 }
             }
-        }
-        TABDisplay.updatePlayerList();
+            TABDisplay.updatePlayerList();
+        });
     }
 
     @EventHandler

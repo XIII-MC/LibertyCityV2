@@ -86,6 +86,7 @@ public class PlayerData implements java.io.Serializable {
     public transient Date banExpiration;
     public transient String banDisplayDate;
     public transient String bannedBy;
+    public transient boolean modMode;
 
     public PlayerData(String name, String uuid) {
         this.uuid = uuid;

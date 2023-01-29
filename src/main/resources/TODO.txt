@@ -1,6 +1,8 @@
 fix /lookup not finding player
-protection map
-add wallet to put cash, CC, ID and that's all | stealable -> data in item lore
 pôle emplois
 link discord
+job medecin
+job police
+système revive hopital
+mod mode
 Système "maladies": démangésons, ruhme ect
